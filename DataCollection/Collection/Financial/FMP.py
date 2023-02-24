@@ -18,8 +18,11 @@ import os
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+class information:
 
-class FMP_Extracter():
+
+
+class FMP_Extracter:
     def __init__(self):
         self.core_cols = ['date','symbol','reportedCurrency','calendarYear','period','link','finalLink'] 
         self.is_cols = ['revenue','costOfRevenue','sellingGeneralAndAdministrativeExpenses','operatingIncome','totalOtherIncomeExpensesNet',

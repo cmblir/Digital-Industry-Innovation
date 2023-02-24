@@ -63,9 +63,11 @@ sqlalchemy==2.0.4
           <code>
           investing = INVESTING.Investing_Crawler("/~.xlsx")
           # An argument is the material path that contains the content to be matched.
+          
           settings = investing.DriverSettings()
           # if you want use Turn off Warning, use argument Turn_off_warning = True
           # if you want use Linux mode on Background, use argument linux_mode = True
+          
           crawler = investing.investingDotcom_crawler("korea", "South Korea", "/")
           # if you want crawlering Singapore, use argument isSingapore = True          
           </code>
@@ -88,6 +90,7 @@ sqlalchemy==2.0.4
           fmp = FMP()
           information = fmp.information()
           print(information)
+          
           """
           print is 
           """
@@ -119,6 +122,7 @@ sqlalchemy==2.0.4
           dart = DART()
           information = dart.information()
           print(information)
+          
           """
           print is 
           """
@@ -130,7 +134,9 @@ sqlalchemy==2.0.4
           <code>
           dart = DART.Dart_Extract("/.xlsx")
           print(dart.api_key())
+          
           """ print is api_key1 = 'example key code 0000' """
+          
           extract_finstate = dart.load_finstats('example key code 0000')
           </code>
           </pre>
