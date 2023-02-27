@@ -19,10 +19,26 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 class information:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        함수에 대한 설명은 아래와 같습니다. \n
+        라이브러리 내 주요 클래스는 fmp_extact입니다. \n
+        get_jsonparsed_data()는 데이터를 파싱하는 함수입니다. \n
+        extractor()은 데이터를 json형태로 가지고 오는 함수입니다. \n
+        url_generator()은 FMP 사이트에 접속하여 데이터를 분리하는 함수입니다. \n
+        ending_period_extact()는 날짜를 표준화하는 함수입니다. \n
+        report_type_extract()는 들어오는 값에 따라 연간인지 분기인지 구분하는 함수입니다. \n
+        GetExcel()은 추출한 데이터를 저장하는 함수입니다. \n
+        cleanse()는 데이터를 가공하는 함수입니다. \n
+        get_symbols()는 데이터를 사이트로부터 가져오는 함수입니다. \n
+        make_clean()은 위의 함수들을 순차적으로 실행하여 데이터를 추출 후 저장하는 함수입니다.
+        """)
 
 
-
-class FMP_Extracter:
+class fmp_extract:
     def __init__(self):
         self.core_cols = ['date','symbol','reportedCurrency','calendarYear','period','link','finalLink'] 
         self.is_cols = ['revenue','costOfRevenue','sellingGeneralAndAdministrativeExpenses','operatingIncome','totalOtherIncomeExpensesNet',
@@ -63,7 +79,7 @@ class FMP_Extracter:
         data = response.read().decode("utf-8")
         return json.loads(data)
 
-    def extractor(url) : 
+    def extractor(self, url) : 
         try:
             from pandas import json_normalize
         except ImportError:
@@ -95,14 +111,14 @@ class FMP_Extracter:
         else :
             return "Please input proper filing_type"
 
-    def ending_period_extract(x) : 
+    def ending_period_extract(self, x) : 
         try : 
             date = datetime.strptime(str(x), '%Y-%m-%d')
             return date.strftime("%Y%m%d")
         except : 
             return 
 
-    def report_type_extract(x) : 
+    def report_type_extract(self, x) : 
         try : 
             if 'Q' in str(x) : 
                 return 'Q'

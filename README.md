@@ -49,7 +49,7 @@ sqlalchemy==2.0.4
           * you can get library infromation
           <pre>
           <code>
-          investing = INVESTING()
+          investing = INVESTING
           information = investing.information()
           print(information)
           """
@@ -87,20 +87,30 @@ sqlalchemy==2.0.4
           * you can get library infromation
           <pre>
           <code>
-          fmp = FMP()
+          fmp = FMP
           information = fmp.information()
           print(information)
           
           """
-          print is 
+          함수에 대한 설명은 아래와 같습니다. \n
+          라이브러리 내 주요 클래스는 fmp_extact입니다. \n
+          get_jsonparsed_data()는 데이터를 파싱하는 함수입니다. \n
+          extractor()은 데이터를 json형태로 가지고 오는 함수입니다. \n
+          url_generator()은 FMP 사이트에 접속하여 데이터를 분리하는 함수입니다. \n
+          ending_period_extact()는 날짜를 표준화하는 함수입니다. \n
+          report_type_extract()는 들어오는 값에 따라 연간인지 분기인지 구분하는 함수입니다. \n
+          GetExcel()은 추출한 데이터를 저장하는 함수입니다. \n
+          cleanse()는 데이터를 가공하는 함수입니다. \n
+          get_symbols()는 데이터를 사이트로부터 가져오는 함수입니다. \n
+          make_clean()은 위의 함수들을 순차적으로 실행하여 데이터를 추출 후 저장하는 함수입니다.
           """
           </code>
           </pre>
-          * you can use collecting investing financial information data
+          * you can use collecting Financial Modeling Prep data
           * Example code
           <pre>
           <code>
-          fmp = FMP.FMP_Extracter()
+          fmp = FMP.fmp_extract()
           get_symbols = fmp.get_symbols("한국")
           </code>
           </pre>
@@ -108,7 +118,7 @@ sqlalchemy==2.0.4
           * Example code
           <pre>
           <code>
-          fmp = FMP.FMP_Extracter()
+          fmp = FMP.fmp_extract()
           clean = fmp.make_clean("/", "/")
           </code>
           </pre>
@@ -119,20 +129,24 @@ sqlalchemy==2.0.4
           * you can get library infromation
           <pre>
           <code>
-          dart = DART()
+          dart = DART
           information = dart.information()
           print(information)
           
           """
-          print is 
+          함수에 대한 설명은 아래와 같습니다. \n
+          라이브러리 내 주요 클래스는 dart_extract입니다. \n
+          api_key()는 api key를 알려주는 함수입니다. \n
+          extract_finstate()은 데이터를 추출하는 함수입니다. \n
+          load_finstate()은 데이터를 저장하는 함수입니다.
           """
           </code>
           </pre>
-          * you can use collecting investing financial information data
+          * you can use collecting Dart financial information data
           * Example code
           <pre>
           <code>
-          dart = DART.Dart_Extract("/.xlsx")
+          dart = DART.dart_extract("/.xlsx")
           print(dart.api_key())
           
           """ print is api_key1 = 'example key code 0000' """
@@ -144,8 +158,7 @@ sqlalchemy==2.0.4
           * Example code
           <pre>
           <code>
-          fmp = FMP.FMP_Extracter()
-          clean = fmp.make_clean("/", "/")
+          empty
           </code>
           </pre>
 
@@ -155,7 +168,7 @@ sqlalchemy==2.0.4
           * you can get library infromation
           <pre>
           <code>
-          vietstock = VIETSTOCK()
+          vietstock = VIETSTOCK
           information = vietstock.information()
           print(information)
           """
@@ -163,6 +176,8 @@ sqlalchemy==2.0.4
           """
           </code>
           </pre>
+          * you can use collecting Vietstock financial information data
+          * Example code
 
      * idx (Indonesia Only)
           * importing library
@@ -170,15 +185,20 @@ sqlalchemy==2.0.4
           * you can get library infromation
           <pre>
           <code>
-          idx = IDX()
+          idx = IDX
           information = idx.information()
           print(information)
           """
-          print is 
+          함수에 대한 설명은 아래와 같습니다. \n
+          라이브러리 내 주요 클래스는 idx_extact입니다. \n
+          make_Avaible()는 데이터프레임을 사용할 수 있게하는 함수입니다. \n
+          Add_On()은 데이터를 만드는 함수입니다. \n
+          transform()은 데이터를 가공하는 함수입니다.
           """
           </code>
           </pre>
-
+          * you can use collecting idx financial information data
+          * Example code
     
 * Company general information data
      * opencorporates
@@ -187,56 +207,96 @@ sqlalchemy==2.0.4
           * you can get library infromation
           <pre>
           <code>
-          opencorporates = OPENCORPORATES()
+          opencorporates = OPENCORPORATES
           information = opencorporates.information()
           print(information)
           """
-          print is 
+          함수에 대한 설명은 아래와 같습니다. \n
+          라이브러리 내 주요 클래스는 opencorporates_extract입니다. \n
+          DriverSettings()는 드라이버 세팅을 하는 함수입니다. \n
+          Login()은 opencorporates에 로그인하는 함수입니다. \n
+          ReCounty()는 국가를 선택하는 함수입니다. \n
+          SearchCompanies()는 기업을 찾는 함수입니다. \n
+          GetInformation()은 데이터를 추출하는 함수입니다. \n
+          GetExcel()은 추출한 데이터를 저장하는 함수입니다. \n
           """
           </code>
           </pre>
+          * you can use collecting opencorporates general information data
+          * Example code
+          <pre>
+          <code>
+          opencorporates = OPENCORPORATES
+          crawler = opencorporates.opencorporates_extract()
+          crawler.Login()
+          df = pd.read_excel("finished_url_opencorporates.xlsx")
+          for name, url in tqdm(zip(df["country"], df["url"])):
+               try: Crawler.GetInformation(url, name)
+               except: pass
+               Crawler.GetExcel()
+        </pre>
+        </code>
+
      * datos (Columbia Only)
           * importing library
           * ```from DataColletion.Collection.General import DATOS``` 
           * you can get library infromation
           <pre>
           <code>
-          datos = DATOS()
+          datos = DATOS
           information = datos.information()
           print(information)
           """
-          print is 
+          함수에 대한 설명은 아래와 같습니다. \n
+          라이브러리 내 주요 클래스는 datos_extact입니다. \n
+          make()는 데이터를 가공하는 함수입니다. \n
+          load()은 데이터를 저장하는 함수입니다.
           """
           </code>
           </pre>
+          * you can use collecting opencorporates general information data
+          * Example code
+
      * ESERCIZI (Indonesia Only)
           * importing library
           * ```from DataColletion.Collection.General import ESERCIZI``` 
           * you can get library infromation
           <pre>
           <code>
-          esercizi = ESERSIZI()
+          esercizi = ESERSIZI
           information = esercizi.information()
           print(information)
           """
-          print is 
+          함수에 대한 설명은 아래와 같습니다. \n
+          라이브러리 내 주요 클래스는 datos_extact입니다. \n
+          make()는 데이터를 가공하는 함수입니다. \n
+          load()은 데이터를 저장하는 함수입니다.
           """
           </code>
           </pre>
+          * you can use collecting opencorporates general information data
+          * Example code
+
      * kemenperin (Italy Only)
           * importing library
           * ```from DataColletion.Collection.General import KEMENPERIN``` 
           * you can get library infromation
           <pre>
           <code>
-          kemenperin = KEMENPERIN()
+          kemenperin = KEMENPERIN
           information = kemenperin.information()
           print(information)
           """
-          print is 
+          함수에 대한 설명은 아래와 같습니다. \n
+          라이브러리 내 주요 클래스는 datos_extact입니다. \n
+          DriverSettings()는 크롬 드라이버를 실행하는 함수입니다. \n
+          get_data()는 데이터를 추출하여 가공하는 함수입니다. \n
+          load()은 데이터를 저장하는 함수입니다.
           """
           </code>
           </pre>
+          * you can use collecting opencorporates general information data
+          * Example code
 
 ### Data Processing
 

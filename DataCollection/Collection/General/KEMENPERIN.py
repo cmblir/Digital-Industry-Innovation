@@ -6,6 +6,18 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
+class information:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        함수에 대한 설명은 아래와 같습니다. \n
+        라이브러리 내 주요 클래스는 datos_extact입니다. \n
+        DriverSettings()는 크롬 드라이버를 실행하는 함수입니다. \n
+        get_data()는 데이터를 추출하여 가공하는 함수입니다. \n
+        load()은 데이터를 저장하는 함수입니다.
+        """)
 
 class kemenperin_extract:
     def __init__(self, path):

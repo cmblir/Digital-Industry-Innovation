@@ -1,5 +1,17 @@
 import pandas as pd
 
+class information:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        함수에 대한 설명은 아래와 같습니다. \n
+        라이브러리 내 주요 클래스는 datos_extact입니다. \n
+        make()는 데이터를 가공하는 함수입니다. \n
+        load()은 데이터를 저장하는 함수입니다.
+        """)
+
 class esercizi_extract:
     def __init__(self, path):
         """

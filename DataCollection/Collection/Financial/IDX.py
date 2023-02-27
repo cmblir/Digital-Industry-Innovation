@@ -6,16 +6,16 @@ from tqdm import tqdm
 
 class information:
     def __init__(self):
-        pass
+        self.print_information()
 
-    if __name__ == "__main__":
-        print(
-            """
-            MakeAvaible 함수는 데이터프레임에서 불필요한 값을 지우는 함수입니다. \n
-            Add_On는 mapping_path에 대응표 엑셀이 들어올 경우 이를 반환하여 데이터를 만들어주는 함수입니다. \n
-            transform은 Path에 IDX에서 받은 파일을 모두 읽어 하나의 엑셀파일로 만드는 함수입니다. \n
-            """
-        )
+    def print_information(self):
+        print("""
+        함수에 대한 설명은 아래와 같습니다. \n
+        라이브러리 내 주요 클래스는 idx_extact입니다. \n
+        make_Avaible()는 데이터프레임을 사용할 수 있게하는 함수입니다. \n
+        Add_On()은 데이터를 만드는 함수입니다. \n
+        transform()은 데이터를 가공하는 함수입니다.
+        """)
 
 class idx_extract:
     def __init__(self, dataframe):

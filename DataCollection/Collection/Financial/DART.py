@@ -6,7 +6,20 @@ import numpy as np
 from tqdm import tqdm
 import OpenDartReader
 
-class Dart_Extract:
+class information:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        함수에 대한 설명은 아래와 같습니다. \n
+        라이브러리 내 주요 클래스는 dart_extract입니다. \n
+        api_key()는 api key를 알려주는 함수입니다. \n
+        extract_finstate()은 데이터를 추출하는 함수입니다. \n
+        load_finstate()은 데이터를 저장하는 함수입니다.
+        """)
+
+class dart_extract:
     def __init__(self, Path):
         """
         data에 http://data.krx.co.kr/contents/MDC/MDI/mdiLoader 에서 \n
