@@ -234,8 +234,8 @@ sqlalchemy==2.0.4
                try: Crawler.GetInformation(url, name)
                except: pass
                Crawler.GetExcel()
-          </pre>
           </code>
+          </pre>
 
      * datos (Columbia Only)
           * importing library
