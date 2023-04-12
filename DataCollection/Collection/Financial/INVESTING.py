@@ -3,17 +3,40 @@ import numpy as np
 import time
 import datetime
 import chromedriver_autoinstaller
-from webdriver_manager.chrome import ChromeDriverManager
 import re
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from tqdm import tqdm
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver import ActionChains
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+class information:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        라이브러리는 2개로 나누어집니다. \n
+        데이터를 수집하는 라이브러리인 Investing_Crawler, 데이터를 가공하는 라이브러리인 Investing_Cleanse \n
+        ------------------------------------------------------------------------------------------\n
+        Investing_Crawler의 함수는 아래와 같습니다. \n
+        DriverSettings()은 셀레니움 크롬 드라이버 세팅 함수입니다. \n
+        download_historial()은 과거 주종가 데이터를 수집하는 함수입니다. \n
+        collect()은 인베스팅 닷컴에서 데이터를 수집하는 함수입니다. \n
+        ------------------------------------------------------------------------------------------\n
+        Investing_Cleanse는 클래스를 실행시키면 바로 진행이 됩니다. \n
+        """)
 
 class Investing_Crawler:
 
     def __init__(self, path):
+        """
+        path에 인베스팅 컬럼 엑셀을 넣어주세요.
+        """
         self.base_url = 'https://au.investing.com'
         self.PROFILE_suffix = '-company-profile'
         self.IS_suffix = '-income-statement'
@@ -30,6 +53,7 @@ class Investing_Crawler:
         # 일반기업, 은행, 보험업의 계정과목들중 겹치는 부분은 제거하여 중복없는 합집합을 사용한다. 
         # drop_duplicates는 중복되는 것들중 하나만 제거, 
         self.all_cols = self.all_cols.drop_duplicates()
+        self.company_links = []
 
     def DriverSettings(self, Turn_off_warning = False, linux_mode = False) -> None:
         """
@@ -54,17 +78,57 @@ class Investing_Crawler:
         # WebDruverException Error 방지 기존의 드라이버 버젼으로 지정
         # driver = webdriver.Chrome(executable_path='/Users/cmblir/Python/Musinsa-Analysis/100/chromedriver')
 
-    def investingDotcom_crawler(self, country, official_countryName ,save_dir, isSingapore=False) : 
+    def download_historial(self, all_atag_maintable, url):
+        company_links = []
+        for a in all_atag_maintable:
+            company_link = a.attrs["href"] #find로 한번더 돌려준다.
+            company_links.append(company_link)
+        company_table_css = self.driver.find_element(By.CSS_SELECTOR, 'div[data-test="dynamic-table"]')
+        company_table_html = company_table_css.get_attribute('outerHTML')
+        company_table = pd.read_html(company_table_html)[0]
+        stock_history_company_links = [i+"-historical-data" for i in company_links]
+        for idx, name in tqdm(zip(stock_history_company_links[912:], company_table["Name"][912:])):
+            self.driver.get("https://au.investing.com/" + idx)
+            time.sleep(2)
+            try: click_time = self.driver.find_element(By.XPATH, '//*[@id="history-timeframe-selector"]').click()
+            except NoSuchElementException:
+                self.driver.get("https://au.investing.com/" + idx)
+                click_time = self.driver.find_element(By.XPATH, '//*[@id="history-timeframe-selector"]').click()
+            click_month = self.driver.find_element(By.XPATH, '//*[@id="react-select-2-option-1"]').click()
+            try: historical_data = self.driver.find_element(By.XPATH, '//*[@id="__next"]/div[2]/div/div/div[2]/main/div/div[6]/div/div/div[2]/div[2]')
+            except NoSuchElementException: 
+                try:
+                    historical_data = self.driver.find_element(By.XPATH, '//*[@id="__next"]/div[2]/div/div/div[2]/main/div/div[7]/div/div/div[2]/div[2]')
+                except: 
+                    self.driver.refresh()
+                    click_time = self.driver.find_element(By.XPATH, '//*[@id="history-timeframe-selector"]').click()
+                    click_month = self.driver.find_element(By.XPATH, '//*[@id="react-select-2-option-1"]').click()
+                    try: historical_data = self.driver.find_element(By.XPATH, '//*[@id="__next"]/div[2]/div/div/div[2]/main/div/div[6]/div/div/div[2]/div[2]')
+                    except NoSuchElementException: historical_data = self.driver.find_element(By.XPATH, '//*[@id="__next"]/div[2]/div/div/div[2]/main/div/div[7]/div/div/div[2]/div[2]')
+            time.sleep(2)
+            historical_data.click()
+            input_element = historical_data.find_element(By.TAG_NAME, 'input')
+            while input_element.get_attribute('value') != "2018-01-01":
+                input_element.clear()
+                input_element.send_keys("20180101")
+            month_button = historical_data.find_element(By.TAG_NAME, 'button')
+            month_button.send_keys("\n")
+            time.sleep(3)
+            a = historical_data.find_element(By.TAG_NAME, 'a')
+            a.click()
+        self.driver.get(url)
+
+    def collect(self, country, official_countryName ,save_dir, isSingapore=False) : 
         # 멕시코 주식시장 정보 페이지 접속
         first_url = f'https://au.investing.com/equities/{country.lower()}'    #맨 뒤에 'mexico'를 바꾸면 다른 국가에서도 재활용 할 수 있음
         self.driver.get(first_url)
         time.sleep(8)
-
+        breakpoint()
         #페이지에 표시되는 주식을 'all stocks'로 바꿈 
         try : 
             if isSingapore == False : 
-                select_box = self.driver.find_element(By.XPATH,'//*[@id="stocksFilter"]').click()
-                select_all_stock = self.driver.find_element(By.XPATH,'//*[@id="all"]').click()
+                select_box = self.driver.find_element(By.XPATH,'//*[@id="index-select"]/div[1]').click()
+                select_all_stock = self.driver.find_element(By.XPATH,'//*[@id="index-select"]/div[2]/div/div/div[1]').click()
             else : 
                 pass
             time.sleep(5)
@@ -88,16 +152,21 @@ class Investing_Crawler:
         # BeautifulSoup을 사용할수 있도록 스크롤을 한번 끝까지 내렸다 올린다.
         SCROLL_PAUSE_SEC = 3
 
-        # 스크롤 높이 가져옴
         last_height = self.driver.execute_script("return document.body.scrollHeight")
-
         while True:
+            
+            try:
+                some_tag = self.driver.find_element(By.XPATH, '//*[@id="__next"]/div[2]/div/div/div[2]/main/div[3]/div[2]/div')
+                action = ActionChains(self.driver)
+                action.move_to_element(some_tag).perform()
+                some_tag.click()
+            except NoSuchElementException: break
             # 끝까지 스크롤 다운
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
             # SCROLL_PAUSE_SEC만큼 대기
             time.sleep(SCROLL_PAUSE_SEC)
-
+            
             # 스크롤 다운 후 스크롤 높이 다시 가져옴
             new_height = self.driver.execute_script("return document.body.scrollHeight")
             if new_height == last_height:
@@ -108,26 +177,27 @@ class Investing_Crawler:
         soup = BeautifulSoup(self.driver.page_source,"html.parser")
 
         # 주식 테이블을 가지고 온다. 
-        maintable = soup.find('table', id='cross_rate_markets_stocks_1')
+        maintable = soup.find('div', {'data-test': 'dynamic-table'})
 
         # 메인 주식 테이블에서 회사 페이지로
         all_atag_maintable = maintable.find_all('a')
 
         # soup의 find 메서드를 이용해서 갖고 오게 되면, 링크 뿐 아니라 다른 정보들도 같이 갖고 오게 됩니다. 
         # 따라서 아래 for문으로 순수한 href 링크만을 추출하여, company_links에 저장합니다. 
-        company_links = []
         for a in all_atag_maintable:
             company_link = a.attrs["href"] #find로 한번더 돌려준다.
-            company_links.append(company_link)
+            self.company_links.append(company_link)
 
         # Version 3
+
+        self.download_historial(all_atag_maintable, first_url)
 
         wait_time = 3 # time.sleep의 변수 
 
 
         # 일반기업, 은행, 보험업의 계정과목들중 겹치는 부분은 제거하여 중복없는 합집합을 사용한다. 
         # drop_duplicates는 중복되는 것들중 하나만 제거, 그리고 리스트화 
-        all_cols = list(all_cols.drop_duplicates())
+        all_cols = list(self.all_cols.drop_duplicates())
         all_cols = all_cols+['is_unit','bs_unit','cf_unit','is_time','bs_time','cf_time','report_type','company_name','industry_info','sector_info',
                             'address_info','phone_info','fax_info','webpage_info','source','gathering_time','PIC']
 
@@ -135,7 +205,7 @@ class Investing_Crawler:
 
         result_df = pd.DataFrame()
         crawling_failed_companies = []
-        for company in company_links[:10] : 
+        for company in self.company_links : 
 
             profile_url = self.base_url+company+self.PROFILE_suffix
             bs_url = self.base_url+company+self.BS_suffix
