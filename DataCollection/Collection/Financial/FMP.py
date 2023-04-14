@@ -250,15 +250,16 @@ class fmp_extract:
         elif country == "한국" : selected_symbols = Korea_symbols
         elif country == "미국" : selected_symbols = US_symbols
         elif country == "네덜란드" : selected_symbols = Netherlands_symbols
+        selected_symbols = [i for i in selected_symbols if "\n" not in i]
 
         for _ in range(math.ceil(len(selected_symbols)/1000)):
             company_df_list = pd.DataFrame()
-            for target_Symbol in tqdm(India_symbols[cnt:cnt+1000]) :  
-                if cnt == len(India_symbols):
+            for target_Symbol in tqdm(selected_symbols[cnt:cnt+1000]) :  
+                if cnt == len(selected_symbols):
                     company_df_list = company_df_list.sort_values(by=['symbol','date'], ascending = [True,False]) # symbol은 오름차순으로, 같은 심볼 내에서 회계분기는 내림차순이 되도록 정렬.        
                     # 2022년 현재, 5개년치의 데이터, 즉 2017년 이상인 데이터만 뽑아낸다. -> calendarYear(회계연도)가 2017년 이상 
                     # company_df_list = company_df_list[company_df_list['calendarYear'].astype('int')>=2022]
-                    company_df_list.to_excel(f'US_Original_221216_{cnt}.xlsx', index=False)
+                    company_df_list.to_excel(f'{country}_{cnt}.xlsx', index=False)
 
                 for report_type in ['annual','quarter'] :
                 
@@ -378,7 +379,7 @@ class fmp_extract:
 
             # 2022년 현재, 5개년치의 데이터, 즉 2017년 이상인 데이터만 뽑아낸다. -> calendarYear(회계연도)가 2017년 이상 
             # company_df_list = company_df_list[company_df_list['calendarYear'].astype('int')>=2022]
-            company_df_list.to_excel(f'Original_{cnt}.xlsx', index=False)
+            company_df_list.to_excel(f'Original_{country}_{cnt}.xlsx', index=False)
 
     def make_clean(self, FilePath, SavePath):
         """
