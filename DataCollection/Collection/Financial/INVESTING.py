@@ -558,8 +558,8 @@ class Investing_Cleanse:
         # 보고서종류 
         self.data['report_type'] = self.data['report_type'].apply(lambda x : self.report_type_generator(x))    
         self.mapping_sheet = pd.read_excel(mapping_sheet_dir)
-        self.mapping_dic = self.mapping_sheet.set_index('기준 데이터 필드명(2022 BDC 재무정보데이터)').T.to_dict('index')['investing.com 대응 필드명1']
-        self.mapping_dic_alternative = self.mapping_sheet.set_index('기준 데이터 필드명(2022 BDC 재무정보데이터)').T.to_dict('index')['investing.com 대응 필드명2']
+        self.mapping_dic = self.mapping_sheet.set_index('2022 field name').T.to_dict('index')['corresponding field name 1']
+        self.mapping_dic_alternative = self.mapping_sheet.set_index('2022 field name').T.to_dict('index')['corresponding field name 2']
         # procssed라는 빈 데이터 프레임을 만든 후 아래 루프문으로 'InvestingDotcom 수집코드'로 크롤링한 원본데이터(df)를 
         # 표준화 한다. 
         self.processed = pd.DataFrame(columns = self.mapping_dic.keys())
