@@ -203,7 +203,7 @@ class Investing_Crawler:
 
         # all_cols에 기업 이름, 일반정보 등을 추가한다. 
 
-        result_df = pd.DataFrame()
+        self.result_df = pd.DataFrame()
         crawling_failed_companies = []
         for company in self.company_links : 
 
@@ -432,7 +432,7 @@ class Investing_Crawler:
                     except : 
                         pass  
 
-                result_df = result_df.append(blank)
+                self.result_df = self.result_df.append(blank)
                 blank = pd.DataFrame(columns = all_cols)
 
                 for code in blank.columns : 
@@ -443,7 +443,7 @@ class Investing_Crawler:
                         pass  
 
 
-                result_df = result_df.append(blank)
+                self.result_df = self.result_df.append(blank)
 
             except :
                 # 만약 재무정보가 없어 에러가 났을 경우, 일반정보라도 추가한다. 
@@ -506,13 +506,13 @@ class Investing_Crawler:
                     except : 
                         pass  
                 
-                result_df = result_df.append(blank)
+                self.result_df = self.result_df.append(blank)
                 
-        result_df['Country'] = official_countryName
-        result_df.to_excel(save_dir ,index = False)
+        self.result_df['Country'] = official_countryName
+        self.result_df.to_excel(save_dir ,index = False)
         self.driver.quit()
         
-        return result_df 
+        return self.result_df 
 
 class Investing_Cleanse: 
         
