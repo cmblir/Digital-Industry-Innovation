@@ -27,6 +27,19 @@ class information:
         GetExcel()은 추출한 데이터를 저장하는 함수입니다. \n
         """)
 
+class country_name:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        Hong Kong, Malaysia, Singapore, Thailand \n
+        Viet Nam, India, United States, Canada \n
+        Mexico, Netherlands, Germany, Italy, France \n
+        United Kingdom, Australia, Switzerland, Spain
+        """)
+
+
 class opencorporates_extract:
     def __init__(self):
         self.url = "https://opencorporates.com/"
