@@ -19,15 +19,65 @@ class information:
         print("""
         함수에 대한 설명은 아래와 같습니다. \n
         라이브러리 내 주요 클래스는 BIZIN입니다. \n
+        아시아 국가의 경우 url이 다르므로 설정해줘야 합니다. \n
         DriverSettings()은 셀레니움 크롬 드라이버 세팅 함수입니다. \n
         area()는 해당 국가의 기업들 정보를 수집하는 함수입니다. \n
         collect()은 BIZIN 사이트에서 데이터를 수집하는 함수입니다. \n
         """)
 
+class country_name:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        name에 넣을 수 있는 국가에 대한 설명은 아래와 같습니다. \n
+        """)
+        {"영국" : "gb",
+        "독일" : "de",
+        "스위스" : "ch",
+        "호주" : "at",
+        "이란" : "ie",
+        "벨기에" : "be",
+        "스페인" : "es",
+        "포르투칼" : "pt",
+        "프랑스" : "fr",
+        "이탈리아" : "it",
+        "덴마크" : "dk",
+        "네덜란드" : "nl",
+        "노르웨이" : "no",
+        "핀란드" : "fi",
+        "스웨덴" : "se",
+        "라트비아" : "lv",
+        "에스토니아" : "ee",
+        "폴란드" : "pl",
+        "벨라루스" : "by",
+        "우크라이나" : "ua",
+        "룩셈부르크" : "lu",
+        "그리스" : "gr",
+        "헝가리" : "hu",
+        "중국" : "china",
+        "인도" : "india",
+        "인도네시아" : "indonesia",
+        "대한민국" : "southkorea",
+        "일본" : "japan",
+        "싱가포르" : "singapore",
+        "말레이시아" : "malaysia",
+        "홍콩" : "hongkong",
+        "태국" : "tahiland",
+        "베트남" : "vietnam",
+        "필리핀" : "philippines",
+        "타이완" : "taiwan",
+        "파키스탄" : "pakistan",
+        "사우디" : "saudiarabia"
+        } 
+        
+
 class BIZIN:
-    def __init__(self, name):
+    def __init__(self, name, asia = False):
         name = input()
         self.url = f"https://{name}.bizin.eu/"
+        if asia: self.url = f"https://{name}.bizin.asia/"
     
     def DriverSettings(self):
         chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]  #크롬드라이버 버전 확인

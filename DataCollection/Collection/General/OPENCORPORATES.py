@@ -77,11 +77,11 @@ class opencorporates_extract:
         """
         self.driver.get(self.accounturl)
         time.sleep(3)
-        EmailAddress = self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div[2]/form/div[2]/div/input")
-        EmailPassword = self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div[2]/form/div[3]/div/input")
+        EmailAddress = self.driver.find_element(By.XPATH, '//*[@id="user_email"]')
+        EmailPassword = self.driver.find_element(By.XPATH, '//*[@id="user_password"]')
         EmailAddress.send_keys(id)
         EmailPassword.send_keys(pw)
-        SIGN = self.driver.find_element(By.XPATH, "/html/body/div[2]/div[3]/div[2]/form/div[5]/div/button")
+        SIGN = self.driver.find_element(By.XPATH, '//*[@id="new_user"]/div[5]/div/button')
         SIGN.send_keys("\n")
     
     def ReCountry(self, CountryName):
@@ -92,20 +92,20 @@ class opencorporates_extract:
         self.driver.get(self.url)
         Countries = Select(self.driver.find_element(By.NAME, "jurisdiction_code"))
         Countries.select_by_visible_text(CountryName)
-        CountriesApply = self.driver.find_element(By.XPATH, "/html/body/header[1]/div/div[2]/div/div[1]/form/div[2]/div[2]/div[3]/button")
+        CountriesApply = self.driver.find_element(By.XPATH, '//*[@id="home-background-circle"]/div/div[2]/div/div[1]/form/div[2]/div[2]/div[3]/button')
         CountriesApply.send_keys("\n")
-        ExcludeInactive = self.driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[1]/div[1]/form/div[3]/div/label/input")
+        ExcludeInactive = self.driver.find_element(By.XPATH, '//*[@id="inactive"]')
         ExcludeInactive.send_keys(" ")
-        # GoSearch = driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[1]/div[1]/form/div[2]/input[2]")
-        ExcludeInactive.send_keys("\n")
+        GoSearch = self.driver.find_element(By.XPATH, '//*[@id="basic_companies_search"]/div[2]/input[2]')
+        GoSearch.send_keys("\n")
     
     def SearchCompanies(self, CountryName):
         """
         회사를 검색하여 url을 추출하는 함수
         CountryName에 국가명을 입력해주세요.
         """
-        TotalCompanies = int(self.driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[1]/h2").text.split()[1].replace(",", ""))
-        for _ in range(2):
+        TotalCompanies = int(self.driver.find_element(By.XPATH, '//*[@id="page_container"]/div[2]/div[1]/h2').text.split()[1].replace(",", ""))
+        for _ in range(TotalCompanies // 30):
             results = self.driver.find_element(By.ID, "results")
             results = results.find_element(By.TAG_NAME, "ul")
             results = results.find_elements(By.TAG_NAME, "li")
@@ -115,9 +115,9 @@ class opencorporates_extract:
                 CompanyUrl = Aclass[1].get_attribute("href")
                 df = pd.DataFrame({"country" : CountryName, "company name" : CompanyName, "url" : CompanyUrl}, index=[0])
                 self.CompaniesInformationUrl = self.CompaniesInformationUrl.append(df, ignore_index=True)
-            NextPage = self.driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[1]/div[2]/div/div[1]/ul/li[8]/a").get_attribute("href")
+            NextPage = self.driver.find_element(By.XPATH, '//*[@id="results"]/div/div[1]/ul/li[8]/a').get_attribute("href")
             self.driver.get(NextPage)
-        self.CompaniesInformationUrl.to_excel("finished_url_opencorporates.xlsx", index = False, engine='xlsxwriter')
+        self.CompaniesInformationUrl.to_excel(f"finished_{CountryName}_url_opencorporates.xlsx", index = False, engine='xlsxwriter')
     
     def GetInformation(self, url, CountryName):
         """
