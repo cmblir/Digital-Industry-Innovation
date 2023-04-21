@@ -124,33 +124,31 @@ class BIZIN:
         for num in range(1, self.areas_lst[self.max_area]//20):
             self.driver.get(f"{self.areas_href[self.max_area]}?p={num}")
             try: org_lst = self.driver.find_element(By.XPATH, "/html/body/div[3]/main/div/div[6]/div[1]")
-            except : org_lst = self.driver.find_element(By.XPATH, "/html/body/div[2]/main/div/div[6]/div[1]")
-            href_lst = []
+            except: org_lst = self.driver.find_element(By.XPATH, "/html/body/div[2]/main/div/div[6]/div[1]")
+            self.href_lst = []
             for href in org_lst.find_elements(By.TAG_NAME, "div"):
-                try:
-                    href_lst.append(href.find_element(By.TAG_NAME, "a").get_attribute("href"))
-                except:
-                    pass
-            href_lst = [i for i in href_lst if "bizin" in i]
-            href_lst = list(set(href_lst))
-            for idx in tqdm(href_lst):
+                try: self.href_lst.append(href.find_element(By.TAG_NAME, "a").get_attribute("href"))
+                except: pass
+            self.href_lst = [i for i in self.href_lst if "bizin" in i]
+            self.href_lst = list(set(self.href_lst))
+            for idx in tqdm(self.href_lst):
                 try:
                     self.driver.get(idx)
                     page = self.driver.page_source
                     soup = BeautifulSoup(page, 'html.parser')
                     if first == 0:
-                        df = pd.read_html(str(soup.find('table')))[0]
-                        columns = df.transpose().iloc[0]
-                        df = df.T
-                        df.columns = columns
-                        df = df.drop(0, axis=0)
+                        self.df = pd.read_html(str(soup.find('table')))[0]
+                        columns = self.df.transpose().iloc[0]
+                        self.df = self.df.T
+                        self.df.columns = columns
+                        self.df = self.df.drop(0, axis=0)
                         first += 1
                     else:
-                        append_df = pd.read_html(str(soup.find('table')))[0]
-                        append_df_columns = append_df.transpose().iloc[0]
-                        append_df = append_df.T
-                        append_df.columns = list(append_df_columns)
-                        append_df = append_df.drop(0, axis=0)
-                        df = df.append(append_df)
-                except NoSuchElementException as C:
+                        self.append_df = pd.read_html(str(soup.find('table')))[0]
+                        self.append_df_columns = self.append_df.transpose().iloc[0]
+                        self.append_df = self.append_df.T
+                        self.append_df.columns = list(self.append_df_columns)
+                        self.append_df = self.append_df.drop(0, axis=0)
+                        self.df = self.df.append(self.append_df)
+                except:
                     print(C)
