@@ -123,8 +123,11 @@ class BIZIN:
         first = 0
         for num in range(1, self.areas_lst[self.max_area]//20):
             self.driver.get(f"{self.areas_href[self.max_area]}?p={num}")
-            try: org_lst = self.driver.find_element(By.XPATH, "/html/body/div[3]/main/div/div[6]/div[1]")
-            except: org_lst = self.driver.find_element(By.XPATH, "/html/body/div[2]/main/div/div[6]/div[1]")
+
+            try: org_lst = self.driver.find_element(By.XPATH, "/html/body/div/main/div/div[6]/div[1]") 
+            except: 
+                try: org_lst = self.driver.find_element(By.XPATH, "/html/body/div[2]/main/div/div[6]/div[1]") 
+                except: org_lst = self.driver.find_element(By.XPATH, "/html/body/div[3]/main/div/div[6]/div[1]")
             self.href_lst = []
             for href in org_lst.find_elements(By.TAG_NAME, "div"):
                 try: self.href_lst.append(href.find_element(By.TAG_NAME, "a").get_attribute("href"))
