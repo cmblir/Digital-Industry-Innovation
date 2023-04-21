@@ -30,10 +30,7 @@ class country_name:
         self.print_information()
 
     def print_information(self):
-        print("""
-        name에 넣을 수 있는 국가에 대한 설명은 아래와 같습니다. \n
-        """)
-        {"영국" : "gb",
+        self.country_name = {"영국" : "gb",
         "독일" : "de",
         "스위스" : "ch",
         "호주" : "at",
@@ -70,12 +67,15 @@ class country_name:
         "타이완" : "taiwan",
         "파키스탄" : "pakistan",
         "사우디" : "saudiarabia"
-        } 
+        }
+        print(f"""
+        name에 넣을 수 있는 국가에 대한 설명은 아래와 같습니다. \n
+        {self.country_name}
+        """)
         
 
 class BIZIN:
     def __init__(self, name, asia = False):
-        name = input()
         self.url = f"https://{name}.bizin.eu/"
         if asia: self.url = f"https://{name}.bizin.asia/"
     
@@ -97,6 +97,7 @@ class BIZIN:
 
 
     def area(self):
+        self.driver.get(self.url)
         self.areas_lst = {}
         self.areas_href = {}
         areas = self.driver.find_element(By.XPATH, '//*[@id="main_categories_dk"]')
