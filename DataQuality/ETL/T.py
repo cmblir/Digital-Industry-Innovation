@@ -8,6 +8,32 @@ import datetime
 warnings.simplefilter(action='ignore', category=FutureWarning)
 pd.set_option('mode.chained_assignment',  None)
 
+class information:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        함수에 대한 설명은 아래와 같습니다. \n
+        라이브러리는 ETL과정중 T(Transform)을 포함하고 있습니다. \n
+        데이터베이스에서 데이터를 확인하는 클래스는 Checker 입니다. \n
+        클래스 지정시 데이터베이스(postgresql)의 id, pw, ip, db, 추출하고자 하는 테이블명을 입력해주세요. \n
+        read_excel() 함수는 xlsx을 불러와 데이터프레임으로 저장합니다. \n
+        read_csv() 함수는 csv를 불러와 데이터프레임으로 저장합니다. \n
+        data_update() 함수는 신규 데이터의 업데이트시 I 또는 U를 입력합니다. \n
+        date_update() 함수는 신규 데이터의 업데이트시 날짜를 입력합니다. \n
+        CheckDate() 함수는 인베스팅 닷컴의 일반 데이터 날짜를 표준화하는 함수 \n
+        CheckLength() 함수는 데이터의 크기를 확인하여 크기만큼 자르는 함수 \n
+        CheckVarchar() 함수는 재무 데이터 크기를 확인하여 클 경우 새로 삽입하는 함수 \n
+        CheckNumeric() 함수는 재무 데이터 숫자를 확인하는 함수 \n
+        ------------------------------------------------------------------ \n
+        데이터베이스에서 데이터를 확인하는 클래스는 Analysis 입니다. \n
+        read_excel() 함수는 xlsx을 불러와 데이터프레임으로 저장합니다. \n
+        read_csv() 함수는 csv를 불러와 데이터프레임으로 저장합니다. \n
+        Fail() 함수는 오류가 난 데이터를 데이터프레임에 넣기 위해 딕셔너리화 시키는 함수 \n
+        CheckDate_Duplicate() 함수는 날짜체크, 중복체크를 확인하는 함수 \n
+        CheckNumber() 함수는 전화번호가 유효한지 확인하는 함수 \n
+        """)
 
 class Checker:
     """
@@ -102,19 +128,6 @@ class Checker:
     
         self.df = None
 
-    def information(self):
-        print("""
-        함수 설명은 아래와 같습니다. \n
-        read_excel : xlsx을 불러와 데이터프레임으로 저장합니다. \n
-        read_csv : csv를 불러와 데이터프레임으로 저장합니다. \n
-        data_update : 신규 데이터의 업데이트시 I 또는 U를 입력합니다. \n
-        date_update : 신규 데이터의 업데이트시 날짜를 입력합니다. \n
-        CheckDate : 인베스팅 닷컴의 일반 데이터 날짜를 표준화하는 함수 \n
-        CheckLength : 데이터의 크기를 확인하여 크기만큼 자르는 함수 \n
-        CheckVarchar : 재무 데이터 크기를 확인하여 클 경우 새로 삽입하는 함수 \n
-        CheckNumeric : 재무 데이터 숫자를 확인하는 함수 \n
-        """)
-
     def fndtn_dt(self):
         """
         데이터 내의 fndtn_dt 값을 YYYYMMDD로 표준화해주는 함수
@@ -170,17 +183,17 @@ class Checker:
                 TimeStamp = test[2] + self.MonthDict[test[0]] + test[1]
             self.df["entrp_reltn_tdngs_dt"][TimeLength] = re.sub(r'[^0-9]','',TimeStamp)
     
-    def CheckLength(self, df):
+    def CheckLength(self):
         '''
         데이터의 크기보다 클 경우 해당 데이터 크기까지 자르는 함수 \n
         재무, 일반 모두 가능
         '''
         for key, value in self.definition.items():
-            for Length in range(len(df["keyval"])):
-                check = str(df[key.lower()][Length])
+            for Length in range(len(self.df["keyval"])):
+                check = str(self.df[key.lower()][Length])
                 
                 if len(check) > value:
-                    df[key.lower()][Length] = str(df[key.lower()][Length])[:value]
+                    self.df[key.lower()][Length] = str(self.df[key.lower()][Length])[:value]
                 else:
                     pass
 
@@ -618,18 +631,8 @@ class Analysis:
         self.CheckDF = pd.DataFrame(columns=["번호", "시스템", "업무구분", "검증구분", "테이블명", "테이블ID", "컬럼명", "컬럼ID",
                                         "pk", "FK", "NN", "데이터타입", "도메인소분류",
                                         "도메인명", "전체건수", "오류건수", "오류율", "점검일시", "오류데이터"])
-        self.DateList = list(self.DefaultColumns[self.DefaultColumns["데이터타입"] == "VARCHAR(8)"]["표준_영문컬럼명"].values)
+        self.DateList = list(self.DefaultTables[self.DefaultTables["데이터타입"] == "VARCHAR(8)"]["표준_영문컬럼명"].values)
         self.CheckDate = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-    def information(self):
-        print("""
-        함수 설명은 아래와 같습니다. \n
-        read_excel : xlsx을 불러와 데이터프레임으로 저장합니다. \n
-        read_csv : csv를 불러와 데이터프레임으로 저장합니다. \n
-        Fail : 오류가 난 데이터를 데이터프레임에 넣기 위해 딕셔너리화 시키는 함수 \n
-        CheckDate_Duplicate : 날짜체크, 중복체크를 확인하는 함수 \n
-        CheckNumber : 전화번호가 유효한지 확인하는 함수 \n
-        """)
 
     def read_excel(self, path):
         """
@@ -736,3 +739,10 @@ class Analysis:
                     Failed = self.df[column][idx]
                     Returned = self.Fail(column, Failed)
                     self.Success = self.CheckDF.append(Returned, ignore_index=True)
+
+    def change_columns(self, df):
+        """
+        표준 한글컬럼명으로 수집된 데이터 영문 컬럼명으로 바꿔주는 함수
+        """
+        df.columns = [self.TableDefaultColumns["표준_영문컬럼명"][self.TableDefaultColumns["표준_한글컬렴명"].index(col)] if col in self.TableDefaultColumns["표준_한글컬렴명"] else col for col in df.columns]
+        return df

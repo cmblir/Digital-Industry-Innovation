@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import time
-import datetime
+from datetime import datetime
 import chromedriver_autoinstaller
 import re
 from bs4 import BeautifulSoup
@@ -550,6 +550,7 @@ class Investing_Cleanse:
         # ending_period를 이용하여 회계연도에 대응하는 Fiscal year 컬럼 생성
         self.data['Fiscal year'] = self.data['ending_period'].apply(lambda x : x.year)
         # ending_period를 이용하여 결산일자에 대응하는 ending_period 컬럼 생성 
+
         self.data['ending_period'] = self.data['ending_period'].apply(lambda x : x.strftime("%Y%m%d"))
         # 비유동자산 추출을 위한 가공
         self.data['Total Assets - Total Current Assets'] = self.data['Total Assets']-self.data['Total Current Assets']
@@ -611,11 +612,11 @@ class Investing_Cleanse:
 
     # 영문국가명을 넣으면 헤브론스타 국가코드를 반환하는 함수
     def hb_nation_code(self, x) : 
-        hebronstar_code = {'Japan':'JPN', 'Hong Kong, China' : 'HKG','Malaysia' : 'MYS','South Korea' : 'KOR',
-                        'Singapore':'SGP','Thailand':'THA','Vietnam':'VNM','Indonesia':'IDN',
-                        'India':'IND','United States':'USA','Spain':'ESP','Switzerland':'CHE',
-                        'Australia':'AUS','United Kingdom':'GBR', 'France':'FRA','Italy':'ITA',
-                        'Germany':'DEU','Netherlands':'NLD','Mexico':'MEX','Colombia':'COL','Canada':'CAN'}         
+        hebronstar_code = {'japan':'JPN', 'hong-kong' : 'HKG','malaysia' : 'MYS','south-korea' : 'KOR',
+                        'singapore':'SGP','thailand':'THA','vietnam':'VNM','indonesia':'IDN',
+                        'india':'IND','united-states':'USA','spain':'ESP','switzerland':'CHE',
+                        'australia':'AUS','united-kingdom':'GBR', 'france':'FRA','italy':'ITA',
+                        'germany':'DEU','netherlands':'NLD','mexico':'MEX','colombia':'COL','canada':'CAN'}         
         try : result = hebronstar_code[x]
         except : 
             print("잘못된 국가 이름을 넣었습니다. 국가이름을 표준화 시켜서 넣으십시오.")

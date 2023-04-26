@@ -5,6 +5,28 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from tqdm import tqdm
 
+class information:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        함수에 대한 설명은 아래와 같습니다. \n
+        라이브러리는 ETL과정중 E(Extract)와 L(Load)을 포함하고 있습니다. \n
+        데이터베이스에서 데이터를 추출하는 클래스는 DataExtract 입니다. \n
+        클래스 지정시 데이터베이스(postgresql)의 id, pw, ip, db, 추출하고자 하는 테이블명을 입력해주세요. \n
+        connect() 함수는 데이터베이스에 접속하는 함수입니다. \n
+        extract() 함수는 데이터베이스에서 데이터를 추출하는 함수입니다. \n
+        --------------------------------------------------- \n
+        데이터베이스에 데이터를 적재하는 클래스는 DataLoad입니다. \n
+        DataLoading() 함수는 데이터를 일괄로 불러오는 함수 \n
+        CheckLength() 함수는 데이터내의 값의 최대 길이까지 제한을 두는 함수 \n
+        Load() 함수는 데이터를 배치프로세스를 진행하여 적재하는 함수 \n
+        Login() 함수는 데이터베이스에 로그인하는 함수 \n
+        Connect_DB() 함수는 데이터베이스에 적재하기 위해 기본값을 설정하는 함수 \n
+        """)
+
+
 class DataExtract:
     """
     데이터베이스에서 데이터를 추출하는 모듈
@@ -44,6 +66,48 @@ class DataLoad:
         """
         다수의 파일을 적재할 시 many = True로 설정해주세요.
         """
+        self.country = {"australia" : "aus",
+                        "canada" : "can",
+                        "switzerlands" : "che",
+                        "colombia" : "col",
+                        "germany" : "deu",
+                        "spain" : "esp",
+                        "france" : "fra",
+                        "united-kingdom" : "gbr",
+                        "hong-kong" : "hkg",
+                        "indonesia" : "idn",
+                        "india" : "ind",
+                        "italy" : "ita",
+                        "japan" : "jpn",
+                        "south-korea" : "kor",
+                        "malaysia" : "mys",
+                        "mexico" : "mex",
+                        "netherlands" : "nld",
+                        "singapore" : "sgp",
+                        "thailand" : "tha",
+                        "united-states" : "usa",
+                        "vietnam" : "vnm",
+                        "호주" : "aus",
+                        "캐나다" : "can",
+                        "스위스" : "che",
+                        "콜롬비아" : "col",
+                        "독일" : "deu",
+                        "스페인" : "esp",
+                        "프랑스" : "fra",
+                        "영국" : "gbr",
+                        "홍콩" : "hkg",
+                        "인도네시아" : "idn",
+                        "인도" : "ind",
+                        "이탈리아" : "ita",
+                        "일본" : "jpn",
+                        "대한민국" : "kor",
+                        "말레이시아" : "mys",
+                        "멕시코" : "mex",
+                        "네덜란드" : "nld",
+                        "싱가포르" : "sgp",
+                        "태국" : "tha",
+                        "미국" : "usa",
+                        "베트남" : "vnm"}
         self.dtypesql_finan = {
         'keyval' : sqlalchemy.types.NUMERIC(),
         'stock_mrkt_cd' : sqlalchemy.types.VARCHAR(6),
@@ -281,6 +345,28 @@ class DataLoad:
         'data_crtin_dt' : 8,
         'cntct_prces_stts_cd' : 1,
         'cntct_prces_dt' : 8}
+        self.empty_data = {
+                        "aus" : ["Australian Securities Exchange", "ASX"],
+                        "can" : ["Toronto Stock Exchange", "TSX"],
+                        "che" : ["SIX Swiss Exchange", "SIX"],
+                        "col" : ["Bolsa de Valores de Colombia", "BVC"],
+                        "deu" : ["Frankfurt Stock Exchange", "FSE"],
+                        "esp" : ["Bolsa de Madrid", "BM"],
+                        "fra" : ["Euronext Paris", "EP"],
+                        "gbr" : ["London Stock Exchange", "LSE"],
+                        "hkg" : ["Hong Kong Stock Exchange", "HKEX"],
+                        "idn" : ["Indonesia Stock Exchange", "IDX"],
+                        "ind" : ["National Stock Exchange", "NSE"],
+                        "ita" : ["Borsa Italiana", "BI"],
+                        "jpn" : ["Tokyo Stock Exchange", "TSE"],
+                        "kor" : ["Korea Exchange", "KRX"],
+                        "mys" : ["Kuala Lumpur Stock Exchange", "KLSE"],
+                        "mex" : ["Bolsa Mexicana de Valores", "BMV"],
+                        "nld" : ["Euronext Amsterdam", "BA"],
+                        "sgp" : ["Singapore Stock Exchange", "SGX"],
+                        "tha" : ["Stock Exchange of Thailand", "SET"],
+                        "usa" : ["New York Stock Exchange", "NYSE"],
+                        "vnm" : ["Ho Chi Minh City Stock Exchange", "HSX"]}
         self.many = many
         self.url = None
         self.df = None
@@ -371,7 +457,7 @@ class DataLoad:
         이는 일괄 처리라고도 하는 과정으로서 실시간으로 요청에 의해 처리되는 \n
         방식이 아닌 일괄적으로 대량의 데이터를 처리해준다.
         """
-        engine = create_engine(self.url, executemany_mode = "batch")
+        engine = create_engine(self.url)
         if self.many == False:
             if self.table_name.split("_")[-1] == "m":
                 dtypesql = self.dtypesql_info
@@ -447,3 +533,17 @@ class DataLoad:
                     for Length in tqdm(range(len(self.DataFrameList[length]))):
                         self.DataFrameList[length]["keyval"][Length] = int(Length)
                     self.DataFrameList[length]["keyval"] = self.DataFrameList[length]["keyval"].astype(int)
+        
+    def fill_data(self):
+        for key, value in self.empty_data.items():
+            for df_name, df in zip(self.table_nameList, self.DataFrameList):
+                if key in df_name:
+                    df["stock_mrkt_cd"] = df["stock_mrkt_cd"].fillna(value[1])
+                    df["acplc_lngg_stock_mrkt_nm"] = df["acplc_lngg_stock_mrkt_nm"].fillna(value[0])
+                    df["engls_stock_mrkt_nm"] = df["engls_stock_mrkt_nm"].fillna(value[0])
+                    df["hb_ntn_cd"] = df["hb_ntn_cd"].fillna(str(df_name.split("_")[2]).upper())
+
+    def change_name(self, df_name):
+        for key, value in self.country.items():
+            if key in df_name: df_name = f"tb_hb_{value}_plcfi_d.xlsx"
+        return df_name

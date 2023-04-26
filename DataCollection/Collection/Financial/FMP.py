@@ -57,10 +57,11 @@ class fmp_extract:
                 'bsn_prft_incre_rt_val','thtrm_ntpf_incre_rt_val','entrp_yrmn_grrt_val','entrp_reltn_tdngs_dt','entrp_reltn_tdngs_kind_cont','entrp_reltn_tdngs_subjc','entrp_reltn_tdngs_cont_smmr','entrp_reltn_tdngs_dtl_cont','info_orgin_cont',
                 'entrp_reltn_tdngs_url','cmp_insd_reltn_info','cstmr_reltn_info','sppl_reltn_info','cmptt_reltn_info','sbst_goods_reltn_info','opert_sctin_cd','data_crtin_dt','cntct_prces_stts_cd','cntct_prces_dt'],
                 "Financial Modeling API":
-                ['exchangeShortName','exchange','exchange','헤브론스타국가코드','symbol','companyName','companyName','','taxIdentificationNumber','','ipoDate','industry','industry','reportedCurrency','calendarYear',
-                'period','date','totalCurrentAssets','totalNonCurrentAssets','cashAndCashEquivalents','','','','','propertyPlantEquipmentNet','otherAssets','totalAssets','totalCurrentLiabilities','totalNonCurrentLiabilities','',
-                '','otherLiabilities','totalLiabilities','','','','accumulatedOtherComprehensiveIncomeLoss','retainedEarnings','totalEquity','totalLiabilitiesAndTotalEquity','revenue','costOfRevenue','operatingExpenses','operatingIncome','',
-                'incomeBeforeTax','','incomeTaxExpense','','','','netIncome_x','netCashProvidedByOperatingActivities','netCashUsedForInvestingActivites','netCashUsedProvidedByFinancingActivities','netChangeInCash','cashAtBeginningOfPeriod','cashAtEndOfPeriod','','','','','','','','','','','','','','','','','','','','','','','']}
+                ["","exchangeShortName","exchange","exchange","헤브론스타국가코드","symbol","companyName","companyName","","taxIdentificationNumber",
+                "","ipoDate","industry","industry","reportedCurrency","calendarYear","period","date","totalCurrentAssets","totalNonCurrentAssets","cashAndCashEquivalents","","","","","propertyPlantEquipmentNet","otherAssets","totalAssets","totalCurrentLiabilities",
+                "totalNonCurrentLiabilities","","","otherLiabilities","totalLiabilities","","","","accumulatedOtherComprehensiveIncomeLoss","retainedEarnings","totalEquity","totalLiabilitiesAndTotalEquity","revenue","costOfRevenue","operatingExpenses","operatingIncome",
+                "","incomeBeforeTax","","incomeTaxExpense","","","","netIncome_x","netCashProvidedByOperatingActivities","netCashUsedForInvestingActivites","netCashUsedProvidedByFinancingActivities","netChangeInCash","cashAtBeginningOfPeriod","cashAtEndOfPeriod",
+                "","","","","","","","","","","","","","","","","","","","","",""]}
 
 
     def get_jsonparsed_data(self, url):
@@ -180,8 +181,8 @@ class fmp_extract:
         processed['reprt_kind_cd'] = processed['reprt_kind_cd'].apply(lambda x : self.report_type_extract(x))
         
         # 엑셀로 저장
-        processed.to_excel(f"finished_{filename}.xlsx", index = False)
-        print(f"finished_{filename}이 완료되었습니다.")
+        processed.to_excel(filename, index = False)
+        print(f"{filename}이 완료되었습니다.")
         
         # 판다스로 리턴
         return processed

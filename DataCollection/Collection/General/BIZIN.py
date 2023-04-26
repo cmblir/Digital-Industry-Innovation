@@ -126,7 +126,9 @@ class BIZIN:
             try: org_lst = self.driver.find_element(By.XPATH, "/html/body/div/main/div/div[6]/div[1]") 
             except: 
                 try: org_lst = self.driver.find_element(By.XPATH, "/html/body/div[2]/main/div/div[6]/div[1]") 
-                except: org_lst = self.driver.find_element(By.XPATH, "/html/body/div[3]/main/div/div[6]/div[1]")
+                except: 
+                    try: org_lst = self.driver.find_element(By.XPATH, "/html/body/div[3]/main/div/div[6]/div[1]")
+                    except: continue
             self.href_lst = {}
             for href in org_lst.find_elements(By.TAG_NAME, "div"):
                 try:
