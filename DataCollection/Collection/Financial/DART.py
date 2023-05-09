@@ -22,7 +22,7 @@ class information:
 class dart_extract:
     def __init__(self, Path):
         """
-        data에 http://data.krx.co.kr/contents/MDC/MDI/mdiLoader 에서 \n
+        data에 http://data.krx.co.kr/contents/MDC/MDI/mdiLoader 에서 전종목을 다운받으세요. \n
         다운받은 데이터 파일 경로를 입력하세요.
         """
         self.Columns = [

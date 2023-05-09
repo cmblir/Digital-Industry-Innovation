@@ -419,6 +419,7 @@ class DataLoad:
     def CheckLength(self):
         '''
         데이터의 크기보다 클 경우 해당 데이터 크기까지 자르는 함수
+        한국 재무 안됨
         '''
         if self.many == False:
             if self.table_name.split("_")[-1] == "m":

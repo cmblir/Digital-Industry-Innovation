@@ -101,17 +101,17 @@ sqlalchemy==2.0.4
           print(information)
           
           """
-          함수에 대한 설명은 아래와 같습니다. 
-          라이브러리 내 주요 클래스는 fmp_extact입니다. 
-          get_jsonparsed_data()는 데이터를 파싱하는 함수입니다. 
-          extractor()은 데이터를 json형태로 가지고 오는 함수입니다. 
-          url_generator()은 FMP 사이트에 접속하여 데이터를 분리하는 함수입니다. 
-          ending_period_extact()는 날짜를 표준화하는 함수입니다. 
-          report_type_extract()는 들어오는 값에 따라 연간인지 분기인지 구분하는 함수입니다. 
-          GetExcel()은 추출한 데이터를 저장하는 함수입니다. 
-          cleanse()는 데이터를 가공하는 함수입니다. 
-          get_symbols()는 데이터를 사이트로부터 가져오는 함수입니다. 
-          make_clean()은 위의 함수들을 순차적으로 실행하여 데이터를 추출 후 저장하는 함수입니다.
+          The function is described below.
+          The main class in the library is fmp_extact.
+          get_jsonparsed_data() is a function that parses data.
+          Extractor() is a function that imports data in json form.
+          url_generator() is a function of accessing the FMP site and isolating the data.
+          ending_period_extact() is a function that standardizes dates.
+          report_type_extract() is a function that distinguishes between annual and quarterly based on incoming values.
+          GetExcel() is a function that stores the extracted data.
+          cleanse() is a function that processes data.
+          get_symbols() is a function that imports data from the site.
+          Make_clean() is a function that executes the above functions sequentially to extract and store data.
           """
           </code>
           </pre>
@@ -143,11 +143,11 @@ sqlalchemy==2.0.4
           print(information)
           
           """
-          함수에 대한 설명은 아래와 같습니다. 
-          라이브러리 내 주요 클래스는 dart_extract입니다. 
-          api_key()는 api key를 알려주는 함수입니다. 
-          extract_finstate()은 데이터를 추출하는 함수입니다. 
-          load_finstate()은 데이터를 저장하는 함수입니다.
+          The function is described below.
+          The main class in the library is dart_extract.
+          api_key() is a function that tells the api key.
+          Extract_finstate() is a function that extracts data.
+          load_finstate() is a function that stores data.
           """
           </code>
           </pre>
@@ -198,11 +198,11 @@ sqlalchemy==2.0.4
           information = idx.information()
           print(information)
           """
-          함수에 대한 설명은 아래와 같습니다. 
-          라이브러리 내 주요 클래스는 idx_extact입니다. 
-          make_Avaible()는 데이터프레임을 사용할 수 있게하는 함수입니다. 
-          Add_On()은 데이터를 만드는 함수입니다. 
-          transform()은 데이터를 가공하는 함수입니다.
+          The function is described below.
+          The main class in the library is idx_extact.
+          make_Available() is a function that enables data frames.
+          Add_On() is a function that creates data.
+          Transform() is a function that processes data.
           """
           </code>
           </pre>
@@ -220,14 +220,14 @@ sqlalchemy==2.0.4
           information = opencorporates.information()
           print(information)
           """
-          함수에 대한 설명은 아래와 같습니다. 
-          라이브러리 내 주요 클래스는 opencorporates_extract입니다. 
-          DriverSettings()는 드라이버 세팅을 하는 함수입니다. 
-          Login()은 opencorporates에 로그인하는 함수입니다. 
-          ReCounty()는 국가를 선택하는 함수입니다. 
-          SearchCompanies()는 기업을 찾는 함수입니다. 
-          GetInformation()은 데이터를 추출하는 함수입니다. 
-          GetExcel()은 추출한 데이터를 저장하는 함수입니다. 
+          The function is described below.
+          The main class in the library is opencorporates_extract.
+          DriverSettings() is a function that sets the driver.
+          Login() is a function to log in to the opensporates.
+          ReCounty() is a function that selects a country.
+          SearchCompanies() is a function that finds a company.
+          GetInformation() is a function that extracts data.
+          GetExcel() is a function that stores the extracted data.
           """
           </code>
           </pre>
@@ -256,30 +256,10 @@ sqlalchemy==2.0.4
           information = datos.information()
           print(information)
           """
-          함수에 대한 설명은 아래와 같습니다. 
-          라이브러리 내 주요 클래스는 datos_extact입니다. 
-          make()는 데이터를 가공하는 함수입니다. 
-          load()은 데이터를 저장하는 함수입니다.
-          """
-          </code>
-          </pre>
-          * you can use collecting opencorporates general information data
-          * Example code
-
-     * ESERCIZI (Indonesia Only)
-          * importing library
-          * ```from DataColletion.Collection.General import ESERCIZI``` 
-          * you can get library infromation
-          <pre>
-          <code>
-          esercizi = ESERSIZI
-          information = esercizi.information()
-          print(information)
-          """
-          함수에 대한 설명은 아래와 같습니다. 
-          라이브러리 내 주요 클래스는 datos_extact입니다. 
-          make()는 데이터를 가공하는 함수입니다. 
-          load()은 데이터를 저장하는 함수입니다.
+          The function is described below.
+          The main class in the library is datos_extact.
+          Make() is a function that processes data.
+          load() is a function that stores data.
           """
           </code>
           </pre>
@@ -296,11 +276,11 @@ sqlalchemy==2.0.4
           information = kemenperin.information()
           print(information)
           """
-          함수에 대한 설명은 아래와 같습니다.
-          라이브러리 내 주요 클래스는 datos_extact입니다. 
-          DriverSettings()는 크롬 드라이버를 실행하는 함수입니다. 
-          get_data()는 데이터를 추출하여 가공하는 함수입니다. 
-          load()은 데이터를 저장하는 함수입니다.
+          The function is described below.
+          The main class in the library is datos_extact.
+          DriverSettings() is a function that runs the Chrome driver.
+          get_data() is a function that extracts and processes data.
+          load() is a function that stores data.
           """
           </code>
           </pre>

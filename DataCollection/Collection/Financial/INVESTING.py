@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import time
-from datetime import datetime
+import datetime
 import chromedriver_autoinstaller
 import re
 from bs4 import BeautifulSoup
@@ -118,7 +118,7 @@ class Investing_Crawler:
             a.click()
         self.driver.get(url)
 
-    def collect(self, country, official_countryName ,save_dir, isSingapore=False) : 
+    def collect(self, country, official_countryName ,save_dir, isSingapore=False, download_history=False) : 
         # 멕시코 주식시장 정보 페이지 접속
         first_url = f'https://au.investing.com/equities/{country.lower()}'    #맨 뒤에 'mexico'를 바꾸면 다른 국가에서도 재활용 할 수 있음
         self.driver.get(first_url)
@@ -189,9 +189,8 @@ class Investing_Crawler:
             self.company_links.append(company_link)
 
         # Version 3
-
-        self.download_historial(all_atag_maintable, first_url)
-
+        if download_history == True: self.download_historial(all_atag_maintable, first_url)
+        else: pass
         wait_time = 3 # time.sleep의 변수 
 
 
