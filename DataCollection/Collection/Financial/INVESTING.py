@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import time
-from datetime import datetime
+import datetime
 import chromedriver_autoinstaller
 import re
 from bs4 import BeautifulSoup
@@ -20,22 +20,31 @@ class information:
 
     def print_information(self):
         print("""
-        라이브러리는 2개로 나누어집니다. \n
-        데이터를 수집하는 라이브러리인 Investing_Crawler, 데이터를 가공하는 라이브러리인 Investing_Cleanse \n
-        ------------------------------------------------------------------------------------------\n
-        Investing_Crawler의 함수는 아래와 같습니다. \n
-        DriverSettings()은 셀레니움 크롬 드라이버 세팅 함수입니다. \n
-        download_historial()은 과거 주종가 데이터를 수집하는 함수입니다. \n
-        collect()은 인베스팅 닷컴에서 데이터를 수집하는 함수입니다. \n
-        ------------------------------------------------------------------------------------------\n
-        Investing_Cleanse는 클래스를 실행시키면 바로 진행이 됩니다. \n
+        The library is divided into two parts. \n
+        Investing_Crawler, a library that collects data, Investing_Cleanse, a library that processes data \n
+        -------------------------------------------------- ----------------------------------------\n
+        The function of Investing_Crawler is shown below. \n
+        DriverSettings() is a Selenium Chrome driver settings function. \n
+        download_historial() is a function that collects past stock price data. \n
+        collect() is a function that collects data from investing.com. \n
+        -------------------------------------------------- ----------------------------------------\n
+        Investing_Cleanse will proceed as soon as you run the class. \n
+        """)
+
+    def country(self):
+        print("""
+        japan, hong-kong, malaysia, south-korea
+        singapore, thailand, vietnam, indonesia
+        india ,united-states, spain, switzerland
+        australia, united-kingdom, france, italy
+        germany, netherlands, mexico, colombia, canada
         """)
 
 class Investing_Crawler:
 
     def __init__(self, path):
         """
-        path에 인베스팅 컬럼 엑셀을 넣어주세요.
+        Please insert the investing column Excel in the path.
         """
         self.base_url = 'https://au.investing.com'
         self.PROFILE_suffix = '-company-profile'
@@ -43,45 +52,44 @@ class Investing_Crawler:
         self.BS_suffix = '-balance-sheet'
         self.CF_suffix = '-cash-flow'
         self.column_listup = pd.read_excel(path)
-        # 인베스팅 닷컴의 계정과목 리스트들. 일반 기업, 은행, 보험업의 계정과목이 달랐다. 
+        # Investing.com account list. Accounting subjects for general corporations, banks, and insurance businesses were different.
         self.all_bs_cols = pd.concat([self.column_listup['BS'],self.column_listup['BANK BS'], self.column_listup['INSURANCE BS']]).dropna()
         self.all_is_cols = pd.concat([self.column_listup['IS'],self.column_listup['BANK IS'], self.column_listup['INSURANCE IS']]).dropna()
         self.all_cf_cols = pd.concat([self.column_listup['CF'],self.column_listup['BANK CF'], self.column_listup['INSURANCE CF']]).dropna()
         self.all_cols = pd.concat([self.column_listup['BS'],self.column_listup['BANK BS'], self.column_listup['INSURANCE BS'],self.column_listup['IS'],self.column_listup['BANK IS'], self.column_listup['INSURANCE IS'],
                             self.column_listup['CF'],self.column_listup['BANK CF'],self.column_listup['INSURANCE CF']]).dropna()
 
-        # 일반기업, 은행, 보험업의 계정과목들중 겹치는 부분은 제거하여 중복없는 합집합을 사용한다. 
-        # drop_duplicates는 중복되는 것들중 하나만 제거, 
+        # Remove the overlapping parts among the account subjects of general corporations, banks, and insurance businesses to use the union without duplicates. 
+        # drop_duplicates removes only one of the duplicates
         self.all_cols = self.all_cols.drop_duplicates()
         self.company_links = []
 
     def DriverSettings(self, Turn_off_warning = False, linux_mode = False) -> None:
         """
-        드라이버 세팅을 하는 함수입니다.
-        linux mode를 True로 지정할 경우 백그라운드에서 수집이 가능합니다.
-        단, 클릭과 같은 액션은 취하지 못합니다.
+        This function sets the driver.
+        If linux mode is set to True, collection is possible in the background.
+        However, actions such as clicks cannot be taken.
         """
         if Turn_off_warning == True: self.TurnOffWarning()
-        chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]  #크롬드라이버 버전 확인
+        chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]  # Check chromedriver version
         chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument("--incognito") # 시크릿 모드
-        if linux_mode == True: chrome_options.add_argument("--headless") # 리눅스 GUI 없는 디스플레이 모드
-        chrome_options.add_argument("--no-sandbox") # 리소스에 대한 엑서스 방지
-        chrome_options.add_argument("--disable-setuid-sandbox") # 크롬 충돌 방지
-        chrome_options.add_argument("--disable-dev-shm-usage") # 메모리 부족 에러 방지
+        chrome_options.add_argument("--incognito") # incognito mode
+        if linux_mode == True: chrome_options.add_argument("--headless") # Display mode without Linux GUI
+        chrome_options.add_argument("--no-sandbox") # Prevent access to resources
+        chrome_options.add_argument("--disable-setuid-sandbox") # Prevent chrome crashes
+        chrome_options.add_argument("--disable-dev-shm-usage") # Prevent out of memory errors
         chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        try: # 크롬 드라이버
+        try: # Chrome Driver
             self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)   
         except:
             chromedriver_autoinstaller.install(True)
             self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-        # WebDruverException Error 방지 기존의 드라이버 버젼으로 지정
-        # driver = webdriver.Chrome(executable_path='/Users/cmblir/Python/Musinsa-Analysis/100/chromedriver')
+        # Prevent WebDruverException Error Designate as an existing driver version
 
     def download_historial(self, all_atag_maintable, url):
         company_links = []
         for a in all_atag_maintable:
-            company_link = a.attrs["href"] #find로 한번더 돌려준다.
+            company_link = a.attrs["href"]
             company_links.append(company_link)
         company_table_css = self.driver.find_element(By.CSS_SELECTOR, 'div[data-test="dynamic-table"]')
         company_table_html = company_table_css.get_attribute('outerHTML')
@@ -112,19 +120,18 @@ class Investing_Crawler:
                 input_element.clear()
                 input_element.send_keys("20180101")
             month_button = historical_data.find_element(By.TAG_NAME, 'button')
-            month_button.send_keys("\n")
+            month_button.send_keys("\n") 
             time.sleep(3)
             a = historical_data.find_element(By.TAG_NAME, 'a')
             a.click()
         self.driver.get(url)
 
-    def collect(self, country, official_countryName ,save_dir, isSingapore=False) : 
-        # 멕시코 주식시장 정보 페이지 접속
-        first_url = f'https://au.investing.com/equities/{country.lower()}'    #맨 뒤에 'mexico'를 바꾸면 다른 국가에서도 재활용 할 수 있음
+    def collect(self, country, official_countryName ,save_dir, isSingapore=False, download_history=False) : 
+        first_url = f'https://au.investing.com/equities/{country.lower()}'
         self.driver.get(first_url)
         time.sleep(8)
         breakpoint()
-        #페이지에 표시되는 주식을 'all stocks'로 바꿈 
+        # Replace the stocks displayed on the page with 'all stocks'
         try : 
             if isSingapore == False : 
                 select_box = self.driver.find_element(By.XPATH,'//*[@id="index-select"]/div[1]').click()
@@ -133,14 +140,13 @@ class Investing_Crawler:
                 pass
             time.sleep(5)
 
-        # Avoid error. 만약 광고 팝업창으로 인해 에러가 발생할 경우 except로 에러 회피
+        # Avoid errors. If an error occurs due to an advertisement pop-up window, use except to avoid the error
         except : 
-            # 광고 팝업창 닫기 
+            # Close ad pop-up window 
             self.driver.find_element(By.XPATH, '//*[@id="PromoteSignUpPopUp"]/div[2]/i').click()
-            # try와 동일
 
-            # 싱가포르는 all stock을 선택하는 탭이 없다. 따라서 all stocks 버튼을 클릭하는 부분을 
-            # 건너 뛰고 넘어간다. 
+            # Singapore does not have a tab to select all stock. So, the part where you click the all stocks button
+            # skip over
             if isSingapore == False : 
                 select_box = self.driver.find_element(By.XPATH,'//*[@id="stocksFilter"]').click()
                 select_all_stock = self.driver.find_element(By.XPATH,'//*[@id="all"]').click()
@@ -148,8 +154,8 @@ class Investing_Crawler:
                 pass
             time.sleep(5)
 
-        # 인베스팅 닷컴은 동적페이지이다. 
-        # BeautifulSoup을 사용할수 있도록 스크롤을 한번 끝까지 내렸다 올린다.
+        # Investing.com is a dynamic page.
+        # Scroll all the way down once to use BeautifulSoup.
         SCROLL_PAUSE_SEC = 3
 
         last_height = self.driver.execute_script("return document.body.scrollHeight")
@@ -161,13 +167,13 @@ class Investing_Crawler:
                 action.move_to_element(some_tag).perform()
                 some_tag.click()
             except NoSuchElementException: break
-            # 끝까지 스크롤 다운
+            # scroll down to the end
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
-            # SCROLL_PAUSE_SEC만큼 대기
+            # Wait for SCROLL_PAUSE_SEC
             time.sleep(SCROLL_PAUSE_SEC)
             
-            # 스크롤 다운 후 스크롤 높이 다시 가져옴
+            # Get scroll height back after scrolling down
             new_height = self.driver.execute_script("return document.body.scrollHeight")
             if new_height == last_height:
                 break
@@ -176,32 +182,31 @@ class Investing_Crawler:
         time.sleep(20)
         soup = BeautifulSoup(self.driver.page_source,"html.parser")
 
-        # 주식 테이블을 가지고 온다. 
+        # Get the stock table.
         maintable = soup.find('div', {'data-test': 'dynamic-table'})
 
-        # 메인 주식 테이블에서 회사 페이지로
+        # From main stock table to company page
         all_atag_maintable = maintable.find_all('a')
 
-        # soup의 find 메서드를 이용해서 갖고 오게 되면, 링크 뿐 아니라 다른 정보들도 같이 갖고 오게 됩니다. 
-        # 따라서 아래 for문으로 순수한 href 링크만을 추출하여, company_links에 저장합니다. 
+        # If you use soup's find method to get it, not only the link but also other information will be brought back.
+        # Therefore, only pure href links are extracted with the for statement below and stored in company_links.
         for a in all_atag_maintable:
-            company_link = a.attrs["href"] #find로 한번더 돌려준다.
+            company_link = a.attrs["href"]
             self.company_links.append(company_link)
 
         # Version 3
+        if download_history == True: self.download_historial(all_atag_maintable, first_url)
+        else: pass
+        wait_time = 3 
 
-        self.download_historial(all_atag_maintable, first_url)
 
-        wait_time = 3 # time.sleep의 변수 
-
-
-        # 일반기업, 은행, 보험업의 계정과목들중 겹치는 부분은 제거하여 중복없는 합집합을 사용한다. 
-        # drop_duplicates는 중복되는 것들중 하나만 제거, 그리고 리스트화 
+        # Remove the overlapping parts among the account subjects of general corporations, banks, and insurance businesses to use the union without duplicates.
+        # drop_duplicates removes only one of the duplicates, then lists
         all_cols = list(self.all_cols.drop_duplicates())
         all_cols = all_cols+['is_unit','bs_unit','cf_unit','is_time','bs_time','cf_time','report_type','company_name','industry_info','sector_info',
                             'address_info','phone_info','fax_info','webpage_info','source','gathering_time','PIC']
 
-        # all_cols에 기업 이름, 일반정보 등을 추가한다. 
+        # Add company name and general information to all_cols.
 
         self.result_df = pd.DataFrame()
         crawling_failed_companies = []
@@ -213,7 +218,7 @@ class Investing_Crawler:
             cf_url = self.base_url+company+self.CF_suffix
 
             try : 
-                # company_link를 보면 'cid='라 주소 맨 끝에 붙어져 있는, 링크가 특이한 기업들이 있다. 이런 기업들은 다루 처리를 해주어야 한다. 
+                # If you look at company_link, there are companies with unusual links that have 'cid=' attached to the end of the address. These companies need to be dealt with.
                 if company.__contains__('cid=') : 
                     index = company.find('?')
                     profile_url =  self.base_url+company[:index]+self.PROFILE_suffix+company[index:]
@@ -221,12 +226,12 @@ class Investing_Crawler:
                     is_url = self.base_url+company[:index] +self.IS_suffix+company[index:]
                     cf_url = self.base_url+company[:index] +self.CF_suffix+company[index:]
 
-                ############## 기업 일반정보   #########
-                #company profile page
+                ############## Company General Information #########
+                # company profile page
                 self.driver.get(profile_url)
                 time.sleep(1)
 
-                #  description : 기업 설명
+                # description
                 soup = BeautifulSoup(self.driver.page_source, "html.parser")
                 desciption_info = soup.find('div', attrs = {'class' : 'companyProfileBody'}).text
                 desciption_info = desciption_info.replace('\n','')
@@ -243,7 +248,7 @@ class Investing_Crawler:
                 fax_info = soup.find('div', attrs = {'class' : 'companyFax'}).text
                 webpage_info = soup.find('div', attrs = {'class' : 'companyWeb'}).text
 
-                # 특수문자 제거 
+                # remove special characters
                 phone_info = phone_info.replace('\n','')
                 phone_info = phone_info.replace('Phone','')
                 fax_info = fax_info.replace('\n','')
@@ -251,8 +256,8 @@ class Investing_Crawler:
                 webpage_info = webpage_info.replace('\n','')
                 webpage_info = webpage_info.replace('Web','')
 
-                ############## 기업 재무정보   #########    
-                # 분기별 Income Statement 
+                ############## Corporate financial information #########
+                # Quarterly Income Statement
                 self.driver.get(is_url)
                 time.sleep(wait_time)
 
@@ -262,23 +267,23 @@ class Investing_Crawler:
                         break
 
                 df_income_Q = pd.read_html(self.driver.page_source)[table_num].dropna()
-                df_is_unit = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[10]').text             # 통화 단위(Unit)
-                company_name = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[1]/h1').text             # 회사이름 추출
+                df_is_unit = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[10]').text            # Currency unit (Unit)
+                company_name = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[1]/h1').text             # extract company name
 
                 # income statement dataframe preprocess
                 df_income_Q = df_income_Q.T
-                df_income_Q = df_income_Q.rename(columns = df_income_Q.iloc[0])         # 계정과목을 column 이름으로 설정
-                df_income_Q = df_income_Q.iloc[1:, :]                                 # 0번째 row를 삭제하고 나머지만 남긴다.
+                df_income_Q = df_income_Q.rename(columns = df_income_Q.iloc[0])        # set account subject as column name
+                df_income_Q = df_income_Q.iloc[1:, :]                                # Delete row 0 and leave only the rest.
 
-                df_income_Q['is_unit'] = df_is_unit                 # 데이터프레임에 income statement 통화단위 삽입
-                df_income_Q['is_time']= df_income_Q.index                  # 데이터프레임에 '시간' 추가
-                df_income_Q['report_type'] = 'Quarter'                         # 데이터프레임에 분기보고서임을 표시 
-                df_income_Q['company_name'] = company_name                     # 데이터프레임에 회사 이름 삽입
+                df_income_Q['is_unit'] = df_is_unit                 # insert income statement currency into dataframe
+                df_income_Q['is_time']= df_income_Q.index                  # Add 'time' to the dataframe
+                df_income_Q['report_type'] = 'Quarter'                         # Mark the data frame as a quarterly report
+                df_income_Q['company_name'] = company_name                     # insert company name into dataframe
                 df_income_Q=df_income_Q.reset_index(drop=True) 
 
-                # 연간 Income Statement. 
+                # yearly Income Statement. 
                 try : 
-                    self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[8]/div[1]/a[1]').click() # Annual 버튼 클릭
+                    self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[8]/div[1]/a[1]').click()
                     time.sleep(2)
                 except : 
                     self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[9]/div[1]/a[1]').click()
@@ -293,13 +298,13 @@ class Investing_Crawler:
 
                 # income statement dataframe preprocess
                 df_income_A = df_income_A.T
-                df_income_A = df_income_A.rename(columns = df_income_A.iloc[0])         # 계정과목을 column 이름으로 설정
-                df_income_A = df_income_A.iloc[1:, :]                                 # 0번째 row를 삭제하고 나머지만 남긴다.
+                df_income_A = df_income_A.rename(columns = df_income_A.iloc[0])        # set account subject as column name
+                df_income_A = df_income_A.iloc[1:, :]                                # Delete row 0 and leave only the rest.
 
-                df_income_A['is_unit'] = df_is_unit                 # 데이터프레임에 income statement 통화단위 삽입
-                df_income_A['is_time']= df_income_A.index                  # 데이터프레임에 '시간' 추가
-                df_income_A['report_type'] = 'Annual'                          # 데이터프레임에 분기보고서임을 표시 
-                df_income_A['company_name'] = company_name                     # 데이터 프레임에 회사 이름 삽입
+                df_income_A['is_unit'] = df_is_unit                 # insert income statement currency into dataframe
+                df_income_A['is_time']= df_income_A.index                  # Add 'time' to the dataframe
+                df_income_A['report_type'] = 'Annual'                          # Mark the data frame as a quarterly report
+                df_income_A['company_name'] = company_name                     # insert company name into data frame
                 df_income_A=df_income_A.reset_index(drop=True) 
 
 
@@ -312,27 +317,27 @@ class Investing_Crawler:
                         table_num = order
 
 
-                # 분기별 balance sheet
+                # quarterly balance sheet
                 df_balance_Q = pd.read_html(self.driver.page_source)[table_num].dropna()
-                df_bs_unit = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[10]').text           # 통화 단위(Unit) 추출
+                df_bs_unit = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[10]').text           # Extract currency unit (Unit)
                 time.sleep(wait_time)
                 # balance sheet dataframe preprocess
                 df_balance_Q = df_balance_Q.T
-                df_balance_Q = df_balance_Q.rename(columns = df_balance_Q.iloc[0])     # 계정과목을 column 이름으로 설정
-                df_balance_Q = df_balance_Q.iloc[1:, :]                               # 0번째 row를 삭제하고 나머지만 남긴다.
+                df_balance_Q = df_balance_Q.rename(columns = df_balance_Q.iloc[0])    # set account subject as column name
+                df_balance_Q = df_balance_Q.iloc[1:, :]                              # Delete row 0 and leave only the rest.
                 ##df_balance = df_balance[bs_targets]
-                df_balance_Q['bs_unit'] = df_bs_unit                  # 데이터프레임에 cash flow 통화단위 삽입
+                df_balance_Q['bs_unit'] = df_bs_unit                  # insert cash flow currency unit into dataframe
                 df_balance_Q['bs_time']= df_balance_Q.index
-                #df_balance_Q['report_type'] = 'Quarter'                         # 데이터프레임에 분기보고서임을 표시 
-                #df_balance_Q['company_name'] = company_name                     # 데이터 프레임에 회사 이름 삽입
+                #df_balance_Q['report_type'] = 'Quarter'                         # Mark the data frame as a quarterly report
+                #df_balance_Q['company_name'] = company_name                     # insert company name into data frame
                 df_balance_Q=df_balance_Q.reset_index(drop=True)
 
 
-                # 연간 balance sheet 
+                # yearly balance sheet 
                 try : 
-                    self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[8]/div[1]/a[1]').click() # Annual 버튼 클릭
+                    self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[8]/div[1]/a[1]').click() # Click the Annual button
                 except :
-                    self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[9]/div[1]/a[1]').click() # Annual 버튼 클릭
+                    self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[9]/div[1]/a[1]').click() # Click the Annual button
                 time.sleep(wait_time)
 
                 for order, table in enumerate(pd.read_html(self.driver.page_source)) : 
@@ -341,17 +346,17 @@ class Investing_Crawler:
                         break
 
                 df_balance_A = pd.read_html(self.driver.page_source)[table_num].dropna()
-                df_bs_unit = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[10]').text           # 통화 단위(Unit) 추출
+                df_bs_unit = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[10]').text           # Extract currency unit (Unit)
                 time.sleep(wait_time)
                 # balance sheet dataframe preprocess
                 df_balance_A = df_balance_A.T
-                df_balance_A = df_balance_A.rename(columns = df_balance_A.iloc[0])      # 계정과목을 column 이름으로 설정
-                df_balance_A = df_balance_A.iloc[1:, :]                               # 0번째 row를 삭제하고 나머지만 남긴다.
+                df_balance_A = df_balance_A.rename(columns = df_balance_A.iloc[0])     # set account subject as column name
+                df_balance_A = df_balance_A.iloc[1:, :]                              # Delete row 0 and leave only the rest.
                 ##df_balance = df_balance[bs_targets]
-                df_balance_A['bs_unit'] = df_bs_unit                  # 데이터프레임에 cash flow 통화단위 삽입
+                df_balance_A['bs_unit'] = df_bs_unit                  # insert cash flow currency unit into dataframe
                 df_balance_A['bs_time']= df_balance_A.index
-                #df_balance_A['report_type'] = 'Annual'                          # 데이터프레임에 연간보고서임을 표시 
-                #df_balance_A['company_name'] = company_name                     # 데이터 프레임에 회사 이름 삽입
+                #df_balance_A['report_type'] = 'Annual'                          # Mark the data frame as an annual report
+                #df_balance_A['company_name'] = company_name                     # insert company name into data frame
                 df_balance_A = df_balance_A.reset_index(drop=True)
 
                 # cash flow
@@ -363,23 +368,23 @@ class Investing_Crawler:
                         table_num = order
                         break    
 
-                # 분기별 cashflow 
+                # quarterly cashflow 
                 df_cash_flow_Q = pd.read_html(self.driver.page_source)[table_num].dropna()
-                df_cf_unit = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[10]').text           # 통화 단위(Unit) 추출
+                df_cf_unit = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[10]').text           # Extract currency unit (Unit)
                 time.sleep(wait_time)
 
                 df_cash_flow_Q = df_cash_flow_Q.T 
-                df_cash_flow_Q = df_cash_flow_Q.rename(columns = df_cash_flow_Q.iloc[0]) # 계정과목을 column 이름으로 설정
-                df_cash_flow_Q = df_cash_flow_Q.iloc[1:, :]                              # 0번째 row를 삭제하고 나머지만 남긴다.
-                df_cash_flow_Q['cf_unit'] = df_cf_unit                     # 데이터프레임에 cash flow 통화단위 삽입
-                df_cash_flow_Q['cf_time']= df_cash_flow_Q.index.get_level_values(0)  # cf는 period_ending, period_length 두가지 멀티인덱스 사용    
+                df_cash_flow_Q = df_cash_flow_Q.rename(columns = df_cash_flow_Q.iloc[0])# set account subject as column name
+                df_cash_flow_Q = df_cash_flow_Q.iloc[1:, :]                             # Delete row 0 and leave only the rest.
+                df_cash_flow_Q['cf_unit'] = df_cf_unit                     # insert cash flow currency unit into dataframe
+                df_cash_flow_Q['cf_time']= df_cash_flow_Q.index.get_level_values(0)  # cf는 period_ending, period_length Using two multi-indexes  
                 df_cash_flow_Q = df_cash_flow_Q.reset_index(drop=True)
 
-                #연도별 cashflow 
+                # yearly cashflow 
                 try : 
-                    self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[8]/div[1]/a[1]').click() # Annual 버튼 클릭
+                    self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[8]/div[1]/a[1]').click() # Click the Annual button
                 except :                         
-                    self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[9]/div[1]/a[1]').click() # Annual 버튼 클릭
+                    self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[9]/div[1]/a[1]').click() # Click the Annual button
                 time.sleep(wait_time)
 
                 for order, table in enumerate(pd.read_html(self.driver.page_source)) : 
@@ -388,19 +393,19 @@ class Investing_Crawler:
                         break        
 
                 df_cash_flow_A = pd.read_html(self.driver.page_source)[table_num].dropna()
-                df_cash_flow_unit = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[10]').text            # 통화 단위(Unit) 추출
+                df_cash_flow_unit = self.driver.find_element(By.XPATH,'//*[@id="leftColumn"]/div[10]').text            # Extract currency unit (Unit)
 
                 #cash flow dataframe preprocess
                 df_cash_flow_A = df_cash_flow_A.T 
-                df_cash_flow_A = df_cash_flow_A.rename(columns = df_cash_flow_A.iloc[0]) # 계정과목을 column 이름으로 설정
-                df_cash_flow_A = df_cash_flow_A.iloc[1:, :]                              # 0번째 row를 삭제하고 나머지만 남긴다.
-                df_cash_flow_A['cf_unit'] = df_cf_unit                     # 데이터프레임에 cash flow 통화단위 삽입
-                df_cash_flow_A['cf_time']= df_cash_flow_A.index.get_level_values(0)  # cf는 period_ending, period_length 두가지 멀티인덱스 사용 
+                df_cash_flow_A = df_cash_flow_A.rename(columns = df_cash_flow_A.iloc[0])# set account subject as column name
+                df_cash_flow_A = df_cash_flow_A.iloc[1:, :]                             # Delete row 0 and leave only the rest.
+                df_cash_flow_A['cf_unit'] = df_cf_unit                     # insert cash flow currency unit into dataframe
+                df_cash_flow_A['cf_time']= df_cash_flow_A.index.get_level_values(0)  # cf는 period_ending, period_length Using two multi-indexes
                 df_cash_flow_A = df_cash_flow_A.reset_index(drop=True) 
 
-                # 일괄적으로 통합 열방향으로.
-                # company_df_A는 'Annual'버튼을 눌러 얻은 사업보고서 
-                company_df_A = pd.concat([df_balance_A, df_income_A, df_cash_flow_A],axis=1) # 데이터프레임에 사업보고서임을 표시 
+                # Integrate column by batch.
+                # company_df_A is a business report obtained by pressing the 'Annual' button
+                company_df_A = pd.concat([df_balance_A, df_income_A, df_cash_flow_A],axis=1) # Indicate that it is a business report in the data frame
                 company_df_A['industry_info'] = industry_info
                 company_df_A['sector_info'] = sector_info
                 company_df_A['address_info'] = address_info
@@ -411,8 +416,8 @@ class Investing_Crawler:
                 company_df_A['PIC'] = 'Nicholas'
                 company_df_A['gathering_time'] = datetime.date.today()
                 
-                # company_df_Q는 'Quarter'버튼을 눌러 얻은 분기보고서
-                company_df_Q = pd.concat([df_balance_Q, df_income_Q, df_cash_flow_Q],axis=1)# 데이터프레임에 분기보고서임을 표시 
+                # company_df_Q is the quarterly report obtained by pressing the 'Quarter' button
+                company_df_Q = pd.concat([df_balance_Q, df_income_Q, df_cash_flow_Q],axis=1)# Mark the data frame as a quarterly report
                 company_df_Q['industry_info'] = industry_info
                 company_df_Q['sector_info'] = sector_info
                 company_df_Q['address_info'] = address_info
@@ -426,7 +431,7 @@ class Investing_Crawler:
                 
                 blank = pd.DataFrame(columns = all_cols)
                 for code in blank.columns : 
-                # 대응표의 ifrs코드로 필요한 정보를 추출한다. 
+                # Extract necessary information with the ifrs code of the correspondence table.
                     try : 
                         blank[code] = company_df_A[code] 
                     except : 
@@ -436,7 +441,7 @@ class Investing_Crawler:
                 blank = pd.DataFrame(columns = all_cols)
 
                 for code in blank.columns : 
-                # 대응표의 ifrs코드로 필요한 정보를 추출한다. 
+                # Extract necessary information with the ifrs code of the correspondence table.
                     try : 
                         blank[code] = company_df_Q[code] 
                     except : 
@@ -446,22 +451,22 @@ class Investing_Crawler:
                 self.result_df = self.result_df.append(blank)
 
             except :
-                # 만약 재무정보가 없어 에러가 났을 경우, 일반정보라도 추가한다. 
-                ############## 기업 일반정보   #########
+                # If an error occurs due to lack of financial information, add general information as well.
+                ############## Company General Information #########
                 #company profile page
                 self.driver.get(profile_url)
                 time.sleep(1)
 
-                #  description : 기업 설명
+                #  description
                 soup = BeautifulSoup(self.driver.page_source, "html.parser")
                 try : 
                     company_name = soup.find('h2').text.replace('Company Profile',"")
-                    #  description : 기업 설명
+                    #  description
                     desciption_info = soup.find('div', attrs = {'class' : 'companyProfileBody'}).text
                     desciption_info = desciption_info.replace('\n','')
                 except : 
-                    print(f"profile이 없어서 안되는 기업 {profile_url}")
-                    print(f"profile이 없어서 안되는 기업 {company}")
+                    print(f"A company without a profile {profile_url}")
+                    print(f"A company without a profile {company}")
                     continue
 
                 profile_header = soup.find('div', attrs = {'class' : 'companyProfileHeader'}).text
@@ -477,7 +482,6 @@ class Investing_Crawler:
                 webpage_info = soup.find('div', attrs = {'class' : 'companyWeb'}).text
 
 
-                # 정규표현식으로 특수문자 제거 
                 phone_info = phone_info.replace('\n','')
                 phone_info = phone_info.replace('Phone','')
                 fax_info = fax_info.replace('\n','')
@@ -500,7 +504,7 @@ class Investing_Crawler:
 
 
                 for code in blank.columns : 
-                    # 대응표의 ifrs코드로 필요한 정보를 추출한다. 
+                    # Extract necessary information with the ifrs code of the correspondence table.
                     try : 
                         blank[code] = company_df_A[code] 
                     except : 
@@ -516,56 +520,57 @@ class Investing_Crawler:
 
 class Investing_Cleanse: 
         
-    def __init__(self, originalfile_dir, mapping_sheet_dir, 통화코드결측대체 = True):
+        
+    def __init__(self, originalfile_dir, mapping_sheet_dir, Replace_missing_currency_code = True):
         self.data = pd.read_excel(originalfile_dir)
-        # 회사 이름이 없는 row 제거
+        # Remove rows without company name
         self.data = self.data.dropna(subset = ['company_name'])
-        # 통화구분코드에 대응하는 'currency'라는 열을 data 에 추가 
+        # Add a column called 'currency' corresponding to the currency code to data
         self.data['currency'] = self.data['bs_unit'].apply(lambda x : self.currency_extract(x))
-        # 'unit' 열을 self.data 에 추가 
-        self.data['unit'] = self.data['unit'] = self.data['bs_unit'].apply(lambda x : self.unit_change(x)) 
-        # 원본데이터에서 숫자데이터가 들어가는 열은 0번째 열부터 141번째 열까지임
-        # self.data['unit']으로 숫자 데이터들의 단위를 바꿔주기 이전에, 가끔 null값이 '-'으로 들어가 있어서 이것을 먼저 제거토록 한다. 
+        # Add column 'unit' to self.data
+        self.data['unit'] = self.data['unit'] = self.data['bs_unit'].apply(lambda x : self.unit_change(x))
+        # Columns containing numeric data in the original data are from the 0th column to the 141st column.
+        # Before changing the unit of numeric data with self.data['unit'], sometimes null values are entered as '-', so remove them first.
         for name in self.data.columns[:142] : self.data[name]= self.data[name].replace('-',np.nan)
-        # 숫자 데이터들은 단위를 바꿔준다. 
-        # 0열부터 113열까지가 숫자 데이터가 있는 열들 
+        # Change units for numeric data.
+        # Columns 0 to 113 contain numeric data
         for name in self.data.columns[:142] : self.data[name]= self.data[name].astype('float')*self.data['unit']
-        # 기업이름에서 티커를 추출하여 'stock_code'라는 열을 추가한다. 
+        # Add a column called 'stock_code' by extracting the ticker from the company name.
         self.data['stock_code'] = self.data['company_name'].apply(lambda x : self.ticker_extract(x))
-        # 기업이름에서 티커를 추출했으므로 티커를 제거한다. 
+        # Since we extracted the ticker from the company name, remove the ticker.
         self.data['company_name'] = self.data['company_name'].apply(lambda x : self.ticker_delete(x))
-        # 회계연도와 회계분기를 생성하기 위해 bs_time을 date_time 형식으로 가공하여 
-        # 'ending' period라는 열을 추가한다. 
+        # Process bs_time into date_time format to generate fiscal year and fiscal quarter
+        # Add a column called 'ending' period.
         self.data['ending_period'] = self.data['bs_time'].apply(lambda x : self.ending_period_extract(x))
-        # 결측치 제거 
-        # 회계연도와 회계 분기를 뽑아내기전, ending_perod가 없는 결측치를 먼저 제거한다. 
+        # remove missing values
+        # Remove missing values without ending_perod before extracting the fiscal year and fiscal quarter.
         self.data = self.data.dropna(subset=['ending_period'])
-        # 헤브론 스타 국가코드 열 채우기 
+        # Fill Hebron star country code column
         self.data['hb_nation_code'] = self.data['Country'].apply(lambda x : self.hb_nation_code(x))
-        # 통화코드가 없는 데이터들은 최빈값 (frequent value)로 대체하거나 제거한다. 
-        if 통화코드결측대체 == True : self.data['currency'] = self.data['currency'].fillna(value = self.data['currency'].mode()[0])
-            # 해당 국가에서 가장 빈번하게 쓰이는 통화코드로 통화코드가 없는 칸들을 채워넣는다. 
+        # Replace or remove data without a currency code with a frequent value.
+        if Replace_missing_currency_code == True : self.data['currency'] = self.data['currency'].fillna(value = self.data['currency'].mode()[0])
+            # Fill in the fields without a currency code with the most frequently used currency code for the country.
         else : self.data = self.data.dropna(subset=['currency'])
-            # 만약통화코드결측대체가 False이면 결측값이 있는 row는 제거한다. 
-        # ending_period를 이용하여 회계연도에 대응하는 Fiscal year 컬럼 생성
+            # If currency code missing substitution is False, rows with missing values are removed.
+        # Create a Fiscal year column corresponding to the fiscal year using ending_period
         self.data['Fiscal year'] = self.data['ending_period'].apply(lambda x : x.year)
-        # ending_period를 이용하여 결산일자에 대응하는 ending_period 컬럼 생성 
+        # Creating an ending_period column corresponding to the settlement date using ending_period
 
         self.data['ending_period'] = self.data['ending_period'].apply(lambda x : x.strftime("%Y%m%d"))
-        # 비유동자산 추출을 위한 가공
+        # Processing to extract illiquid assets
         self.data['Total Assets - Total Current Assets'] = self.data['Total Assets']-self.data['Total Current Assets']
-        # 부채자산총계 추출을 위한 가공 
+        # Process for extracting total liabilities and assets
         self.data['Total Liabilities + Total Equity'] = self.data['Total Liabilities']+self.data['Total Equity']
-        # 보고서종류 
-        self.data['report_type'] = self.data['report_type'].apply(lambda x : self.report_type_generator(x))    
+        # report type
+        self.data['report_type'] = self.data['report_type'].apply(lambda x : self.report_type_generator(x))
         self.mapping_sheet = pd.read_excel(mapping_sheet_dir)
         self.mapping_dic = self.mapping_sheet.set_index('2022 field name').T.to_dict('index')['corresponding field name 1']
         self.mapping_dic_alternative = self.mapping_sheet.set_index('2022 field name').T.to_dict('index')['corresponding field name 2']
-        # procssed라는 빈 데이터 프레임을 만든 후 아래 루프문으로 'InvestingDotcom 수집코드'로 크롤링한 원본데이터(df)를 
-        # 표준화 한다. 
+        # After creating an empty data frame called procssed, the original data (df) crawled with 'InvestingDotcom collection code' is retrieved with the loop statement below.
+        # standardize
         self.processed = pd.DataFrame(columns = self.mapping_dic.keys())
 
-    # bs_unit에서 통화구분코드를 추출하는 함수     
+    # Function to extract currency identification code from bs_unit 
     def currency_extract(self, x) :
         world_currency = ['HKD', 'EUR', 'AUD', 'KRW', 'NZD', 'PHP', 'USD', 'DKK', 'TRY', 'CAD', 'CLP','INR', 'EGP', 'NOK', 'MYR', 'MXN', 
                         'CHF', 'GBP', 'SGD', 'ARS', 'THB', 'JPY', 'CNY','IDR','VND']
@@ -576,7 +581,7 @@ class Investing_Cleanse:
             except : return np.nan
         return np.nan    
     
-    # 재무제표에 사용된 숫자 단위를 추출하는 함수  
+    # Function to extract numeric units used in financial statements
     def unit_change(self,x) : 
         try : 
             if "Millions" in x : unit =  1000000
@@ -585,19 +590,19 @@ class Investing_Cleanse:
         except : unit = x
         return unit
     
-    # 기업 이름에서 티커를 추출하는 함수 
+    # Function to extract ticker from company name
     def ticker_extract(self,x) : 
         ticker = re.findall('\(([^)]+)',x)
-        ticker = ticker[0] # findall은 list를 return 하므로 인덱싱을 활용하여 원소만 추출
+        ticker = ticker[0] # Since findall returns a list, only elements are extracted using indexing
         return ticker
     
-    # 기업 이름에서 티커를 제거하는 함수 
+    # Function to remove ticker from company name
     def ticker_delete(self,x) : 
         regex = "\(.*\)|\s-\s.*"
         name = re.sub(regex,'',x)
         return name
     
-    # row 의 'bs_time'열을 읽고 회계연도를 의미하는 FY열과 회계분기를 의미하는 Quarter를 생성하는 함수 
+    # A function that reads the row's 'bs_time' column and creates a FY column for the fiscal year and a Quarter for the fiscal quarter.
     def ending_period_extract(self, x) : 
         try : 
             x = datetime.strptime(x, '%Y%d/%m')
@@ -610,7 +615,7 @@ class Investing_Cleanse:
             else : return 'A'
         except : return np.nan
 
-    # 영문국가명을 넣으면 헤브론스타 국가코드를 반환하는 함수
+    # A function that returns the Hebron Star country code if an English country name is entered
     def hb_nation_code(self, x) : 
         hebronstar_code = {'japan':'JPN', 'hong-kong' : 'HKG','malaysia' : 'MYS','south-korea' : 'KOR',
                         'singapore':'SGP','thailand':'THA','vietnam':'VNM','indonesia':'IDN',
@@ -619,12 +624,12 @@ class Investing_Cleanse:
                         'germany':'DEU','netherlands':'NLD','mexico':'MEX','colombia':'COL','canada':'CAN'}         
         try : result = hebronstar_code[x]
         except : 
-            print("잘못된 국가 이름을 넣었습니다. 국가이름을 표준화 시켜서 넣으십시오.")
+            print("You entered the wrong country name. Please enter standardized country names.")
             print("ex) korea -> South Korea , hongkong -> Hong Kong, China")
         return 
 
-    # 대응표 주소(mapping_sheet_dir)와 InvestingDotcom 수집코드로 크롤링한 원본데이터(df)를 인풋으로 넣으면, 
-    # 대응표를 마탕으로 원하는 데이터 프레임을 추출하는 함수 
+    # If you input the correspondence table address (mapping_sheet_dir) and the original data (df) crawled with the InvestingDotcom collection code as input,
+    # Function to extract the desired data frame based on the correspondence table 
 
     def matching_process(self) : 
         for order, field in enumerate(self.processed.columns) : 
@@ -639,16 +644,15 @@ class Investing_Cleanse:
             try : self.processed.loc[:,field] = self.data.loc[:,self.mapping_dic[field]]
             except : pass
         data_size = len(self.processed['영문기업명'].unique())
-        print(f'인베스팅 닷컴에서 수집한 원본 데이터가 클렌징 되어 총 {data_size}의 기업에 대한 재무제표가 추출 되었습니다.')
+        print(f'The original data collected from Investing.com was cleansed to extract financial statements for a total of {data_size} companies.')
         return self.processed
     
 
     
-    # 앞의 메소드들을 cleanse메소드 안에 순서대로 모두 넣는다. 
-    # originalfile_dir : 'investingDotcom수집코드'로 크롤링된 데이터 원본주소 
-    # mapping_sheet_dir : 대응표 주소 
-    # 통화코드결측대체 : 통화코드 결측치를 최빈값으로 대체 하는지 선택하는 옵션. 
-    # 인베스팅 닷컴에서 종종 재무제표에서 어떤 통화단위로 적었는지 안나오는 경우가 종종 있다. 
-    # 통화코드결측대체는 어떤 통화단위로 적었는지 안 나올때, 여태까지 수집된 데이터를 보고 그나라 상장사들이 
-    # 주로 표기하는 통화단위로 null값을 대체(imputation) 하는 코드이다. 
-        
+    # Put all the preceding methods in order in the cleanse method.
+    # originalfile_dir : Source address of data crawled by 'investingDotcom collection code'
+    # mapping_sheet_dir: mapping table address
+    # Replace missing currency code: Option to select whether to replace missing currency code with the most frequent value.
+    # Investing.com often does not show which currency unit is written in the financial statement.
+    # When currency code missing replacement is not available in which currency unit, listed companies in that country look at the data collected so far
+    # This is the code to imputation the null value with the currency unit that is mainly expressed.

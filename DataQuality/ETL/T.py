@@ -619,8 +619,8 @@ class Analysis:
                 'tb_hb_che_plcfi_d',
                 'tb_hb_esp_plcfi_d']
         }
-        self.DefaultTables = pd.DataFrame(self.TableDefaultColumns)
-        self.DefaultColumns = pd.DataFrame(self.TableDefault)
+        self.DefaultTables = pd.DataFrame(self.TableDefault)
+        self.DefaultColumns = pd.DataFrame(self.TableDefaultColumns)
         self.ColumnDF = self.DefaultColumns.T
         self.ColumnDF = self.ColumnDF.rename(columns=self.ColumnDF.iloc[0])
         self.ColumnDF = self.ColumnDF.drop(self.ColumnDF.index[0])
@@ -631,7 +631,7 @@ class Analysis:
         self.CheckDF = pd.DataFrame(columns=["번호", "시스템", "업무구분", "검증구분", "테이블명", "테이블ID", "컬럼명", "컬럼ID",
                                         "pk", "FK", "NN", "데이터타입", "도메인소분류",
                                         "도메인명", "전체건수", "오류건수", "오류율", "점검일시", "오류데이터"])
-        self.DateList = list(self.DefaultTables[self.DefaultTables["데이터타입"] == "VARCHAR(8)"]["표준_영문컬럼명"].values)
+        self.DateList = list(self.DefaultColumns[self.DefaultColumns["데이터타입"] == "VARCHAR(8)"]["표준_영문컬럼명"].values)
         self.CheckDate = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     def read_excel(self, path):
@@ -639,8 +639,9 @@ class Analysis:
         path에 excel 주소를 입력하세요.
         """
         self.df = pd.read_excel(path)
-        Table = path.split(".")[0]
-        self.TableName = str(self.DefaultTables[self.DefaultTables["영문 테이블명"] == Table]["한국 테이블명"])
+        if "/" in path: Table = path.split("/")[-1].split(".")[0]
+        else: Table = path.split(".")[0]
+        self.TableName = list(self.DefaultTables[self.DefaultTables["영문 테이블명"] == Table]["한국 테이블명"])[0]
         self.TableID = str(Table)
 
     def read_csv(self, path):
@@ -648,8 +649,9 @@ class Analysis:
         path에 csv 주소를 입력하세요.
         """
         self.df = pd.read_csv(path)
-        Table = path.split(".")[0]
-        self.TableName = str(self.DefaultTables[self.DefaultTables["영문 테이블명"] == Table]["한국 테이블명"])
+        if "/" in path: Table = path.split("/")[-1].split(".")[0]
+        else: Table = path.split(".")[0]
+        self.TableName = list(self.DefaultTables[self.DefaultTables["영문 테이블명"] == Table]["한국 테이블명"])[0]
         self.TableID = str(Table)
 
     def Fail(self, column, Failed):
@@ -687,8 +689,8 @@ class Analysis:
         """
         날짜와 동시에 중복여부를 확인하는 함수.
         """
-        self.df.columns = list(self.DefaultColumns["표준_영문컬럼명"].values[:77])        
-        for column in self.df.columns: # 컬럼ID
+        self.df.columns = list(self.DefaultColumns["표준_영문컬럼명"].values)        
+        for column in tqdm(self.df.columns): # 컬럼ID
             for length in range(len(self.df[column])):
                 self.verification = "날짜"
                 if column in self.DateList:
@@ -697,7 +699,7 @@ class Analysis:
                         self.count += 1
                         Failed = self.df[column][length]
                         Returned = self.Fail(column, Failed)
-                        self.Success = self.Success.append(Returned, ignore_index=True)
+                        self.CheckDF = self.CheckDF.append(Returned, ignore_index=True)
             if column in self.ExceptList: continue
             else:
                 for cwt, idx in zip(self.df[column].value_counts(), self.df[column].value_counts().index):
@@ -707,7 +709,7 @@ class Analysis:
                         self.count += 1
                         Failed = idx
                         Returned = self.Fail(column, Failed)
-                        self.Success = self.Success.append(Returned, ignore_index=True)
+                        self.CheckDF = self.CheckDF.append(Returned, ignore_index=True)
 
     def CheckNumber(self, phone_columns, cop_columns):
         """
@@ -728,7 +730,7 @@ class Analysis:
                     self.verification = "전화번호오류"
                     Failed = self.df[column][idx]
                     Returned = self.Fail(column, Failed)
-                    self.Success = self.CheckDF.append(Returned, ignore_index=True)
+                    self.CheckDF = self.CheckDF.append(Returned, ignore_index=True)
         for column in cop_columns:
             for idx in range(len(self.df[column])):
                 BS_Check_1 = BS_1.search(self.df[column][idx])
@@ -738,7 +740,7 @@ class Analysis:
                     self.verification = "법인번호오류"
                     Failed = self.df[column][idx]
                     Returned = self.Fail(column, Failed)
-                    self.Success = self.CheckDF.append(Returned, ignore_index=True)
+                    self.CheckDF = self.CheckDF.append(Returned, ignore_index=True)
 
     def change_columns(self, df):
         """
