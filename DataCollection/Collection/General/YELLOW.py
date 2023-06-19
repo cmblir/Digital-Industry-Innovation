@@ -14,14 +14,15 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 class information:
     def __init__(self):
-        self.print_information()
-
-    def print_information(self):
-        print("""
+        self.print_information = """
         The function is described below. \n
         The main class in the library is opencorporates_extract. \n
         DriverSettings() is a function that sets the driver. \n
-        """)
+        """
+
+    def __repr__(self) -> str:
+        return str(self.print_information)
+        
 
 
 class yellow_extract:
@@ -51,6 +52,8 @@ class yellow_extract:
             "호주" : "https://www.australiayp.com/",
             "스위스" : "https://www.swissyello.com/"
         }
+    def __repr__(self):
+        return str(self.country_dict.keys())
 
     def DriverSettings(self, Turn_off_warning = False, linux_mode = False) -> None:
         """
@@ -74,38 +77,51 @@ class yellow_extract:
             self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
         # Prevent WebDruverException Error Designate as an existing driver version
 
+    def moment_save(self, number, country_name):
+        self.companies_info.to_csv(f"{country_name}_{number}.csv", index=False)
+        return f"{country_name} is passed"
 
-    def Extact(self, country_name):
-        CompaniesInformation = pd.DataFrame()
+    def extract(self, country_name, moment_stop = False):
+        self.companies_info = pd.DataFrame()
         self.driver.get(self.url(self.country_dict[country_name]))
-        location_lst = self.driver.find_element(By.XPATH, '/html/body/section[2]/ul')
-        locations = location_lst.find_elements(By.TAG_NAME, 'a')
-        location_link_lst = []
-        for location in locations:
-            location_link = location.get_attribute("href")
-            if "location" in location_link and location_link not in location_link_lst: location_link_lst.append(location_link)
-        for link in location_link_lst:
+
+        location_list = self.driver.find_element(By.XPATH, '/html/body/section[2]/ul')
+        locations = location_list.find_elements(By.TAG_NAME, 'a')
+        self.location_links = [location.get_attribute("href") for location in locations if "location" in location.get_attribute("href")]
+
+        for link in set(self.location_links):
             self.driver.get(link)
             find_max_page_number = self.driver.find_element(By.XPATH, '//*[@id="listings"]')
-            max_page_number = max([int(i.text) for i in find_max_page_number.find_elements(By.TAG_NAME, 'a') if i.get_attribute("class") == "pages_no"])
-            for idx in tqdm(range(1, max_page_number)):
-                try:
-                    if idx == 1: pass
-                    else: self.driver.get(self.url + f"/{idx}")
-                    href_lst = self.driver.find_element(By.XPATH, '//*[@id="listings"]')
-                    company_link_lst = []
-                    for hrefs in href_lst.find_elements(By.TAG_NAME, "a"):
-                        href = hrefs.get_attribute("href")
-                        if "company" in href and "reviews" not in href and href not in company_link_lst: company_link_lst.append(href)
-                    for company_link in company_link_lst:
-                        self.driver.get(company_link)
-                        div_lst = self.driver.find_elements(By.TAG_NAME, "div")
-                        lst = []
-                        for div in div_lst:
-                            if div.get_attribute('class') == 'info': lst.append(div.text)
-                        company_name = lst[0].split("\n")[1]
-                        append_df = pd.DataFrame({company_name : lst[1:]})
-                        CompaniesInformation = pd.concat([CompaniesInformation, append_df], axis=1)
+            max_page_number = max(int(i.text) for i in find_max_page_number.find_elements(By.TAG_NAME, 'a') if i.get_attribute("class") == "pages_no")
+            
+            for idx in tqdm(range(1, max_page_number + 1)):
+                if idx > 1: self.driver.get(f"{link}/{idx}")
+                
+                if moment_stop == True and idx % 100 == 0:
+                    self.moment_save(idx, country_name)
+                    break
+                    
+                href_list = self.driver.find_element(By.XPATH, '//*[@id="listings"]')
+                company_links = [href.get_attribute("href") for href in href_list.find_elements(By.TAG_NAME, "a") if "company" in href.get_attribute("href") and "reviews" not in href.get_attribute("href")]
+
+                for company_link in set(company_links):
+                    self.driver.get(company_link)
+                    left_list = self.driver.find_element(By.XPATH, '//*[@id="left"]')
+                    div_list = left_list.find_elements(By.TAG_NAME, "div")
+                    
+                    try:
+                        info_texts = [div.text for div in div_list if div.get_attribute('class') == ['info']]
+                        if not info_texts:
+                            continue
+                        company_name = info_texts[0].split("\n")[1]
+                        append_df = pd.DataFrame({company_name: info_texts[1:]})
+                        self.companies_info = pd.concat([self.companies_info, append_df], axis=1)
                         print(f"appended {company_name}")
-                except:
-                    pass
+                    except Exception as e:
+                        print(f"Error while processing {company_link}: {e}")
+                        continue
+        self.driver.close()
+
+        return self.companies_info
+
+
