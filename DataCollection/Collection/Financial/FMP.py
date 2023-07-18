@@ -192,12 +192,8 @@ class fmp_extract:
         데이터 가져오는 함수 \n
         county에 국가명을 입력하세요.
         """
-        # Financial Statments가 있는 기업들의 Symbol을 가져오기 위한 QueryString. API Key = 33d67d9c5e5ed94ff134e9bf93f9d818
-        url = ("https://financialmodelingprep.com/api/v3/financial-statement-symbol-lists?apikey=33d67d9c5e5ed94ff134e9bf93f9d818")
-        Symbols = self.get_jsonparsed_data(url)
-        # Financial Statments가 있는 기업들의 Symbol을 가져오기 위한 QueryString. API Key = 33d67d9c5e5ed94ff134e9bf93f9d818
-        url = ("https://financialmodelingprep.com/api/v3/financial-statement-symbol-lists?apikey=33d67d9c5e5ed94ff134e9bf93f9d818")
-
+        # Financial Statments가 있는 기업들의 Symbol을 가져오기 위한 QueryString. API Key = 89d4891348727c3950b79b9067127c3f
+        url = ("https://financialmodelingprep.com/api/v3/financial-statement-symbol-lists?apikey=89d4891348727c3950b79b9067127c3f")
         Symbols = self.get_jsonparsed_data(url)
 
         US_symbols = []          # 

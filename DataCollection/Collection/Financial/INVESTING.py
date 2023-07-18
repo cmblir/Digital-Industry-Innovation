@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import time
-import datetime
+from datetime import datetime
 import chromedriver_autoinstaller
 import re
 from bs4 import BeautifulSoup
@@ -226,7 +226,7 @@ class Investing_Crawler:
                     is_url = self.base_url+company[:index] +self.IS_suffix+company[index:]
                     cf_url = self.base_url+company[:index] +self.CF_suffix+company[index:]
 
-                ############## Company General Information #########
+                ############## Company General Information #############
                 # company profile page
                 self.driver.get(profile_url)
                 time.sleep(1)
@@ -528,7 +528,7 @@ class Investing_Cleanse:
         # Add a column called 'currency' corresponding to the currency code to data
         self.data['currency'] = self.data['bs_unit'].apply(lambda x : self.currency_extract(x))
         # Add column 'unit' to self.data
-        self.data['unit'] = self.data['unit'] = self.data['bs_unit'].apply(lambda x : self.unit_change(x))
+        self.data['unit'] = self.data['bs_unit'].apply(lambda x : self.unit_change(x))
         # Columns containing numeric data in the original data are from the 0th column to the 141st column.
         # Before changing the unit of numeric data with self.data['unit'], sometimes null values are entered as '-', so remove them first.
         for name in self.data.columns[:142] : self.data[name]= self.data[name].replace('-',np.nan)
@@ -546,9 +546,14 @@ class Investing_Cleanse:
         # Remove missing values without ending_perod before extracting the fiscal year and fiscal quarter.
         self.data = self.data.dropna(subset=['ending_period'])
         # Fill Hebron star country code column
-        self.data['hb_nation_code'] = self.data['Country'].apply(lambda x : self.hb_nation_code(x))
+        try: self.data['hb_nation_code'] = self.data['Country'].apply(lambda x : self.hb_nation_code(x))
+        except KeyError:
+            country_name = originalfile_dir.split(".xlsx")[-1]
+            self.data['hb_nation_code'] = self.hb_nation_code(country_name)
         # Replace or remove data without a currency code with a frequent value.
-        if Replace_missing_currency_code == True : self.data['currency'] = self.data['currency'].fillna(value = self.data['currency'].mode()[0])
+        if Replace_missing_currency_code == True : 
+            try: self.data['currency'] = self.data['currency'].fillna(value = self.data['currency'].mode()[0])
+            except: print("currency is miss")
             # Fill in the fields without a currency code with the most frequently used currency code for the country.
         else : self.data = self.data.dropna(subset=['currency'])
             # If currency code missing substitution is False, rows with missing values are removed.
@@ -569,11 +574,11 @@ class Investing_Cleanse:
         # After creating an empty data frame called procssed, the original data (df) crawled with 'InvestingDotcom collection code' is retrieved with the loop statement below.
         # standardize
         self.processed = pd.DataFrame(columns = self.mapping_dic.keys())
-
+        
     # Function to extract currency identification code from bs_unit 
     def currency_extract(self, x) :
         world_currency = ['HKD', 'EUR', 'AUD', 'KRW', 'NZD', 'PHP', 'USD', 'DKK', 'TRY', 'CAD', 'CLP','INR', 'EGP', 'NOK', 'MYR', 'MXN', 
-                        'CHF', 'GBP', 'SGD', 'ARS', 'THB', 'JPY', 'CNY','IDR','VND']
+                        'CHF', 'GBP', 'SGD', 'ARS', 'THB', 'JPY', 'CNY','IDR','VND', 'COP']
         for currency in world_currency : 
             try : 
                 if str(currency) in x : return currency 
@@ -622,11 +627,14 @@ class Investing_Cleanse:
                         'india':'IND','united-states':'USA','spain':'ESP','switzerland':'CHE',
                         'australia':'AUS','united-kingdom':'GBR', 'france':'FRA','italy':'ITA',
                         'germany':'DEU','netherlands':'NLD','mexico':'MEX','colombia':'COL','canada':'CAN'}         
-        try : result = hebronstar_code[x]
+        try :
+            result = hebronstar_code[x]
+            return result
         except : 
             print("You entered the wrong country name. Please enter standardized country names.")
             print("ex) korea -> South Korea , hongkong -> Hong Kong, China")
-        return 
+            return
+        
 
     # If you input the correspondence table address (mapping_sheet_dir) and the original data (df) crawled with the InvestingDotcom collection code as input,
     # Function to extract the desired data frame based on the correspondence table 

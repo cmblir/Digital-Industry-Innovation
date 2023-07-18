@@ -1,0 +1,173 @@
+번호,시스템,업무구분,검증구분,테이블명,테이블ID,컬럼명,컬럼ID,pk,FK,NN,데이터타입,도메인소분류,도메인명,전체건수,오류건수,오류율,점검일시,오류데이터
+1,공통,헤브론스타,중복,호주 일반 기업정보 데이터,tb_hb_aus_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,4868,4868,1.0,2023-07-03 14:24:12,AUS
+2,공통,헤브론스타,중복,호주 일반 기업정보 데이터,tb_hb_aus_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,4868,4868,1.0,2023-07-03 14:24:12,AUS
+3,공통,헤브론스타,중복,호주 일반 기업정보 데이터,tb_hb_aus_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,4868,4868,1.0,2023-07-03 14:24:12,AUS
+4,공통,헤브론스타,중복,호주 일반 기업정보 데이터,tb_hb_aus_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,4868,4868,1.0,2023-07-03 14:24:12,English
+5,공통,헤브론스타,중복,호주 일반 기업정보 데이터,tb_hb_aus_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,4868,4868,1.0,2023-07-03 14:24:12,English
+6,공통,헤브론스타,중복,호주 일반 기업정보 데이터,tb_hb_aus_egnin_m,대표이메일,rprsn_email,N,N,N,VARCHAR(100),,,4868,3775,0.775,2023-07-03 14:24:12,-
+7,공통,헤브론스타,중복,호주 일반 기업정보 데이터,tb_hb_aus_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,4868,1977,0.406,2023-07-03 14:24:12,Vienna (Wien)
+8,공통,헤브론스타,중복,호주 일반 기업정보 데이터,tb_hb_aus_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,4868,247,0.051,2023-07-03 14:24:12,Salzburg
+9,공통,헤브론스타,중복,호주 일반 기업정보 데이터,tb_hb_aus_egnin_m,영문기업주소,engls_entrp_addr,N,N,N,VARCHAR(200),,,4868,1977,0.406,2023-07-03 14:24:12,Vienna (Wien)
+10,공통,헤브론스타,중복,호주 일반 기업정보 데이터,tb_hb_aus_egnin_m,영문기업주소,engls_entrp_addr,N,N,N,VARCHAR(200),,,4868,247,0.051,2023-07-03 14:24:12,Salzburg
+11,공통,헤브론스타,중복,호주 일반 기업정보 데이터,tb_hb_aus_egnin_m,기업우편번호,entrp_post_no,N,N,N,VARCHAR(12),,,4868,486,0.1,2023-07-03 14:24:12,1010
+12,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,271,271,1.0,2023-07-03 14:24:12,canada
+13,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,271,271,1.0,2023-07-03 14:24:12,canada
+14,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,271,271,1.0,2023-07-03 14:24:12,CAN
+15,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,271,271,1.0,2023-07-03 14:24:12,English
+16,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,271,271,1.0,2023-07-03 14:24:12,English
+17,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,기업홈페이지URL,entrp_hmpg_url,N,N,N,VARCHAR(700),,,271,123,0.454,2023-07-03 14:24:12,https://www.ic.gc.ca/app/scr/cc/Corpo...
+18,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,271,22,0.081,2023-07-03 14:24:12,"Toronto
+Ontario
+Canada"
+19,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,271,18,0.066,2023-07-03 14:24:12,"Brampton
+Ontario
+Canada"
+20,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,271,18,0.066,2023-07-03 14:24:12,"Ottawa
+Ontario
+Canada"
+21,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,현지언어기업상세주소,acplc_lngg_entrp_dtadd,N,N,N,VARCHAR(200),,,271,22,0.081,2023-07-03 14:24:12,"Toronto
+Ontario
+Canada"
+22,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,현지언어기업상세주소,acplc_lngg_entrp_dtadd,N,N,N,VARCHAR(200),,,271,18,0.066,2023-07-03 14:24:12,"Brampton
+Ontario
+Canada"
+23,공통,헤브론스타,중복,캐나다 일반 기업정보 데이터,tb_hb_can_egnin_m,현지언어기업상세주소,acplc_lngg_entrp_dtadd,N,N,N,VARCHAR(200),,,271,18,0.066,2023-07-03 14:24:12,"Ottawa
+Ontario
+Canada"
+24,공통,헤브론스타,중복,스위스 일반 기업정보 데이터,tb_hb_che_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,184,184,1.0,2023-07-03 14:24:12,Switzerland
+25,공통,헤브론스타,중복,스위스 일반 기업정보 데이터,tb_hb_che_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,184,184,1.0,2023-07-03 14:24:12,Switzerland
+26,공통,헤브론스타,중복,스위스 일반 기업정보 데이터,tb_hb_che_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,184,184,1.0,2023-07-03 14:24:12,che
+27,공통,헤브론스타,중복,스위스 일반 기업정보 데이터,tb_hb_che_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,184,184,1.0,2023-07-03 14:24:12,German
+28,공통,헤브론스타,중복,스위스 일반 기업정보 데이터,tb_hb_che_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,184,184,1.0,2023-07-03 14:24:12,German
+29,공통,헤브론스타,중복,스위스 일반 기업정보 데이터,tb_hb_che_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,184,72,0.391,2023-07-03 14:24:12,Business ServicesBusiness Services / General Business
+30,공통,헤브론스타,중복,콜롬비아 일반 기업정보 데이터,tb_hb_col_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,1828,1828,1.0,2023-07-03 14:24:12,Colombia
+31,공통,헤브론스타,중복,콜롬비아 일반 기업정보 데이터,tb_hb_col_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,1828,1828,1.0,2023-07-03 14:24:12,Colombia
+32,공통,헤브론스타,중복,콜롬비아 일반 기업정보 데이터,tb_hb_col_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,1828,1828,1.0,2023-07-03 14:24:12,COL
+33,공통,헤브론스타,중복,콜롬비아 일반 기업정보 데이터,tb_hb_col_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,1828,1828,1.0,2023-07-03 14:24:12,Colombia
+34,공통,헤브론스타,중복,콜롬비아 일반 기업정보 데이터,tb_hb_col_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,1828,1828,1.0,2023-07-03 14:24:12,Colombia
+35,공통,헤브론스타,중복,독일 일반 기업정보 데이터,tb_hb_deu_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,6200,6200,1.0,2023-07-03 14:24:12,DEU
+36,공통,헤브론스타,중복,독일 일반 기업정보 데이터,tb_hb_deu_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,6200,6200,1.0,2023-07-03 14:24:12,DEU
+37,공통,헤브론스타,중복,독일 일반 기업정보 데이터,tb_hb_deu_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,6200,6200,1.0,2023-07-03 14:24:12,DEU
+38,공통,헤브론스타,중복,독일 일반 기업정보 데이터,tb_hb_deu_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,6200,6200,1.0,2023-07-03 14:24:12,German
+39,공통,헤브론스타,중복,독일 일반 기업정보 데이터,tb_hb_deu_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,6200,6200,1.0,2023-07-03 14:24:12,German
+40,공통,헤브론스타,중복,독일 일반 기업정보 데이터,tb_hb_deu_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,6200,642,0.104,2023-07-03 14:24:12,Berlin
+41,공통,헤브론스타,중복,독일 일반 기업정보 데이터,tb_hb_deu_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,6200,588,0.095,2023-07-03 14:24:12,Hamburg
+42,공통,헤브론스타,중복,독일 일반 기업정보 데이터,tb_hb_deu_egnin_m,영문기업주소,engls_entrp_addr,N,N,N,VARCHAR(200),,,6200,642,0.104,2023-07-03 14:24:12,Berlin
+43,공통,헤브론스타,중복,독일 일반 기업정보 데이터,tb_hb_deu_egnin_m,영문기업주소,engls_entrp_addr,N,N,N,VARCHAR(200),,,6200,588,0.095,2023-07-03 14:24:12,Hamburg
+44,공통,헤브론스타,중복,스페인 일반 기업정보 데이터,tb_hb_esp_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,2287,2287,1.0,2023-07-03 14:24:12,ESP
+45,공통,헤브론스타,중복,스페인 일반 기업정보 데이터,tb_hb_esp_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,2287,2287,1.0,2023-07-03 14:24:12,ESP
+46,공통,헤브론스타,중복,스페인 일반 기업정보 데이터,tb_hb_esp_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,2287,2287,1.0,2023-07-03 14:24:12,ESP
+47,공통,헤브론스타,중복,스페인 일반 기업정보 데이터,tb_hb_esp_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,2287,2287,1.0,2023-07-03 14:24:12,Spanish
+48,공통,헤브론스타,중복,스페인 일반 기업정보 데이터,tb_hb_esp_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,2287,2287,1.0,2023-07-03 14:24:12,Spanish
+49,공통,헤브론스타,중복,스페인 일반 기업정보 데이터,tb_hb_esp_egnin_m,대표이메일,rprsn_email,N,N,N,VARCHAR(100),,,2287,440,0.192,2023-07-03 14:24:12,-
+50,공통,헤브론스타,중복,스페인 일반 기업정보 데이터,tb_hb_esp_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,2287,208,0.091,2023-07-03 14:24:12,Madrid
+51,공통,헤브론스타,중복,스페인 일반 기업정보 데이터,tb_hb_esp_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,2287,123,0.054,2023-07-03 14:24:12,Barcelona
+52,공통,헤브론스타,중복,스페인 일반 기업정보 데이터,tb_hb_esp_egnin_m,영문기업주소,engls_entrp_addr,N,N,N,VARCHAR(200),,,2287,208,0.091,2023-07-03 14:24:12,Madrid
+53,공통,헤브론스타,중복,스페인 일반 기업정보 데이터,tb_hb_esp_egnin_m,영문기업주소,engls_entrp_addr,N,N,N,VARCHAR(200),,,2287,123,0.054,2023-07-03 14:24:12,Barcelona
+54,공통,헤브론스타,중복,프랑스 일반 기업정보 데이터,tb_hb_fra_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,439,439,1.0,2023-07-03 14:24:12,FRA
+55,공통,헤브론스타,중복,프랑스 일반 기업정보 데이터,tb_hb_fra_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,439,439,1.0,2023-07-03 14:24:12,FRA
+56,공통,헤브론스타,중복,프랑스 일반 기업정보 데이터,tb_hb_fra_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,439,439,1.0,2023-07-03 14:24:12,FRA
+57,공통,헤브론스타,중복,프랑스 일반 기업정보 데이터,tb_hb_fra_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,439,439,1.0,2023-07-03 14:24:12,French
+58,공통,헤브론스타,중복,프랑스 일반 기업정보 데이터,tb_hb_fra_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,439,439,1.0,2023-07-03 14:24:12,French
+59,공통,헤브론스타,중복,프랑스 일반 기업정보 데이터,tb_hb_fra_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,439,163,0.371,2023-07-03 14:24:12,-
+60,공통,헤브론스타,중복,프랑스 일반 기업정보 데이터,tb_hb_fra_egnin_m,영문기업주소,engls_entrp_addr,N,N,N,VARCHAR(200),,,439,163,0.371,2023-07-03 14:24:12,-
+61,공통,헤브론스타,중복,프랑스 일반 기업정보 데이터,tb_hb_fra_egnin_m,기업우편번호,entrp_post_no,N,N,N,VARCHAR(12),,,439,27,0.062,2023-07-03 14:24:12,-
+62,공통,헤브론스타,중복,영국 일반 기업정보 데이터,tb_hb_gbr_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,1948,1948,1.0,2023-07-03 14:24:12,GBR
+63,공통,헤브론스타,중복,영국 일반 기업정보 데이터,tb_hb_gbr_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,1948,1948,1.0,2023-07-03 14:24:12,GBR
+64,공통,헤브론스타,중복,영국 일반 기업정보 데이터,tb_hb_gbr_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,1948,1948,1.0,2023-07-03 14:24:12,GBR
+65,공통,헤브론스타,중복,영국 일반 기업정보 데이터,tb_hb_gbr_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,1948,1948,1.0,2023-07-03 14:24:12,English
+66,공통,헤브론스타,중복,영국 일반 기업정보 데이터,tb_hb_gbr_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,1948,1948,1.0,2023-07-03 14:24:12,English
+67,공통,헤브론스타,중복,영국 일반 기업정보 데이터,tb_hb_gbr_egnin_m,대표이메일,rprsn_email,N,N,N,VARCHAR(100),,,1948,1943,0.997,2023-07-03 14:24:12,-
+68,공통,헤브론스타,중복,홍콩 일반 기업정보 데이터,tb_hb_hkg_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,473,473,1.0,2023-07-03 14:24:12,hongkong
+69,공통,헤브론스타,중복,홍콩 일반 기업정보 데이터,tb_hb_hkg_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,473,473,1.0,2023-07-03 14:24:12,hongkong
+70,공통,헤브론스타,중복,홍콩 일반 기업정보 데이터,tb_hb_hkg_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,473,473,1.0,2023-07-03 14:24:12,hkg
+71,공통,헤브론스타,중복,홍콩 일반 기업정보 데이터,tb_hb_hkg_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,473,473,1.0,2023-07-03 14:24:12,Cantonese
+72,공통,헤브론스타,중복,홍콩 일반 기업정보 데이터,tb_hb_hkg_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,473,473,1.0,2023-07-03 14:24:12,Cantonese
+73,공통,헤브론스타,중복,인도네시아 일반 기업정보 데이터,tb_hb_idn_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,3000,3000,1.0,2023-07-03 14:24:12,indonesia
+74,공통,헤브론스타,중복,인도네시아 일반 기업정보 데이터,tb_hb_idn_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,3000,3000,1.0,2023-07-03 14:24:12,indonesia
+75,공통,헤브론스타,중복,인도네시아 일반 기업정보 데이터,tb_hb_idn_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,3000,3000,1.0,2023-07-03 14:24:12,idn
+76,공통,헤브론스타,중복,인도네시아 일반 기업정보 데이터,tb_hb_idn_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,3000,3000,1.0,2023-07-03 14:24:12,Indonesian
+77,공통,헤브론스타,중복,인도네시아 일반 기업정보 데이터,tb_hb_idn_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,3000,3000,1.0,2023-07-03 14:24:12,Indonesian
+78,공통,헤브론스타,중복,인도네시아 일반 기업정보 데이터,tb_hb_idn_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,3000,164,0.055,2023-07-03 14:24:12,Public & Social ServicesPublic & Social Services / Education
+79,공통,헤브론스타,중복,인도네시아 일반 기업정보 데이터,tb_hb_idn_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,3000,153,0.051,2023-07-03 14:24:12,"Finances & InsuranceFinances & Insurance / Banks, Credit Unions"
+80,공통,헤브론스타,중복,인도네시아 일반 기업정보 데이터,tb_hb_idn_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,3000,152,0.051,2023-07-03 14:24:12,Transport & MotoringTransport & Motoring / Motorbikes
+81,공통,헤브론스타,중복,인도 일반 기업정보 데이터,tb_hb_ind_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,29,29,1.0,2023-07-03 14:24:12,india
+82,공통,헤브론스타,중복,인도 일반 기업정보 데이터,tb_hb_ind_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,29,29,1.0,2023-07-03 14:24:12,india
+83,공통,헤브론스타,중복,인도 일반 기업정보 데이터,tb_hb_ind_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,29,29,1.0,2023-07-03 14:24:12,ind
+84,공통,헤브론스타,중복,인도 일반 기업정보 데이터,tb_hb_ind_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,29,29,1.0,2023-07-03 14:24:12,Hindi
+85,공통,헤브론스타,중복,인도 일반 기업정보 데이터,tb_hb_ind_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,29,29,1.0,2023-07-03 14:24:12,Hindi
+86,공통,헤브론스타,중복,인도 일반 기업정보 데이터,tb_hb_ind_egnin_m,기업대표전화번호,entrp_rprsn_tlno,N,N,N,VARCHAR(40),,,29,2,0.069,2023-07-03 14:24:12,0261 - 2431512
+87,공통,헤브론스타,중복,인도 일반 기업정보 데이터,tb_hb_ind_egnin_m,기업담당자전화번호,entrp_pinch_tlno,N,N,N,VARCHAR(40),,,29,2,0.069,2023-07-03 14:24:12,0261 - 2431512
+88,공통,헤브론스타,중복,인도 일반 기업정보 데이터,tb_hb_ind_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,29,3,0.103,2023-07-03 14:24:12,Business ServicesBusiness Services / Advertising
+89,공통,헤브론스타,중복,인도 일반 기업정보 데이터,tb_hb_ind_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,29,2,0.069,2023-07-03 14:24:12,Tradesmen & ConstructionTradesmen & Construction / Dyes & Dye Stuffs
+90,공통,헤브론스타,중복,인도 일반 기업정보 데이터,tb_hb_ind_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,29,2,0.069,2023-07-03 14:24:12,ShoppingShopping / Clothing and Accessories
+91,공통,헤브론스타,중복,이탈리아 일반 기업정보 데이터,tb_hb_ita_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,1149,1149,1.0,2023-07-03 14:24:12,ITA
+92,공통,헤브론스타,중복,이탈리아 일반 기업정보 데이터,tb_hb_ita_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,1149,1149,1.0,2023-07-03 14:24:12,ITA
+93,공통,헤브론스타,중복,이탈리아 일반 기업정보 데이터,tb_hb_ita_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,1149,1149,1.0,2023-07-03 14:24:12,ITA
+94,공통,헤브론스타,중복,이탈리아 일반 기업정보 데이터,tb_hb_ita_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,1149,1149,1.0,2023-07-03 14:24:12,Italian
+95,공통,헤브론스타,중복,이탈리아 일반 기업정보 데이터,tb_hb_ita_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,1149,1149,1.0,2023-07-03 14:24:12,Italian
+96,공통,헤브론스타,중복,이탈리아 일반 기업정보 데이터,tb_hb_ita_egnin_m,현지언어기업명,acplc_lngg_entrp_nm,N,N,N,VARCHAR(100),,,1149,58,0.05,2023-07-03 14:24:12,"Istituto bancario, san paolo di torino spa"
+97,공통,헤브론스타,중복,이탈리아 일반 기업정보 데이터,tb_hb_ita_egnin_m,영문기업명,engls_entrp_nm,N,N,N,VARCHAR(100),,,1149,58,0.05,2023-07-03 14:24:12,"Istituto bancario, san paolo di torino spa"
+98,공통,헤브론스타,중복,이탈리아 일반 기업정보 데이터,tb_hb_ita_egnin_m,대표이메일,rprsn_email,N,N,N,VARCHAR(100),,,1149,1149,1.0,2023-07-03 14:24:12,-
+99,공통,헤브론스타,중복,이탈리아 일반 기업정보 데이터,tb_hb_ita_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,1149,78,0.068,2023-07-03 14:24:12,-
+100,공통,헤브론스타,중복,이탈리아 일반 기업정보 데이터,tb_hb_ita_egnin_m,영문기업주소,engls_entrp_addr,N,N,N,VARCHAR(200),,,1149,78,0.068,2023-07-03 14:24:12,-
+101,공통,헤브론스타,중복,일본 일반 기업정보 데이터,tb_hb_jpn_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,2626,2626,1.0,2023-07-03 14:24:12,JPN
+102,공통,헤브론스타,중복,일본 일반 기업정보 데이터,tb_hb_jpn_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,2626,2626,1.0,2023-07-03 14:24:12,JPN
+103,공통,헤브론스타,중복,일본 일반 기업정보 데이터,tb_hb_jpn_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,2626,2626,1.0,2023-07-03 14:24:12,jpn
+104,공통,헤브론스타,중복,일본 일반 기업정보 데이터,tb_hb_jpn_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,2626,2626,1.0,2023-07-03 14:24:12,Japanese
+105,공통,헤브론스타,중복,일본 일반 기업정보 데이터,tb_hb_jpn_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,2626,2626,1.0,2023-07-03 14:24:12,Japanese
+106,공통,헤브론스타,중복,일본 일반 기업정보 데이터,tb_hb_jpn_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,2626,235,0.089,2023-07-03 14:24:12,Transport & MotoringTransport & Motoring / Vehicle Services
+107,공통,헤브론스타,중복,일본 일반 기업정보 데이터,tb_hb_jpn_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,2626,219,0.083,2023-07-03 14:24:12,Business ServicesBusiness Services / General Business
+108,공통,헤브론스타,중복,일본 일반 기업정보 데이터,tb_hb_jpn_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,2626,182,0.069,2023-07-03 14:24:12,Food & DrinkFood & Drink / Food RetailersFood & Drink / Food Retailers / Food Products
+109,공통,헤브론스타,중복,일본 일반 기업정보 데이터,tb_hb_jpn_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,2626,141,0.054,2023-07-03 14:24:12,Health & BeautyHealth & Beauty / Doctors and Clinics
+110,공통,헤브론스타,중복,멕시코 일반 기업정보 데이터,tb_hb_mex_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,184,184,1.0,2023-07-03 14:24:12,MEX
+111,공통,헤브론스타,중복,멕시코 일반 기업정보 데이터,tb_hb_mex_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,184,184,1.0,2023-07-03 14:24:12,MEX
+112,공통,헤브론스타,중복,멕시코 일반 기업정보 데이터,tb_hb_mex_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,184,184,1.0,2023-07-03 14:24:12,mex
+113,공통,헤브론스타,중복,멕시코 일반 기업정보 데이터,tb_hb_mex_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,184,184,1.0,2023-07-03 14:24:12,Spanish
+114,공통,헤브론스타,중복,멕시코 일반 기업정보 데이터,tb_hb_mex_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,184,184,1.0,2023-07-03 14:24:12,Spanish
+115,공통,헤브론스타,중복,멕시코 일반 기업정보 데이터,tb_hb_mex_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,184,72,0.391,2023-07-03 14:24:12,Business ServicesBusiness Services / General Business
+116,공통,헤브론스타,중복,말레이시아 일반 기업정보 데이터,tb_hb_mys_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,291,291,1.0,2023-07-03 14:24:12,MYS
+117,공통,헤브론스타,중복,말레이시아 일반 기업정보 데이터,tb_hb_mys_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,291,291,1.0,2023-07-03 14:24:12,MYS
+118,공통,헤브론스타,중복,말레이시아 일반 기업정보 데이터,tb_hb_mys_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,291,291,1.0,2023-07-03 14:24:12,mys
+119,공통,헤브론스타,중복,말레이시아 일반 기업정보 데이터,tb_hb_mys_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,291,291,1.0,2023-07-03 14:24:12,Malay
+120,공통,헤브론스타,중복,말레이시아 일반 기업정보 데이터,tb_hb_mys_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,291,291,1.0,2023-07-03 14:24:12,Malay
+121,공통,헤브론스타,중복,말레이시아 일반 기업정보 데이터,tb_hb_mys_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,291,17,0.058,2023-07-03 14:24:12,ServicesServices / General Business
+122,공통,헤브론스타,중복,네덜란드 일반 기업정보 데이터,tb_hb_nld_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,3000,3000,1.0,2023-07-03 14:24:12,Netherlands
+123,공통,헤브론스타,중복,네덜란드 일반 기업정보 데이터,tb_hb_nld_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,3000,3000,1.0,2023-07-03 14:24:12,Netherlands
+124,공통,헤브론스타,중복,네덜란드 일반 기업정보 데이터,tb_hb_nld_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,3000,3000,1.0,2023-07-03 14:24:12,NLD
+125,공통,헤브론스타,중복,네덜란드 일반 기업정보 데이터,tb_hb_nld_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,3000,3000,1.0,2023-07-03 14:24:12,Netherlands
+126,공통,헤브론스타,중복,네덜란드 일반 기업정보 데이터,tb_hb_nld_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,3000,3000,1.0,2023-07-03 14:24:12,Netherlands
+127,공통,헤브론스타,중복,네덜란드 일반 기업정보 데이터,tb_hb_nld_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,3000,626,0.209,2023-07-03 14:24:12,Business ServicesBusiness Services / General Business
+128,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,371,371,1.0,2023-07-03 14:24:12,SGP
+129,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,371,371,1.0,2023-07-03 14:24:12,SGP
+130,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,371,371,1.0,2023-07-03 14:24:12,sgp
+131,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,371,371,1.0,2023-07-03 14:24:12,English
+132,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,371,371,1.0,2023-07-03 14:24:12,English
+133,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,현지언어한줄소개내용,acplc_lngg_oln_intrd_cont,N,N,N,VARCHAR(400),,,371,19,0.051,2023-07-03 14:24:12,BURGER KING® is the worlds second largest fast-food hamburger chain
+134,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,현지언어기업소개내용,acplc_lngg_entrp_intrd_cont,N,N,N,VARCHAR(4000),,,371,19,0.051,2023-07-03 14:24:12,BURGER KING® is the worlds second largest fast-food hamburger chain
+135,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,대표팩스번호,rprsn_fxno,N,N,N,VARCHAR(50),,,371,28,0.075,2023-07-03 14:24:12,(65)
+136,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,기업홈페이지URL,entrp_hmpg_url,N,N,N,VARCHAR(700),,,371,27,0.073,2023-07-03 14:24:12,http://www.mcdonalds.com.sg
+137,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,기업홈페이지URL,entrp_hmpg_url,N,N,N,VARCHAR(700),,,371,22,0.059,2023-07-03 14:24:12,http://www.burgerking.com.sg
+138,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,371,187,0.504,2023-07-03 14:24:12,Food & DrinkFood & Drink / Restaurants
+139,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,371,86,0.232,2023-07-03 14:24:12,Food & DrinkFood & Drink / RestaurantsFood & Drink / Restaurants / Fast Food
+140,공통,헤브론스타,중복,싱가포르 일반 기업정보 데이터,tb_hb_sgp_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,371,23,0.062,2023-07-03 14:24:12,Food & DrinkFood & Drink / RestaurantsFood & Drink / Restaurants / Chinese Restaurants
+141,공통,헤브론스타,중복,태국 일반 기업정보 데이터,tb_hb_tha_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,847,847,1.0,2023-07-03 14:24:12,THA
+142,공통,헤브론스타,중복,태국 일반 기업정보 데이터,tb_hb_tha_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,847,847,1.0,2023-07-03 14:24:12,THA
+143,공통,헤브론스타,중복,태국 일반 기업정보 데이터,tb_hb_tha_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,847,847,1.0,2023-07-03 14:24:12,tha
+144,공통,헤브론스타,중복,태국 일반 기업정보 데이터,tb_hb_tha_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,847,847,1.0,2023-07-03 14:24:12,Thai
+145,공통,헤브론스타,중복,태국 일반 기업정보 데이터,tb_hb_tha_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,847,847,1.0,2023-07-03 14:24:12,Thai
+146,공통,헤브론스타,중복,태국 일반 기업정보 데이터,tb_hb_tha_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,847,110,0.13,2023-07-03 14:24:12,Business ServicesBusiness Services / Products
+147,공통,헤브론스타,중복,태국 일반 기업정보 데이터,tb_hb_tha_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,847,81,0.096,2023-07-03 14:24:12,Business ServicesBusiness Services / General Business
+148,공통,헤브론스타,중복,태국 일반 기업정보 데이터,tb_hb_tha_egnin_m,현지언어산업군명,acplc_lngg_indst_gnnm,N,N,N,VARCHAR(100),,,847,51,0.06,2023-07-03 14:24:12,Manufacturing & IndustryManufacturing & Industry / Farming
+149,공통,헤브론스타,중복,미국 일반 기업정보 데이터,tb_hb_usa_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,1976,1976,1.0,2023-07-03 14:24:12,USA
+150,공통,헤브론스타,중복,미국 일반 기업정보 데이터,tb_hb_usa_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,1976,1976,1.0,2023-07-03 14:24:12,USA
+151,공통,헤브론스타,중복,미국 일반 기업정보 데이터,tb_hb_usa_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,1976,1976,1.0,2023-07-03 14:24:12,USA
+152,공통,헤브론스타,중복,미국 일반 기업정보 데이터,tb_hb_usa_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,1976,1976,1.0,2023-07-03 14:24:12,English
+153,공통,헤브론스타,중복,미국 일반 기업정보 데이터,tb_hb_usa_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,1976,1976,1.0,2023-07-03 14:24:12,English
+154,공통,헤브론스타,중복,미국 일반 기업정보 데이터,tb_hb_usa_egnin_m,현지언어기업주소,acplc_lngg_entrp_addr,N,N,N,VARCHAR(200),,,1976,1975,0.999,2023-07-03 14:24:12,New York
+155,공통,헤브론스타,중복,미국 일반 기업정보 데이터,tb_hb_usa_egnin_m,영문기업주소,engls_entrp_addr,N,N,N,VARCHAR(200),,,1976,1975,0.999,2023-07-03 14:24:12,New York
+156,공통,헤브론스타,중복,베트남 일반 기업정보 데이터,tb_hb_vnm_egnin_m,현지언어국가명,acplc_lngg_ntn_nm,N,N,N,VARCHAR(40),,,985,985,1.0,2023-07-03 14:24:12,VNM
+157,공통,헤브론스타,중복,베트남 일반 기업정보 데이터,tb_hb_vnm_egnin_m,영문국가명,engls_ntn_nm,N,N,N,VARCHAR(40),,,985,985,1.0,2023-07-03 14:24:12,VNM
+158,공통,헤브론스타,중복,베트남 일반 기업정보 데이터,tb_hb_vnm_egnin_m,국가언어코드값,ntn_lngg_cd_val,N,N,N,VARCHAR(3),,,985,985,1.0,2023-07-03 14:24:12,vnm
+159,공통,헤브론스타,중복,베트남 일반 기업정보 데이터,tb_hb_vnm_egnin_m,현지언어언어명,acplc_lngg_lngg_nm,N,N,N,VARCHAR(12),,,985,985,1.0,2023-07-03 14:24:12,Vietnamese
+160,공통,헤브론스타,중복,베트남 일반 기업정보 데이터,tb_hb_vnm_egnin_m,영문언어명,engls_lngg_nm,N,N,N,VARCHAR(40),,,985,985,1.0,2023-07-03 14:24:12,Vietnamese

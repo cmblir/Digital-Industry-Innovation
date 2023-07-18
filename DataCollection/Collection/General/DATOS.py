@@ -24,7 +24,7 @@ class datos_extract:
         데이터를 표준화하는 함수
         path에 Datos에서 다운받은 엑셀을 넣어주세요.
         """
-        df = pd.read_excel(path)
+        df = pd.read_csv(path)
         AppendDict = {
             "hb_ntn_cd" : "COL",
             "acplc_lngg_ntn_nm" : "Colombia",

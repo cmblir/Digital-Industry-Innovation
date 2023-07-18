@@ -126,8 +126,6 @@ class Checker:
             "Nov" : "12"
         }
     
-        self.df = None
-
     def fndtn_dt(self):
         """
         데이터 내의 fndtn_dt 값을 YYYYMMDD로 표준화해주는 함수
@@ -533,6 +531,186 @@ class Analysis:
             'VARCHAR(1)',
             'VARCHAR(8)']
         }
+        self.TableDefaultColumns_info = {
+        "표준_영문컬럼명" : [
+            'keyval',
+            'hb_ntn_cd',
+            'acplc_lngg_ntn_nm',
+            'engls_ntn_nm',
+            'ntn_lngg_cd_val',
+            'acplc_lngg_lngg_nm',
+            'engls_lngg_nm',
+            'acplc_lngg_entrp_nm',
+            'engls_entrp_nm',
+            'acplc_lngg_oln_intrd_cont',
+            'acplc_lngg_entrp_intrd_cont',
+            'engls_oln_intrd_cont',
+            'engls_entrp_intrd_cont',
+            'acplc_lngg_ceo_nm',
+            'engls_ceo_nm',
+            'entrp_rprsn_tlno',
+            'rprsn_fxno',
+            'rprsn_email',
+            'entrp_hmpg_url',
+            'facebook_url',
+            'instgrm_url',
+            'ytb_url',
+            'lnkdn_url',
+            'acplc_lngg_pinch_nm',
+            'engls_pinch_nm',
+            'acplc_lngg_ofpst_nm',
+            'engls_ofpst_nm',
+            'pinch_sub_sgnng',
+            'entrp_pinch_tlno',
+            'pinch_email',
+            'pinch_fxno',
+            'entrp_pinch_mtlno',
+            'acplc_lngg_entrp_addr',
+            'acplc_lngg_entrp_dtadd',
+            'engls_entrp_addr',
+            'engls_entrp_dtadd',
+            'entrp_post_no',
+            'acplc_lngg_indst_gnnm',
+            'engls_indstrsctrs_nm',
+            'acplc_lngg_main_prduc_cont',
+            'engls_main_prduc_cont',
+            'fndtn_dt',
+            'entrp_emply_val',
+            'extnladt_sctin_val',
+            'accnn_yr',
+            'prsls_val',
+            'crrnc_sctin_cd',
+            'currn_unit_nm',
+            'stock_mrkt_cd',
+            'acplc_lngg_stock_mrkt_nm',
+            'engls_stock_mrkt_nm',
+            'lstng_cd',
+            'lstng_dt',
+            'entrp_addtn_info_val',
+            'opert_sctin_cd',
+            'data_crtin_dt',
+            'cntct_prces_stts_cd',
+            'cntct_prces_dt'],
+        "표준_한글컬럼명" : [
+            '키값',
+            '헤브론스타국가코드',
+            '현지언어국가명',
+            '영문국가명',
+            '국가언어코드값',
+            '현지언어언어명',
+            '영문언어명',
+            '현지언어기업명',
+            '영문기업명',
+            '현지언어한줄소개내용',
+            '현지언어기업소개내용',
+            '영문한줄소개내용',
+            '영문기업소개내용',
+            '현지언어대표이사명',
+            '영문대표이사명',
+            '기업대표전화번호',
+            '대표팩스번호',
+            '대표이메일',
+            '기업홈페이지URL',
+            '페이스북URL',
+            '인스타그램URL',
+            '유튜브URL',
+            '링크드인URL',
+            '현지언어담당자명',
+            '영문담당자명',
+            '현지언어직위명',
+            '영문직위명',
+            '담당자부서명',
+            '기업담당자전화번호',
+            '담당자이메일',
+            '담당자팩스번호',
+            '기업담당자이동전화번호',
+            '현지언어기업주소',
+            '현지언어기업상세주소',
+            '영문기업주소',
+            '영문기업상세주소',
+            '기업우편번호',
+            '현지언어산업군명',
+            '영문산업군명',
+            '현지언어주요제품내용',
+            '영문주요제품내용',
+            '설립일자',
+            '기업종업원값',
+            '외감법인구분값',
+            '회계연도',
+            '매출액값',
+            '통화구분코드',
+            '화폐단위명',
+            '주식시장코드',
+            '현지언어주식시장명',
+            '영문주식시장명',
+            '상장코드',
+            '상장일자',
+            '기업추가정보값',
+            '작업구분코드',
+            '데이터생성일자',
+            '연계처리상태코드',
+            '연계처리일자'],
+        "데이터타입" : [
+            'NUMERIC',
+            'VARCHAR(3)',
+            'VARCHAR(40)',
+            'VARCHAR(40)',
+            'VARCHAR(3)',
+            'VARCHAR(12)',
+            'VARCHAR(40)',
+            'VARCHAR(100)',
+            'VARCHAR(100)',
+            'VARCHAR(400)',
+            'VARCHAR(4000)',
+            'VARCHAR(400)',
+            'VARCHAR(4000)',
+            'VARCHAR(100)',
+            'VARCHAR(100)',
+            'VARCHAR(40)',
+            'VARCHAR(50)',
+            'VARCHAR(100)',
+            'VARCHAR(700)',
+            'VARCHAR(300)',
+            'VARCHAR(300)',
+            'VARCHAR(300)',
+            'VARCHAR(300)',
+            'VARCHAR(100)',
+            'VARCHAR(100)',
+            'VARCHAR(40)',
+            'VARCHAR(40)',
+            'VARCHAR(50)',
+            'VARCHAR(40)',
+            'VARCHAR(100)',
+            'VARCHAR(50)',
+            'VARCHAR(40)',
+            'VARCHAR(200)',
+            'VARCHAR(200)',
+            'VARCHAR(200)',
+            'VARCHAR(200)',
+            'VARCHAR(12)',
+            'VARCHAR(100)',
+            'VARCHAR(100)',
+            'VARCHAR(4000)',
+            'VARCHAR(4000)',
+            'VARCHAR(8)',
+            'VARCHAR(400)',
+            'VARCHAR(20)',
+            'VARCHAR(4)',
+            'VARCHAR(400)',
+            'VARCHAR(3)',
+            'VARCHAR(20)',
+            'VARCHAR(6)',
+            'VARCHAR(60)',
+            'VARCHAR(60)',
+            'VARCHAR(12)',
+            'VARCHAR(8)',
+            'VARCHAR(1000)',
+            'VARCHAR(1)',
+            'VARCHAR(8)',
+            'VARCHAR(1)',
+            'VARCHAR(8)'
+        ]
+    }
         self.TableDefault = {
             "한국 테이블명":[
                 '일본 일반 기업정보 데이터',
@@ -621,9 +799,13 @@ class Analysis:
         }
         self.DefaultTables = pd.DataFrame(self.TableDefault)
         self.DefaultColumns = pd.DataFrame(self.TableDefaultColumns)
+        self.DefaultColumns_info = pd.DataFrame(self.TableDefaultColumns_info)
         self.ColumnDF = self.DefaultColumns.T
         self.ColumnDF = self.ColumnDF.rename(columns=self.ColumnDF.iloc[0])
         self.ColumnDF = self.ColumnDF.drop(self.ColumnDF.index[0])
+        self.ColumnDF_info = self.DefaultColumns_info.T
+        self.ColumnDF_info = self.ColumnDF_info.rename(columns=self.ColumnDF_info.iloc[0])
+        self.ColumnDF_info = self.ColumnDF_info.drop(self.ColumnDF_info.index[0])
         self.ExceptList = ["stock_mrkt_cd", "acplc_lngg_stock_mrkt_nm", "engls_stock_mrkt_nm", "hb_ntn_cd", "crrnc_sctin_cd", 
                     "accnn_yr", "reprt_kind_cd","stacnt_dt", "opert_sctin_cd", "data_crtin_dt",
                     "cntct_prces_stts_cd", "cntct_prces_dt"]
@@ -633,7 +815,13 @@ class Analysis:
                                         "도메인명", "전체건수", "오류건수", "오류율", "점검일시", "오류데이터"])
         self.DateList = list(self.DefaultColumns[self.DefaultColumns["데이터타입"] == "VARCHAR(8)"]["표준_영문컬럼명"].values)
         self.CheckDate = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
+    def find_keys_by_value(dictionary, value):
+        keys = []
+        for k, v in dictionary.items():
+            if v == value:
+                keys.append(k)
+        return keys
+    
     def read_excel(self, path):
         """
         path에 excel 주소를 입력하세요.
@@ -654,62 +842,113 @@ class Analysis:
         self.TableName = list(self.DefaultTables[self.DefaultTables["영문 테이블명"] == Table]["한국 테이블명"])[0]
         self.TableID = str(Table)
 
-    def Fail(self, column, Failed):
+    def Fail(self, column, Failed, info):
         """
         오류난 데이터를 입력하는 함수
         column = 오류난 컬럼
         Failed = 오류난 데이터
         """ 
-        ColumnName = self.ColumnDF[column].values[0] # 컬럼명
-        ColumnDataType = self.ColumnDF[column].values[1] # 데이터타입
-        FailedDict = {
-                        "번호" : self.count,
-                        "시스템" : "공통",
-                        "업무구분" : "헤브론스타",
-                        "검증구분" : self.verification,
-                        "테이블명" : self.TableName,
-                        "테이블ID" : self.TableID,
-                        "컬럼명" : self.ColumnDF[column].values[0],
-                        "컬럼ID" : column,
-                        "pk" : "N",
-                        "FK" : "N",
-                        "NN" : "N",
-                        "데이터타입" : self.ColumnDF[column].values[1],
-                        "도메인소분류" : "",
-                        "도메인명" : "",
-                        "전체건수" : len(self.df),
-                        "오류건수" : len(self.df[self.df[column] == Failed]),
-                        "오류율" : round(len(self.df[self.df[column] == Failed]) / len(self.df), 3),
-                        "점검일시" : self.CheckDate,
-                        "오류데이터" : Failed
-                    }
-        return FailedDict
+        if info == True:
+            ColumnName = self.ColumnDF_info[column].values[0] # 컬럼명
+            ColumnDataType = self.ColumnDF_info[column].values[1] # 데이터타입
+            FailedDict = {
+                            "번호" : self.count,
+                            "시스템" : "공통",
+                            "업무구분" : "헤브론스타",
+                            "검증구분" : self.verification,
+                            "테이블명" : self.TableName,
+                            "테이블ID" : self.TableID,
+                            "컬럼명" : ColumnName,
+                            "컬럼ID" : column,
+                            "pk" : "N",
+                            "FK" : "N",
+                            "NN" : "N",
+                            "데이터타입" : ColumnDataType,
+                            "도메인소분류" : "",
+                            "도메인명" : "",
+                            "전체건수" : len(self.df),
+                            "오류건수" : len(self.df[self.df[column] == Failed]),
+                            "오류율" : round(len(self.df[self.df[column] == Failed]) / len(self.df), 3),
+                            "점검일시" : self.CheckDate,
+                            "오류데이터" : Failed
+                        }
+            return FailedDict
 
-    def CheckDate_Duplicate(self):
+        else:
+            ColumnName = self.ColumnDF[column].values[0] # 컬럼명
+            ColumnDataType = self.ColumnDF[column].values[1] # 데이터타입
+            FailedDict = {
+                            "번호" : self.count,
+                            "시스템" : "공통",
+                            "업무구분" : "헤브론스타",
+                            "검증구분" : self.verification,
+                            "테이블명" : self.TableName,
+                            "테이블ID" : self.TableID,
+                            "컬럼명" : ColumnName,
+                            "컬럼ID" : column,
+                            "pk" : "N",
+                            "FK" : "N",
+                            "NN" : "N",
+                            "데이터타입" : ColumnDataType,
+                            "도메인소분류" : "",
+                            "도메인명" : "",
+                            "전체건수" : len(self.df),
+                            "오류건수" : len(self.df[self.df[column] == Failed]),
+                            "오류율" : round(len(self.df[self.df[column] == Failed]) / len(self.df), 3),
+                            "점검일시" : self.CheckDate,
+                            "오류데이터" : Failed
+                        }
+            return FailedDict
+
+    def CheckDate_Duplicate(self, info=False):
         """
         날짜와 동시에 중복여부를 확인하는 함수.
         """
-        self.df.columns = list(self.DefaultColumns["표준_영문컬럼명"].values)        
-        for column in tqdm(self.df.columns): # 컬럼ID
-            for length in range(len(self.df[column])):
-                self.verification = "날짜"
-                if column in self.DateList:
-                    try: pd.to_datetime(str(self.df[column][length]), format='%Y%m%d')
-                    except:
-                        self.count += 1
-                        Failed = self.df[column][length]
-                        Returned = self.Fail(column, Failed)
-                        self.CheckDF = self.CheckDF.append(Returned, ignore_index=True)
-            if column in self.ExceptList: continue
-            else:
-                for cwt, idx in zip(self.df[column].value_counts(), self.df[column].value_counts().index):
-                    per = cwt / len(self.df)
-                    self.verification = "중복"
-                    if per >= 0.05:
-                        self.count += 1
-                        Failed = idx
-                        Returned = self.Fail(column, Failed)
-                        self.CheckDF = self.CheckDF.append(Returned, ignore_index=True)
+        if info==True:
+            self.df.columns = list(self.DefaultColumns_info["표준_영문컬럼명"].values)        
+            for column in tqdm(self.df.columns): # 컬럼ID
+                for length in range(len(self.df[column])):
+                    self.verification = "날짜"
+                    if column in self.DateList:
+                        try: pd.to_datetime(str(self.df[column][length]), format='%Y%m%d')
+                        except:
+                            self.count += 1
+                            Failed = self.df[column][length]
+                            Returned = self.Fail(column, Failed, info)
+                            self.CheckDF = self.CheckDF.append(Returned, ignore_index=True)
+                if column in self.ExceptList: continue
+                else:
+                    for cwt, idx in zip(self.df[column].value_counts(), self.df[column].value_counts().index):
+                        per = cwt / len(self.df)
+                        self.verification = "중복"
+                        if per >= 0.05:
+                            self.count += 1
+                            Failed = idx
+                            Returned = self.Fail(column, Failed, info)
+                            self.CheckDF = self.CheckDF.append(Returned, ignore_index=True)
+
+        else:
+            self.df.columns = list(self.DefaultColumns["표준_영문컬럼명"].values)        
+            for column in tqdm(self.df.columns): # 컬럼ID
+                for length in range(len(self.df[column])):
+                    self.verification = "날짜"
+                    if column in self.DateList:
+                        try: pd.to_datetime(str(self.df[column][length]), format='%Y%m%d')
+                        except:
+                            self.count += 1
+                            Failed = self.df[column][length]
+                            Returned = self.Fail(column, Failed)
+                            self.CheckDF = self.CheckDF.append(Returned, ignore_index=True)
+                if column in self.ExceptList: continue
+                else:
+                    for cwt, idx in zip(self.df[column].value_counts(), self.df[column].value_counts().index):
+                        per = cwt / len(self.df)
+                        self.verification = "중복"
+                        if per >= 0.05:
+                            self.count += 1
+                            Failed = idx
+                            Returned = self.Fail(column, Failed)
+                            self.CheckDF = self.CheckDF.append(Returned, ignore_index=True)
 
     def CheckNumber(self, phone_columns, cop_columns):
         """
@@ -742,9 +981,11 @@ class Analysis:
                     Returned = self.Fail(column, Failed)
                     self.CheckDF = self.CheckDF.append(Returned, ignore_index=True)
 
-    def change_columns(self, df):
+    def change_columns(self, df, info=False, korea=False):
         """
         표준 한글컬럼명으로 수집된 데이터 영문 컬럼명으로 바꿔주는 함수
         """
-        df.columns = [self.TableDefaultColumns["표준_영문컬럼명"][self.TableDefaultColumns["표준_한글컬렴명"].index(col)] if col in self.TableDefaultColumns["표준_한글컬렴명"] else col for col in df.columns]
+        if info==True: df.columns = [self.TableDefaultColumns_info[col] for col in df.columns]
+        else: df.columns = [self.TableDefaultColumns["표준_영문컬럼명"][self.TableDefaultColumns["표준_한글컬렴명"].index(col)] if col in self.TableDefaultColumns["표준_한글컬렴명"] else col for col in df.columns]
+        if korea==True: df.rename(columns={'법인등록번호': 'ovrss_entrp_crprt_rgno', '사업자등록번호': 'ovrss_entrp_bsnsm_rgno'}, inplace=True)
         return df

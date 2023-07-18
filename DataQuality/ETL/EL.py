@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import psycopg2
 import sqlalchemy
-import constants
+from ETL import EL_constants as constants
 from sqlalchemy import create_engine
 from tqdm import tqdm
 
@@ -68,11 +68,11 @@ class DataLoad:
         다수의 파일을 적재할 시 many = True로 설정해주세요.
         """
         self.country = constants.country
-        self.dtypesql_finan = constants.definition_finan
+        self.dtypesql_finan = constants.dtypesql_finan
         self.definition_finan = constants.definition_finan
         self.dtypesql_info = constants.dtypesql_info
         self.definition_info = constants.definition_info
-        self.empty_data = constants.empty_data
+        self.empty_data = constants.stock_name
         self.many = many
         self.url = None
         self.df = None

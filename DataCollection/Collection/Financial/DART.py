@@ -27,7 +27,7 @@ class dart_extract:
         self.Columns = constants.Columns
         self.cleansed_finstats = pd.DataFrame(columns= self.Columns)
         if Path.split(".")[-1] == "xlsx": self.df = pd.read_excel(Path)
-        elif Path.split(".")[-1] == "csv": self.df = pd.read_csv(Path)
+        elif Path.split(".")[-1] == "csv": self.df = pd.read_csv(Path, encoding='cp949')
         self.listed_companies = self.df[self.df['주식종류']=='보통주']["한글 종목약명"]
         self.failed_companies = []
 

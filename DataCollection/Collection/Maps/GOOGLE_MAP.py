@@ -14,12 +14,13 @@ class information:
 
 class map:
     def __init__(self):
-        self.key = "AIzaSyDI5iyCeXWsam63HacmjK-JwKXOHuYAD90"
+        self.key = "AIzaSyA_aFyISdRheOULp2nv8q4qu-UtsdY_CBU"
         self.base = "https://maps.googleapis.com/maps/api/streetview"
         
     def GetStreet(self, address, save_loc):
         params = {"size":"1920x1080", "location":address, "key":self.key}
         url = self.base + "?" + urllib.parse.urlencode(params)
+        if "\n" in address: address = address.replace("\n", "")
         filename = address.replace(",", "").replace(" ", "_") + ".bmp"
         urllib.request.urlretrieve(url, os.path.join(save_loc, filename))
 
