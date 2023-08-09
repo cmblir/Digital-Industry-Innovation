@@ -13,6 +13,11 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
+    - name: Configure Git
+      run: |
+        git config --global user.name "cmblir"
+        git config --global user.email "sodlalwl13@gmail.com"
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
