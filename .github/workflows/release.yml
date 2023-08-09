@@ -3,7 +3,7 @@ name: Bump version and release to PyPI
 on:
   push:
     branches:
-      - main # 또는 릴리즈를 관리하고자 하는 브랜치
+      - main
 
 jobs:
   release:
@@ -28,7 +28,10 @@ jobs:
         pip install bumpversion setuptools wheel twine
 
     - name: Bump version (minor)
-      run: bumpversion minor # minor 부분을 업데이트하여 0.01씩 증가
+      run: bumpversion minor
+
+    - name: Clear distribution directory
+      run: rm -rf dist/*
 
     - name: Build and publish package
       env:
@@ -37,4 +40,3 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
         twine upload dist/*
-        
