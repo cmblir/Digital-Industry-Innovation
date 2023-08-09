@@ -30,6 +30,12 @@ jobs:
     - name: Bump version (minor)
       run: bumpversion minor
 
+    - name: Verify version bump
+      run: |
+        cat .bumpversion.cfg
+        cat dinnovation/version.py
+        cat setup.py
+
     - name: Clear distribution directory
       run: rm -rf dist/*
 
