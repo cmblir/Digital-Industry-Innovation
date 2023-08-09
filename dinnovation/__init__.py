@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# DII - Digital Industry Innovation
-# https://github.com/cmblir/DII
+# dinnovation - Digital Industry Innovation
+# https://github.com/cmblir/dinnovation
 #
 # Copyright 2022-2023 cmblir
 #

@@ -1,0 +1,12 @@
+LICENSE
+README.md
+setup.cfg
+setup.py
+dinnovation/__init__.py
+dinnovation/version.py
+dinnovation.egg-info/PKG-INFO
+dinnovation.egg-info/SOURCES.txt
+dinnovation.egg-info/dependency_links.txt
+dinnovation.egg-info/requires.txt
+dinnovation.egg-info/top_level.txt
+dinnovation/collection/__init__.py

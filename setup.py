@@ -5,7 +5,7 @@ from os import path
 
 # --- get version ---
 version = "unknown"
-with open("DII/version.py") as f:
+with open("dinnovation/version.py") as f:
     line = f.read().strip()
     version = line.replace("version = ", "").replace('"', '')
 # --- /get version ---
@@ -17,15 +17,15 @@ with io.open(path.join(here, 'README.md'), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
-    name="DII",
+    name="dinnovation",
     version=version,
     author="cmblir",
     author_email="sodlalwl13@gmail.com",
     description="Digital Industry Innovation Data Platform Big data collection and processing, database loading, distribution",
     classifiers=[
         "Programming Language :: Python :: 3.8",
-        "License :: Apache License",
-        "Operation System :: OS Independent",
+        "License :: OSI Approved :: Apache Software License",
+        "Operating System :: OS Independent",
         'Intended Audience :: Developers',
         'Topic :: Office/Business :: Financial',
         'Topic :: Office/Business :: Financial :: Investment',
@@ -48,10 +48,7 @@ setup(
     'chromedriver_autoinstaller==0.4.0',
     'psycopg2==2.9.5',
     'sqlalchemy==2.0.4']
-    
-    ,
-
 )
 
 print("""
-NOTE: DII is not affiliated, endorsed, or vetted by source sites.""")
+NOTE: dinnovation is not affiliated, endorsed, or vetted by source sites.""")
