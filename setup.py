@@ -7,7 +7,8 @@ from os import path
 version = "unknown"
 with open("dinnovation/version.py") as f:
     line = f.read().strip()
-    version = line.replace("version = ", "").replace('"', '')
+    version = line.replace("version = ", "").replace("'", "")
+    
 # --- /get version ---
 
 here = path.abspath(path.dirname(__file__))
