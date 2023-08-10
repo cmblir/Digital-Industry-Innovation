@@ -8,14 +8,11 @@ with open(filename, 'r') as file:
     current_version = version_line.split('=')[1].strip().strip("'")
 
 # Split the version into parts
-major, minor, patch = current_version.split('.')
-minor = int(minor) + 1  # Increment the minor version by 1
-
-# Convert the minor version back to two decimal places
-minor = f"{minor / 100:.02f}".split('.')[1]
+major, minor, patch, micro = current_version.split('.')
+micro = int(micro) + 1  # Increment the micro version by 1
 
 # Create the new version
-new_version = f"{major}.{minor}.{patch}"
+new_version = f"{major}.{minor}.{patch}.{micro}"
 
 # Replace the version in the file
 with open(filename, 'w') as file:
