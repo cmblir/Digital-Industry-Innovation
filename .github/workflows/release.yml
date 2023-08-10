@@ -13,10 +13,6 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
-    - name: Configure Git
-      run: |
-        git config --global user.name "cmblir"
-        git config --global user.email "sodlalwl13@gmail.com"
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -25,18 +21,26 @@ jobs:
     - name: Install dependencies
       run: |
         pip install setuptools wheel twine
-    - name: Bump version (minor)
-      run: python bump_version.py
 
-    - name: Update dinnovation/version.py
-      run: |
-        VERSION=$(python -c "from dinnovation import version; print(version.version)")
-        echo "version = '$VERSION'" > dinnovation/version.py
+    - name: Bump version (minor) and update dinnovation/version.py
+      run: python bump_version.py
 
     - name: Verify version bump
       run: |
         cat dinnovation/version.py
         cat setup.py
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "cmblir"
+        git config --global user.email "sodlalwl13@gmail.com"
+
+    - name: Commit and push version bump
+      run: |
+        git add dinnovation/version.py
+        git commit -m "Bump version"
+        git push
+
     - name: Clear distribution directory
       run: rm -rf dist/*
 
