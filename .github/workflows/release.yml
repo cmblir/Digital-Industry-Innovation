@@ -28,7 +28,7 @@ jobs:
         pip install bumpversion setuptools wheel twine
 
     - name: Bump version (minor)
-      run: bumpversion minor
+      run: bumpversion --config-file .bumpversion.cfg minor
 
     - name: Verify version bump
       run: |
