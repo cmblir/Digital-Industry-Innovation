@@ -30,7 +30,7 @@ jobs:
 
     - name: Update dinnovation/version.py
       run: |
-        VERSION=$(python -c "from dinnovation import version; print(version.__version__)")
+        VERSION=$(python -c "from dinnovation import version; print(version.version)")
         echo "version = '$VERSION'" > dinnovation/version.py
 
     - name: Verify version bump
