@@ -14,11 +14,12 @@ def generate_key(password, salt):
     )
     return base64.urlsafe_b64encode(kdf.derive(password))
 
-with open('financial_constants.enc', 'rb') as file:
+password = input("input your password").encode()
+
+# 파일에서 암호화된 데이터 불러오기
+with open('data.enc', 'rb') as file:
     salt = file.read(16)  # Salt 읽기
     encrypted_data = file.read()
-
-password = input("input your password").encode()
 
 key = generate_key(password, salt)
 
@@ -31,9 +32,4 @@ decrypted_data = cipher_suite.decrypt(encrypted_data)
 # Pickle에서 데이터 로드
 loaded_data = pickle.loads(decrypted_data)
 
-korea_financial_column = loaded_data["korea_financial_column"]
-fmp_FMP_field = loaded_data["fmp_FMP_field"]
-fmp_core_cols = loaded_data["fmp_core_cols"]
-fmp_is_cols = loaded_data["fmp_is_cols"]
-fmp_bs_cols = loaded_data["fmp_bs_cols"]
-fmp_cf_cols = loaded_data["fmp_cf_cols"]
+print(loaded_data)
