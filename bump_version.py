@@ -6,6 +6,7 @@ with open(filename, 'r') as file:
     lines = file.readlines()
     version_line = [line for line in lines if line.startswith('version')][0]
     current_version = version_line.split('=')[1].strip().strip("'")
+    current_version = current_version.replace('"', "")
 
 # Split the version into parts
 major, minor, patch, micro = current_version.split('.')
