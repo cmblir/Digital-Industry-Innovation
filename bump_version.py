@@ -23,4 +23,4 @@ with open(filename, 'w') as file:
         else:
             file.write(line)
 
-print(f"Bumped version from {current_version} to {new_version}")
+print(f"Bumped dinnovation version from {current_version} to {new_version}")
