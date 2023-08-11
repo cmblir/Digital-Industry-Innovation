@@ -11,6 +11,11 @@ with open("dinnovation/version.py") as f:
     
 # --- /get version ---
 
+# --- get requirements ---
+requirements = None
+with open("requirements.txt") as f:
+    requirements = f.read().splitlines()
+
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
@@ -34,21 +39,11 @@ setup(
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
+    include_package_data=True,
     packages=find_packages(),
     platforms=['any'],
     python_requires='>=3.9',
-    install_requires=[
-    'pandas==1.5.3',
-    'numpy==1.24.2',
-    'tqdm==4.64.1',
-    'OpenDartReader==0.2.1',
-    'beautifulsoup4==4.11.2',
-    'urllib3==1.26.14',
-    'selenium==4.8.2',
-    'webdriver_manager==3.8.5',
-    'chromedriver_autoinstaller==0.4.0',
-    'psycopg2==2.9.5',
-    'sqlalchemy==2.0.4']
+    install_requires=requirements
 )
 
 print("""
