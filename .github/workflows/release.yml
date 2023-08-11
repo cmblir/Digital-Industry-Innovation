@@ -72,6 +72,8 @@ jobs:
       with:
         tag_name: ${{ env.VERSION }}
         release_name: Release ${{ env.VERSION }}
-        body: ${{ env.COMMIT_MESSAGE }}
+        body: ${{ github.event.head_commit.message }}
         draft: false
         prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
