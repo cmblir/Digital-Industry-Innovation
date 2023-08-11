@@ -41,8 +41,11 @@ jobs:
         git commit -m "Bump version"
         git push
 
-    - name: Clear distribution directory
-      run: rm -rf dist/
+    - name: Delete distribution directory if exists
+      run: |
+        if [ -d "dist" ]; then
+          rm -rf dist/
+        fi
 
     - name: Build and publish package
       env:
