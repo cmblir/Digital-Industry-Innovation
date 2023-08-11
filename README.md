@@ -35,6 +35,9 @@ To install the related library, use the command below.
 or
 ``` python setup.py install ```
 
+To install the related libray
+``` pip install dinnnovation ```
+
 **required library**
 
 ```
