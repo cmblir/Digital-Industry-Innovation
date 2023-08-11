@@ -1,5 +1,5 @@
 import requests
-from constants import const
+from .constants import const
 import pandas as pd
 import json
 try:

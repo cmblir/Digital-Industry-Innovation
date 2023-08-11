@@ -5,7 +5,7 @@ import numpy as np
 import warnings
 import datetime
 from tqdm import tqdm
-from constants import const
+from .constants import const
 warnings.simplefilter(action='ignore', category=FutureWarning)
 pd.set_option('mode.chained_assignment',  None)
 

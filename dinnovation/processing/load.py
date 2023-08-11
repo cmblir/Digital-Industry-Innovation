@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import psycopg2
-from constants import const
+from .constants import const
 from sqlalchemy import create_engine
 from tqdm import tqdm
 

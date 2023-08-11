@@ -1,5 +1,5 @@
 import pandas as pd
-from constants import const
+from .constants import const
 from tqdm import tqdm
 import OpenDartReader
 

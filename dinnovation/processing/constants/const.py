@@ -15,7 +15,10 @@ def generate_key(password, salt):
     )
     return base64.urlsafe_b64encode(kdf.derive(password))
 
-with open('financial_constants.enc', 'rb') as file:
+module_path = os.path.abspath(os.path.dirname(__file__))
+enc_file_path = os.path.join(module_path, 'processing_constants.enc')
+
+with open(enc_file_path, 'rb') as file:
     salt = file.read(16)
     encrypted_data = file.read()
 
