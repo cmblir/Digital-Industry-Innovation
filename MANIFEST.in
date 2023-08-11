@@ -1,2 +1,4 @@
+include dinnovation/collection/financial/constants/const.py
 include dinnovation/collection/financial/constants/financial_constants.enc
+include dinnovation/processing/constants/const.py
 include dinnovation/processing/constants/processing_constants.enc
