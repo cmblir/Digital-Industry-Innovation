@@ -7,12 +7,12 @@ from tqdm import tqdm
 
 class DataLoad:
     """
-    데이터를 데이터베이스에 적재하는 모듈 
-    사용할 데이터가 많을 시 many를 True로 설정해주세요.
+    A module that loads data into the database
+    Set many to True when there is a lot of data to use.
     """
     def __init__(self, many=False):
         """
-        다수의 파일을 적재할 시 many = True로 설정해주세요.
+        When loading multiple files, set many = True.
         """
         self.country = const.country
         self.dtypesql_finan = const.dtypesql_finan
@@ -31,7 +31,7 @@ class DataLoad:
 
     def DataLoading(self, Path):
         """
-        데이터를 2개 이상 적재할 시 Path를 설정하여 사용하는 함수
+        A function used by setting a path when loading two or more data
         """
         FilePath = os.listdir(Path)
         if self.many == True:
@@ -61,8 +61,8 @@ class DataLoad:
 
     def CheckLength(self):
         '''
-        데이터의 크기보다 클 경우 해당 데이터 크기까지 자르는 함수
-        한국 재무 안됨
+        If it is larger than the data size, a function that cuts the data to that size
+        Korea Finance No
         '''
         if self.many == False:
             if self.table_name.split("_")[-1] == "m":
@@ -97,9 +97,9 @@ class DataLoad:
 
     def Load(self):
         """
-        배치 프로세스를 이용한다. \n
-        이는 일괄 처리라고도 하는 과정으로서 실시간으로 요청에 의해 처리되는 \n
-        방식이 아닌 일괄적으로 대량의 데이터를 처리해준다.
+        Use a batch process. \n
+        This is a process, also known as batch processing, where \n is processed by request in real time.
+        It processes large amounts of data in batches rather than in a way.
         """
         engine = create_engine(self.url)
         if self.many == False:
@@ -113,7 +113,7 @@ class DataLoad:
             elif self.replace == True:
                 self.df.to_sql(name = self.table_name, con=engine, schema='public',chunksize= 10000,
                 if_exists='replace', index = False, dtype=dtypesql, method = 'multi')
-            return f"{self.table_name}가 적재 완료되었습니다."
+            return f"{self.table_name} has finished loading."
         else:
             for length in tqdm(range(len(self.table_nameList))):
                 if self.table_nameList[length].split("_")[-1] == "m":
@@ -126,7 +126,7 @@ class DataLoad:
                 elif self.replace == True:
                     self.DataFrameList[length].to_sql(name = self.table_nameList[length], con=engine, schema='public',chunksize= 10000,
                     if_exists='replace', index = False, dtype=dtypesql, method = 'multi')
-                print(f"{self.table_nameList[length]}가 적재 완료되었습니다.")
+                print(f"{self.table_nameList[length]} has finished loading.")
 
 
     def Login(self, user, password, host, port, dbname):
@@ -134,11 +134,11 @@ class DataLoad:
 
     def Connect_DB(self, replace=False, first=False):
         """
-        postgresql 접속에 필요한 \n
-        id, password, host, port, dbname이다.\n
-        replace는 업데이트 여부를 의미한다. \n
-        업데이트를 진행할 시 선택해주면 된다. \n
-        각 국가마다 테이블명이 다르므로 필요하다.
+        required to connect to postgresql \n
+        id, password, host, port, dbname.\n
+        replace means whether to update. \n
+        You can choose to proceed with the update. \n
+        It is necessary because the table name is different for each country.
         """
         self.replace = replace
         self.first = first
@@ -151,7 +151,7 @@ class DataLoad:
                     rows = cur.fetchall()
                     NowKeyval = int(str(rows[0]).split("'")[1])
                 except psycopg2.DatabaseError as db_err:
-                    print(f"현재 발생한 에러는 {db_err} 입니다.")
+                    print(f"The current error is {db_err}")
                 for keyval, idx in zip(range(NowKeyval, len(self.df)+NowKeyval), range(len(self.df))):
                     self.df["keyval"][idx] = int(keyval)
                 self.df["keyval"] = self.df["keyval"].astype(int)
@@ -169,7 +169,7 @@ class DataLoad:
                         rows = cur.fetchall()
                         NowKeyval = int(str(rows[0]).split("'")[1]) + 1
                     except psycopg2.DatabaseError as db_err:
-                        print(f"현재 발생한 에러는 {db_err} 입니다.")
+                        print(f"The current error is {db_err}")
                     for keyval, idx in zip(range(NowKeyval, len(self.DataFrameList[length])+NowKeyval), range(len(self.DataFrameList[length]))):
                         self.DataFrameList[length]["keyval"][idx] = int(keyval)
                     self.DataFrameList[length]["keyval"] = self.DataFrameList[length]["keyval"].astype(int)

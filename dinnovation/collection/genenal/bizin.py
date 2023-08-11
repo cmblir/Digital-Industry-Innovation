@@ -14,12 +14,12 @@ class information:
 
     def print_information(self):
         print("""
-        함수에 대한 설명은 아래와 같습니다. \n
-        라이브러리 내 주요 클래스는 BIZIN입니다. \n
-        아시아 국가의 경우 url이 다르므로 설정해줘야 합니다. \n
-        DriverSettings()은 셀레니움 크롬 드라이버 세팅 함수입니다. \n
-        area()는 해당 국가의 기업들 정보를 수집하는 함수입니다. \n
-        collect()은 BIZIN 사이트에서 데이터를 수집하는 함수입니다. \n
+        A description of the function is given below. \n
+        The main class within the library is BIZIN. \n
+        In the case of Asian countries, the url is different, so you need to set it. \n
+        DriverSettings() is a Selenium Chrome driver settings function. \n
+        area() is a function that collects information on companies in the country. \n
+        collect() is a function that collects data from the BIZIN site. \n
         """)
 
 class country_name:
@@ -36,7 +36,7 @@ class country_name:
                             "싱가포르" : "singapore","말레이시아" : "malaysia","홍콩" : "hongkong","태국" : "tahiland",
                             "베트남" : "vietnam","필리핀" : "philippines","타이완" : "taiwan","파키스탄" : "pakistan","사우디" : "saudiarabia"}
         print(f"""
-        name에 넣을 수 있는 국가에 대한 설명은 아래와 같습니다. \n
+        The description of the country that can be put in the name is as follows. \n
         {self.country_name}
         """)
         
@@ -46,21 +46,27 @@ class BIZIN:
         self.url = f"https://{name}.bizin.eu/"
         if asia: self.url = f"https://{name}.bizin.asia/"
     
-    def DriverSettings(self):
-        chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]  #크롬드라이버 버전 확인
+    def DriverSettings(self, Turn_off_warning = False, linux_mode = False) -> None:
+        """
+        This function sets the driver.
+        If linux mode is set to True, collection is possible in the background.
+        However, actions such as clicks cannot be taken.
+        """
+        if Turn_off_warning == True: self.TurnOffWarning()
+        chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]  # Check chromedriver version
         chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument("--incognito") # 시크릿 모드
-        chrome_options.add_argument("--no-sandbox") # 리소스에 대한 엑서스 방지
-        chrome_options.add_argument("--disable-setuid-sandbox") # 크롬 충돌 방지
-        chrome_options.add_argument("--disable-dev-shm-usage") # 메모리 부족 에러 방지
+        chrome_options.add_argument("--incognito") # incognito mode
+        if linux_mode == True: chrome_options.add_argument("--headless") # Display mode without Linux GUI
+        chrome_options.add_argument("--no-sandbox") # Prevent access to resources
+        chrome_options.add_argument("--disable-setuid-sandbox") # Prevent chrome crashes
+        chrome_options.add_argument("--disable-dev-shm-usage") # Prevent out of memory errors
         chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        try: # 크롬 드라이버
+        try: # Chrome Driver
             self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)   
         except:
             chromedriver_autoinstaller.install(True)
             self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-        # WebDruverException Error 방지 기존의 드라이버 버젼으로 지정
-        # driver = webdriver.Chrome(executable_path='/Users/cmblir/Python/Musinsa-Analysis/100/chromedriver')
+        # Prevent WebDruverException Error Designate as an existing driver version
 
 
     def area(self):

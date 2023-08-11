@@ -16,20 +16,20 @@ def generate_key(password, salt):
     return base64.urlsafe_b64encode(kdf.derive(password))
 
 with open('financial_constants.enc', 'rb') as file:
-    salt = file.read(16)  # Salt 읽기
+    salt = file.read(16)
     encrypted_data = file.read()
 
 password = input("input your password").encode()
 
 key = generate_key(password, salt)
 
-# 암호화 객체 생성
+# create encryption object
 cipher_suite = Fernet(key)
 
-# 복호화
+# decryption
 decrypted_data = cipher_suite.decrypt(encrypted_data)
 
-# Pickle에서 데이터 로드
+# Load data from Pickle
 loaded_data = pickle.loads(decrypted_data)
 
 country = loaded_data["country"]

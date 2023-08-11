@@ -8,11 +8,11 @@ class information:
 
     def print_information(self):
         print("""
-        함수에 대한 설명은 아래와 같습니다. \n
-        라이브러리 내 주요 클래스는 idx_extact입니다. \n
-        make_Avaible()는 데이터프레임을 사용할 수 있게하는 함수입니다. \n
-        Add_On()은 데이터를 만드는 함수입니다. \n
-        transform()은 데이터를 가공하는 함수입니다.
+        A description of the function is given below. \n
+        The main class within the library is idx_extact. \n
+        make_Avaible() is a function that makes a data frame available. \n
+        Add_On() is a function that creates data. \n
+        transform() is a function that processes data.
         """)
 
 class idx_extract:

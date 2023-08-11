@@ -15,30 +15,30 @@ class information:
 
     def print_information(self):
         print("""
-        함수에 대한 설명은 아래와 같습니다. \n
-        라이브러리는 ETL과정중 T(Transform)을 포함하고 있습니다. \n
-        데이터베이스에서 데이터를 확인하는 클래스는 Checker 입니다. \n
-        클래스 지정시 데이터베이스(postgresql)의 id, pw, ip, db, 추출하고자 하는 테이블명을 입력해주세요. \n
-        read_excel() 함수는 xlsx을 불러와 데이터프레임으로 저장합니다. \n
-        read_csv() 함수는 csv를 불러와 데이터프레임으로 저장합니다. \n
-        data_update() 함수는 신규 데이터의 업데이트시 I 또는 U를 입력합니다. \n
-        date_update() 함수는 신규 데이터의 업데이트시 날짜를 입력합니다. \n
-        CheckDate() 함수는 인베스팅 닷컴의 일반 데이터 날짜를 표준화하는 함수 \n
-        CheckLength() 함수는 데이터의 크기를 확인하여 크기만큼 자르는 함수 \n
-        CheckVarchar() 함수는 재무 데이터 크기를 확인하여 클 경우 새로 삽입하는 함수 \n
-        CheckNumeric() 함수는 재무 데이터 숫자를 확인하는 함수 \n
-        ------------------------------------------------------------------ \n
-        데이터베이스에서 데이터를 확인하는 클래스는 Analysis 입니다. \n
-        read_excel() 함수는 xlsx을 불러와 데이터프레임으로 저장합니다. \n
-        read_csv() 함수는 csv를 불러와 데이터프레임으로 저장합니다. \n
-        Fail() 함수는 오류가 난 데이터를 데이터프레임에 넣기 위해 딕셔너리화 시키는 함수 \n
-        CheckDate_Duplicate() 함수는 날짜체크, 중복체크를 확인하는 함수 \n
-        CheckNumber() 함수는 전화번호가 유효한지 확인하는 함수 \n
-        """)
+        A description of the function is given below. \n
+        The library includes T (Transform) in the ETL process. \n
+        The class that checks data in the database is Checker. \n
+        When designating a class, enter the id, pw, ip, db of the database (postgresql), and the table name to be extracted. \n
+        The read_excel() function loads xlsx and saves it as a data frame. \n
+        The read_csv() function loads a csv and saves it as a data frame. \n
+        The data_update() function inputs I or U when updating new data. \n
+        The date_update() function inputs the date when new data is updated. \n
+        The CheckDate() function is a function that standardizes the general data date of Investing.com \n
+        The CheckLength() function checks the size of data and cuts it by the size \n
+        The CheckVarchar() function checks the financial data size and inserts a new one if it is large \n
+        The CheckNumeric() function checks a number in financial data \n
+        -------------------------------------------------- ----------------\n
+        The class that checks data from database is Analysis. \n
+        The read_excel() function loads xlsx and saves it as a data frame. \n
+        The read_csv() function loads a csv and saves it as a data frame. \n
+        The Fail() function is a function that dictates erroneous data to put into a data frame \n
+        The CheckDate_Duplicate() function is a function that checks the date check and duplicate check \n
+        The CheckNumber() function checks whether a phone number is valid \n
+         """)
 
 class Checker:
     """
-    데이터를 검사하여 필요에 따라 값을 대체하는 모듈
+    A module that inspects data and replaces values as needed
     """
     def __init__(self):
         self.definition = const.definition
@@ -50,7 +50,7 @@ class Checker:
     
     def fndtn_dt(self):
         """
-        데이터 내의 fndtn_dt 값을 YYYYMMDD로 표준화해주는 함수
+        A function that normalizes fndtn_dt values in data to YYYYMMDD
         """
         for idx in range(len(self.df)):
             value = self.df["fndtn_dt"][idx]
@@ -64,19 +64,19 @@ class Checker:
 
     def read_excel(self, path):
         """
-        path에 excel 주소를 입력하세요.
+        Enter the excel address in path.
         """
         self.df = pd.read_excel(path)
 
     def read_csv(self, path):
         """
-        path에 csv 주소를 입력하세요.
+        Enter the csv address in path.
         """
         self.df = pd.read_csv(path)
 
     def data_update(self, Insert: bool) -> bool:
         """
-        신규 데이터 업데이트 여부를 입력해주세요.
+        Please enter whether or not to update new data.
         """
         if Insert == True:
             self.df["opert_sctin_cd"] = "I"
@@ -85,14 +85,14 @@ class Checker:
 
     def date_update(self):
         """
-        신규 데이터의 날짜 업데이트를 입력하는 함수
+        Function to input date update of new data
         """
         self.df["data_crtin_dt"] = "".join(str(datetime.date.today()).split("-"))
 
     def CheckDate(self):
         """
-        인베스팅 닷컴의 데이터 날짜를 표준화시키는 함수 \n
-        일반만 사용 가능
+        Investing.com's function to standardize data dates \n
+        General use only
         """
         for TimeLength in range(len(self.df)):
             time = self.df["entrp_reltn_tdngs_dt"][TimeLength]
@@ -105,8 +105,8 @@ class Checker:
     
     def CheckLength(self):
         '''
-        데이터의 크기보다 클 경우 해당 데이터 크기까지 자르는 함수 \n
-        재무, 일반 모두 가능
+        If it is larger than the size of the data, a function that cuts it to the size of the data \n
+        Both financial and general
         '''
         for key, value in self.definition.items():
             for Length in range(len(self.df["keyval"])):
@@ -119,8 +119,8 @@ class Checker:
 
     def CheckVarchar(self, News=False): 
         """
-        데이터의 크기를 체크하고 만약 데이터 크기보다 클 경우 해당 데이터를 새로 삽입하는 함수 \n
-        재무만 가능
+        A function that checks the data size and inserts the data if it is larger than the data size \n
+        finance only
         """
         FirstRange = len(self.df['keyval'])
         cnt = 0
@@ -174,8 +174,8 @@ class Checker:
 
     def CheckNumeric(self):
         """
-        숫자여부를 파악하고 숫자가 아닐 경우 삭제하고 숫자가 포함된 경우 숫자만 도출하는 함수 \n
-        재무만 가능
+        A function that determines whether it is a number, deletes it if it is not a number, and derives only the number if it contains a number \n
+        finance only
         """
         numeric_match = re.compile('[^0-9]')
         for i in range(len(self.df)):
@@ -202,7 +202,7 @@ class Checker:
 class Analysis:
     def __init__(self):
         """
-        데이터를 분석하여 오류율을 엑셀형태로 저장하는 모듈
+        A module that analyzes data and saves error rates in Excel format
         """
         self.TableDefaultColumns = const.TableDefaultColumns
         self.TableDefaultColumns_info = const.TableDefaultColumns_info
@@ -234,7 +234,7 @@ class Analysis:
     
     def read_excel(self, path):
         """
-        path에 excel 주소를 입력하세요.
+        Enter the excel address in path.
         """
         self.df = pd.read_excel(path)
         if "/" in path: Table = path.split("/")[-1].split(".")[0]
@@ -244,7 +244,7 @@ class Analysis:
 
     def read_csv(self, path):
         """
-        path에 csv 주소를 입력하세요.
+        Enter the csv address in path.
         """
         self.df = pd.read_csv(path)
         if "/" in path: Table = path.split("/")[-1].split(".")[0]
@@ -254,9 +254,9 @@ class Analysis:
 
     def Fail(self, column, Failed, info):
         """
-        오류난 데이터를 입력하는 함수
-        column = 오류난 컬럼
-        Failed = 오류난 데이터
+        Function to input error data
+        column = column in error
+        Failed = erroneous data
         """ 
         if info == True:
             ColumnName = self.ColumnDF_info[column].values[0] # 컬럼명
@@ -312,7 +312,7 @@ class Analysis:
 
     def CheckDate_Duplicate(self, info=False):
         """
-        날짜와 동시에 중복여부를 확인하는 함수.
+        A function that checks for duplicates at the same time as the date.
         """
         if info==True:
             self.df.columns = list(self.DefaultColumns_info["표준_영문컬럼명"].values)        
@@ -362,12 +362,12 @@ class Analysis:
 
     def CheckNumber(self, phone_columns, cop_columns):
         """
-        전화번호의 컬럼들을 확인하는 함수
+        Function to check columns of phone number
         """
-        PN_1 = re.compile("\d{2,3}-\d{3,4}-\d{4}$") # 전화번호 예시 1 000-0000-0000
-        PN_2 = re.compile("\(\d{2,3}\)-\d{3,4}-\d{3,4}$") # 전화번호 예시 2 (000)-0000-0000
-        PN_3 = re.compile("\d{1,2} \d{7,8}$") # 전화번호 예시 3 00 00000000
-        BS_1 = re.compile("\d{1,2}-\d{7,8}$") # 법인번호 예시 1 00-00000000
+        PN_1 = re.compile("\d{2,3}-\d{3,4}-\d{4}$") # phone number ex 1 000-0000-0000
+        PN_2 = re.compile("\(\d{2,3}\)-\d{3,4}-\d{3,4}$") # phone number ex 2 (000)-0000-0000
+        PN_3 = re.compile("\d{1,2} \d{7,8}$") # phone number ex 3 00 00000000
+        BS_1 = re.compile("\d{1,2}-\d{7,8}$") # corporate number ex 1 00-00000000
         for column in phone_columns:
             for idx in range(len(self.df[column])):
                 PN_Check_1 = PN_1.search(self.df[column][idx])
@@ -393,7 +393,7 @@ class Analysis:
 
     def change_columns(self, df, info=False, korea=False):
         """
-        표준 한글컬럼명으로 수집된 데이터 영문 컬럼명으로 바꿔주는 함수
+        A function that converts collected data from standard Korean column names to English column names
         """
         if info==True: df.columns = [self.TableDefaultColumns_info[col] for col in df.columns]
         else: df.columns = [self.TableDefaultColumns["표준_영문컬럼명"][self.TableDefaultColumns["표준_한글컬렴명"].index(col)] if col in self.TableDefaultColumns["표준_한글컬렴명"] else col for col in df.columns]

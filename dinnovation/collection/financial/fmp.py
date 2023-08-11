@@ -2,7 +2,6 @@ import requests
 from constants import const
 import pandas as pd
 import json
-# Financial Statments가 있는 기업들의 Symbol을 가져오기 위한 모듈 설치 
 try:
     # For Python 3.0 and later
     from urllib.request import urlopen
@@ -23,19 +22,18 @@ class information:
 
     def print_information(self):
         print("""
-        함수에 대한 설명은 아래와 같습니다. \n
-        라이브러리 내 주요 클래스는 fmp_extact입니다. \n
-        get_jsonparsed_data()는 데이터를 파싱하는 함수입니다. \n
-        extractor()은 데이터를 json형태로 가지고 오는 함수입니다. \n
-        url_generator()은 FMP 사이트에 접속하여 데이터를 분리하는 함수입니다. \n
-        ending_period_extact()는 날짜를 표준화하는 함수입니다. \n
-        report_type_extract()는 들어오는 값에 따라 연간인지 분기인지 구분하는 함수입니다. \n
-        GetExcel()은 추출한 데이터를 저장하는 함수입니다. \n
-        cleanse()는 데이터를 가공하는 함수입니다. \n
-        get_symbols()는 데이터를 사이트로부터 가져오는 함수입니다. \n
-        make_clean()은 위의 함수들을 순차적으로 실행하여 데이터를 추출 후 저장하는 함수입니다.
+        A description of the function is given below. \n
+        The main class within the library is fmp_extact. \n
+        get_jsonparsed_data() is a function that parses data. \n
+        extractor() is a function that brings data in json format. \n
+        url_generator() is a function that connects to the FMP site and separates data. \n
+        ending_period_extact() is a function that normalizes dates. \n
+        report_type_extract() is a function that determines whether it is annual or quarterly based on the incoming value. \n
+        GetExcel() is a function that stores the extracted data. \n
+        cleanse() is a function that processes data. \n
+        get_symbols() is a function that gets data from the site. \n
+        make_clean() is a function that sequentially executes the above functions to extract and save data.
         """)
-
 
 class fmp_extract:
     def __init__(self):
@@ -67,7 +65,6 @@ class fmp_extract:
             from pandas import json_normalize
         except ImportError:
             from pandas.io.json import json_normalize
-        # 데이터 갖고오기
         req=requests.get(url)
         # json load
         data = json.loads(req.text)
@@ -115,58 +112,54 @@ class fmp_extract:
     def cleanse(self, path, filename, fund = False, trading = True) : 
         original_df = pd.read_excel(path)
         """
-        데이터 가공하는 함수
-        original_df : extract_and_save에서 추출한 원본데이터 \n 
-        save_dir : 저장할 디렉토리 \n
-        fund : 주식시장에 상장된 etf 까지 확인하고 싶으면 True, 아니라면 False \n 
-        trading : 현재 주식시장에서 거래되고 있는 기업들만 추출하고 싶으면 True, 아니라면 False
+        data processing function
+        original_df : Original data extracted from extract_and_save \n
+        save_dir : Directory to save \n
+        fund: True if you want to check ETFs listed on the stock market, otherwise False \n
+        trading: True if you want to extract only companies that are currently trading in the stock market, otherwise False
         """
 
         if fund == True : 
-            pass  # 펀드포함 
+            pass  # included fund
         else : 
-            # 펀드가 제거된, 진짜 상장기업 정보만을 보고싶으면 false 
+            # false if you want to see only real listed company information with funds removed
             original_df['isFund'].fillna(False) 
             original_df = original_df[original_df['isFund']== False]
             
             
-        # 현재 거래되고 있는 기업들만 추출 
+        # Extract only the companies that are currently trading
         if trading == True : 
-            # isActivelyTrading 이 공란인 기업들의 경우 거래되고 있다고 가정
+            # Assume that firms with isActivelyTrading blank are trading
             original_df['isActivelyTrading'] = original_df['isActivelyTrading'].fillna(True)
             original_df = original_df[original_df['isActivelyTrading']==True]
         else : 
             pass
         
         
-        ## 대응표 갖고오기 
+        ## Get correspondence table
         mapping_sheet = pd.DataFrame(self.FMP_field)
-        # 대응표를 딕셔너리화 key : value = 기준필드명 : FMP필드명
+        # Dictionize correspondence table key : value = standard field name : FMP field name
         mapping_dic = mapping_sheet.set_index('채워야할 테이블 필드명').T.to_dict('index')['Financial Modeling API']
         
-        
-        # processed라는 빈 데이터 프레임을 생성한다. 
         processed = pd.DataFrame(columns = mapping_dic.keys())
         
-        # 아래 루프로 대응표를 이용하여 processed라는 빈 데이터 프레임에 정보를 집어 넣는다. 
+        # Use the correspondence table with the loop below to insert information into an empty data frame called processed.
         for order, field in enumerate(processed.columns) : 
             try : 
                 processed.loc[:,field] = original_df.loc[:,mapping_dic[field]]
             except : 
                 pass
         import re 
-        regExp = '\W[a-zA-Z]+'  # \W로 문자, 숫자가 아닌 특수문자 제거하고 [a-zA-Z]+ 로 ''. 뒤에있는 주식시장 코드 제거
+        regExp = '\W[a-zA-Z]+'  # Remove special characters that are not letters and numbers with \W and '' with [a-zA-Z]+. Remove stock market code behind
         processed['lstng_cd']= processed['lstng_cd'].str.replace(pat = regExp ,repl=r'', regex = True)
         processed['stacnt_dt'] = processed['stacnt_dt'].apply(lambda x : self.ending_period_extract(x))
         processed['lstng_dt'] = processed['lstng_dt'].apply(lambda x : self.ending_period_extract(x))
         processed['fndtn_dt'] = processed['fndtn_dt'].apply(lambda x : self.ending_period_extract(x))
         processed['reprt_kind_cd'] = processed['reprt_kind_cd'].apply(lambda x : self.report_type_extract(x))
         
-        # 엑셀로 저장
         processed.to_excel(filename, index = False)
         print(f"{filename}이 완료되었습니다.")
         
-        # 판다스로 리턴
         return processed
 
     def get_symbols(self, country, api_key):
@@ -175,7 +168,7 @@ class fmp_extract:
         county에 국가명을 입력하세요. \n
         api_key is fmp api key
         """
-        # Financial Statments가 있는 기업들의 Symbol을 가져오기 위한 QueryString.
+        # Query String to get Symbols of companies with Financial Statements.
         url = (f"https://financialmodelingprep.com/api/v3/financial-statement-symbol-lists?apikey={api_key}")
         Symbols = self.get_jsonparsed_data(url)
 
@@ -236,35 +229,34 @@ class fmp_extract:
             company_df_list = pd.DataFrame()
             for target_Symbol in tqdm(selected_symbols[cnt:cnt+1000]) :  
                 if cnt == len(selected_symbols):
-                    company_df_list = company_df_list.sort_values(by=['symbol','date'], ascending = [True,False]) # symbol은 오름차순으로, 같은 심볼 내에서 회계분기는 내림차순이 되도록 정렬.        
-                    # 2022년 현재, 5개년치의 데이터, 즉 2017년 이상인 데이터만 뽑아낸다. -> calendarYear(회계연도)가 2017년 이상 
+                    company_df_list = company_df_list.sort_values(by=['symbol','date'], ascending = [True,False]) # Sort symbols in ascending order, fiscal quarters within the same symbol in descending order.       
+                    # As of 2022, only 5 years of data, that is, data from 2017 or more are extracted. -> calendarYear (fiscal year) is more than 2017
                     # company_df_list = company_df_list[company_df_list['calendarYear'].astype('int')>=2022]
                     company_df_list.to_excel(f'{country}_{cnt}.xlsx', index=False)
 
                 for report_type in ['annual','quarter'] :
                 
                     if report_type == 'annual' : 
-                        limit = 2 # 연간 재무제표 1개년 
+                        limit = 2 # Annual financial statement 1 year
                     else : 
-                        limit = 8 # 분기 별 재무제표 (1년에 4분기)
+                        limit = 8 # Quarterly financial statements (4 quarters per year)
                 
             
-                    # 기업별 URL 생성 
                     is_url = self.url_generator(target_Symbol, 'is', limit, api_key, report_type)
                     bs_url = self.url_generator(target_Symbol, 'bs', limit, api_key, report_type)
                     cf_url = self.url_generator(target_Symbol, 'cf', limit, api_key, report_type)
 
-                    # extractor 함수를 이용하여 API를 통한 데이터를 판다스 데이터프레임으로 갖고옴. 
+                    # Use the extractor function to import data through the API into a Pandas data frame.
                     df_is = self.extractor(is_url)
                     df_bs = self.extractor(bs_url)
                     df_cf = self.extractor(cf_url)
 
 
-                # 오류 회피 
-                # 간혹가다 손익 계산서, 대차대조표는 있는데 현금흐름표가 없는등의 문제가 있다. 
-                # 모든 경우에 대한 오류 회피 
-                # try : 만약 추출해 올 열들에 대한 정보가 존재한다면 불러온다
-                # except : 만약 추출 해 올 열들에 대한 정보가 있으면, core_is()
+                # Error Avoidance
+                # Occasionally, there are problems such as income statement and balance sheet, but no cash flow statement.
+                # Error avoidance for all cases
+                # try: If there is information about the columns to be extracted, call it
+                # except: if there is information about the columns to be extracted, core_is()
 
                     try :  
                         df_is = df_is[self.core_cols+self.is_cols]
@@ -286,16 +278,16 @@ class fmp_extract:
                     company_df = pd.merge(df_is, df_bs, how = 'outer', on = self.core_cols)
                     company_df = pd.merge(company_df, df_cf, how = 'outer', on = self.core_cols)
 
-                    # 숫자 데이터 이외에 필요한 기업 일반정보들을 추가한다. 
-                    # Financil Modeling Prep의 Company profile API를 이용한다. 
+                    # Add necessary company general information in addition to numeric data.
+                    # Use Company profile API of Financil Modeling Prep.
                     base_url = f'https://financialmodelingprep.com/api/v3/profile/RY.TO?apikey={api_key}'
                     target_url = base_url.replace('RY.TO', target_Symbol)
 
-                    # request로 데이터 갖고오기 
+                    # Get data with request
                     req = requests.get(target_url)
                     data = json.loads(req.text)
 
-                    # 데이터 명세서에 근거하여 필요한 일반정보 칼럼들만 추출하여 company_df에 추가한다. 
+                    # Extract only necessary general information columns based on the data specification and add them to company_df.
 
                     try : company_df['companyName'] = data[0]['companyName'] 
                     except :company_df['companyName'] = ""
@@ -332,13 +324,13 @@ class fmp_extract:
                     try : company_df['isFund'] =data[0]['isFund']
                     except : company_df['isFund'] = ""
                         
-                    # 택스 번호 추가. 'Company core information API'를 이용한다. 
+                    # Add tax number. Use 'Company core information API'.
                     try : 
                         base_url = f'https://financialmodelingprep.com/api/v4/company-core-information?symbol=AAPL&apikey={api_key}'
                         target_url = base_url.replace('AAPL', target_Symbol)
 
-                        # request로 데이터 갖고오기 
-                        # 갖고오는 데이터가 null이게 되면, 'data'에서 정보를 추출하는 과정에서 에러가 발생하게 될 것이다. 
+                        # Get data with request
+                        # If the imported data is null, an error will occur in the process of extracting information from 'data'.
                         req = requests.get(target_url)
                         data = json.loads(req.text)
                         
@@ -355,16 +347,16 @@ class fmp_extract:
                     cnt += 1
                 
                 
-            company_df_list = company_df_list.sort_values(by=['symbol','date'], ascending = [True,False]) # symbol은 오름차순으로, 같은 심볼 내에서 회계분기는 내림차순이 되도록 정렬.        
+            company_df_list = company_df_list.sort_values(by=['symbol','date'], ascending = [True,False]) # Sort symbols in ascending order, fiscal quarters within the same symbol in descending order.  
 
-            # 2022년 현재, 5개년치의 데이터, 즉 2017년 이상인 데이터만 뽑아낸다. -> calendarYear(회계연도)가 2017년 이상 
+            # As of 2022, only 5 years of data, that is, data from 2017 or more are extracted. -> calendarYear (fiscal year) is more than 2017
             # company_df_list = company_df_list[company_df_list['calendarYear'].astype('int')>=2022]
             company_df_list.to_excel(f'Original_{country}_{cnt}.xlsx', index=False)
 
     def make_clean(self, FilePath, SavePath):
         """
-        FilePath = Clean 작업을 진행할 디렉토리 \n
-        SavePath = Clean 작업 후 저장할 디렉토리
+        FilePath = directory to be cleaned \n
+        SavePath = Directory to save after Clean operation
         """
         for File in tqdm(FilePath):
             name = File.split(".")[0]

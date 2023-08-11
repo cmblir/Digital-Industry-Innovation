@@ -12,7 +12,7 @@ class investing_news_extract:
 
     def set_columns(self):
         """
-        뉴스에 들어가는 컬럼 설정
+        Column setting for news
         """
         self.news_append_columns = ["entrp_reltn_tdngs_url", "entrp_reltn_tdngs_subjc", "entrp_reltn_tdngs_dtl_cont"]
         self.new_news_columns = ["industry_reltn_tdngs_url", "industry_reltn_tdngs_subjc", "industry_reltn_tdngs_dtl_cont"]
@@ -41,13 +41,13 @@ class investing_news_extract:
 
     def input_dataframe(self, df) -> pd.DataFrame:
         """
-        수집이 진행될 데이터프레임 설정
+        Set the data frame to be collected
         """
         self.df = df
 
     def get_information(self):
         """
-        데이터프레임의 상장코드를 기반으로 인베스팅에서 뉴스를 수집합니다.
+        Collect news from Investing based on the listing code of the data frame.
         """
         symbol = list(set(self.df["lstng_cd"]))
         self.news_dict = {}
@@ -63,7 +63,7 @@ class investing_news_extract:
     def change_length(self):
         max_len = max(map(len, self.news_dict.values()))
 
-        # 모든 리스트를 가장 긴 리스트의 길이에 맞추기
+        # fit all lists to the length of the longest list
         for key, value in self.news_dict.items():
             if len(value) < max_len:
                 self.news_dict[key] = value + [None] * (max_len - len(value))
@@ -71,7 +71,7 @@ class investing_news_extract:
 
     def collect(self):
         """
-        인베스팅에서 수집한 url 주소를 접속하여 뉴스 정보 수집
+        Collect news information by accessing the url address collected from investing
         """
         self.base_df = pd.DataFrame()
         for col in tqdm(list(self.df.columns)):
@@ -101,7 +101,7 @@ class investing_news_extract:
 
     def merge_data(self, path):
         """
-        url 주소에서 수집한 데이터 합치기
+        Combining data collected from url addresses
         """
         self.df = self.df.drop(columns=["Unnamed : 0"])
         self.df = self.df.dropna()
