@@ -54,3 +54,24 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
         twine upload dist/*
+
+    - name: Get commit message
+      id: commit
+      run: |
+        echo "COMMIT_MESSAGE=$(git log --format=%B -n 1 ${{ github.event.after }})" >> $GITHUB_ENV
+
+    - name: Get version number
+      id: version
+      run: |
+        VERSION=$(python -c "from dinnovation import version; print(version.version)")
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ env.VERSION }}
+        release_name: Release ${{ env.VERSION }}
+        body: ${{ env.COMMIT_MESSAGE }}
+        draft: false
+        prerelease: false
