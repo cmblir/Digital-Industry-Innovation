@@ -12,7 +12,7 @@ Please note that dinnovation is not affiliated, endorsed, or vetted by any sourc
 
 ---
 
-<a target="new" href="https://pypi.python.org/pypi/dinnovation"><img border=0 src="https://img.shields.io/badge/python-2.7,%203.6+-blue.svg?style=flat" alt="Python version"></a>
+<a target="new" href="https://pypi.python.org/pypi/dinnovation"><img border=0 src="https://img.shields.io/badge/python-3.9+-blue.svg?style=flat" alt="Python version"></a>
 <a target="new" href="https://pypi.python.org/pypi/dinnovation"><img border=0 src="https://img.shields.io/pypi/v/yfinance.svg?maxAge=60%" alt="PyPi version"></a>
 <a target="new" href="https://pypi.python.org/pypi/dinnovation"><img border=0 src="https://img.shields.io/pypi/status/yfinance.svg?maxAge=60" alt="PyPi status"></a>
 
@@ -49,6 +49,7 @@ webdriver_manager==3.8.5
 chromedriver_autoinstaller==0.4.0
 psycopg2==2.9.5
 sqlalchemy==2.0.4
+cryptography==41.0.3
 ```
 
 ---
