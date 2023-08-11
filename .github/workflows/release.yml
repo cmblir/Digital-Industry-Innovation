@@ -42,7 +42,7 @@ jobs:
         git push
 
     - name: Clear distribution directory
-      run: rm -rf dist/*
+      run: rm -rf dist/
 
     - name: Build and publish package
       env:
