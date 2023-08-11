@@ -5,7 +5,6 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import os
 
-
 def generate_key(password, salt):
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
@@ -15,10 +14,7 @@ def generate_key(password, salt):
     )
     return base64.urlsafe_b64encode(kdf.derive(password))
 
-module_path = os.path.abspath(os.path.dirname(__file__))
-enc_file_path = os.path.join(module_path, 'financial_constants.enc')
-
-with open(enc_file_path, 'rb') as file:
+with open('financial_constants.enc', 'rb') as file:
     salt = file.read(16) 
     encrypted_data = file.read()
 
