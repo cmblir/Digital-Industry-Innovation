@@ -2,6 +2,16 @@ import yfinance as yf
 import psycopg2
 import pandas as pd
 
+class information:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        The yfinance library collects market cap data. \n
+        collect() is a function that collects data from shareoutstanding sites. \n
+        """)
+
 class YFINANCE:
     def __init__(self, country, host, database, user, password):
         conn = psycopg2.connect(

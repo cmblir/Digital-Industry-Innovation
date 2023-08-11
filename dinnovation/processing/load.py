@@ -5,6 +5,21 @@ from .constants import const
 from sqlalchemy import create_engine
 from tqdm import tqdm
 
+class information:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        The DataLoad() class is the main one. \n
+        The class can handle large amounts if many = True is set. \n
+        DataLoading() is a function that saves data in the form of a data frame within a class. \n
+        CheckLength() is a function that measures the length of the saved data frame to prevent errors beyond the standard. In addition, the value of keyval is raised above the latest value that currently exists. \n
+        Load() loads the data using a batch process. \n
+        Login() is a function that connects to the database. \n
+        Connect_DB() is a function that connects to the database and creates an environment where data can be loaded.
+        """)
+
 class DataLoad:
     """
     A module that loads data into the database

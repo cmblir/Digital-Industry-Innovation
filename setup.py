@@ -27,6 +27,8 @@ setup(
     version=version,
     author="cmblir",
     author_email="sodlalwl13@gmail.com",
+    long_description = long_description,
+    long_description_content_type = "text/markdown",
     description="Digital Industry Innovation Data Platform Big data collection and processing, database loading, distribution",
     classifiers=[
         "Programming Language :: Python :: 3.8",

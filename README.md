@@ -1,9 +1,25 @@
-## Notice
+# Download market data from various information sites
 
-Please note that DII is not affiliated, endorsed, or vetted by any source sites. Use at your own risk and discretion.
+<table border=1 cellpadding=10><tr><td>
+
+*** Important Legal Disclaimer ***
+---
+Please note that dinnovation is not affiliated, endorsed, or vetted by any source sites. Use at your own risk and discretion.
+
+**For more information about the rights to use the actual data you downloaded, see the Terms of Use for each site. dinnovation is for personal use only.**
+
+</td></tr></table>
+
+---
+
+<a target="new" href="https://pypi.python.org/pypi/dinnovation"><img border=0 src="https://img.shields.io/badge/python-2.7,%203.6+-blue.svg?style=flat" alt="Python version"></a>
+<a target="new" href="https://pypi.python.org/pypi/dinnovation"><img border=0 src="https://img.shields.io/pypi/v/yfinance.svg?maxAge=60%" alt="PyPi version"></a>
+<a target="new" href="https://pypi.python.org/pypi/dinnovation"><img border=0 src="https://img.shields.io/pypi/status/yfinance.svg?maxAge=60" alt="PyPi status"></a>
 
 
-# Digital Industry Innovation Data Platform Big data collection and processing, database loading, distribution
+---
+
+## Digital Industry Innovation Data Platform Big data collection and processing, database loading, distribution
 
 It was developed to facilitate the work of collecting, processing, and loading the data required for the Big Data Center.
 In addition, various libraries are used in the project, which are available under the Apache 2.0 license.
@@ -50,24 +66,24 @@ sqlalchemy==2.0.4
 * Corporate financial information data
      * Investing
           * importing library
-          * ```from DataColletion.Collection.Financial import INVESTING``` 
+          * ```from dinnovation.collection.financial import investing``` 
           * you can get library infromation
           <pre>
           <code>
-          investing = INVESTING
           information = investing.information()
           print(information)
           
           """
-          라이브러리는 2개로 나누어집니다.
-          데이터를 수집하는 라이브러리인 Investing_Crawler, 데이터를 가공하는 라이브러리인 Investing_Cleanse
-          ----------------------------------------------------------------------
-          Investing_Crawler의 함수는 아래와 같습니다.
-          DriverSettings()은 셀레니움 크롬 드라이버 세팅 함수입니다.
-          download_historial()은 과거 주종가 데이터를 수집하는 함수입니다. 
-          collect()은 인베스팅 닷컴에서 데이터를 수집하는 함수입니다.
-          ------------------------------------------------------------------------------------------
-          Investing_Cleanse는 클래스를 실행시키면 바로 진행이 됩니다.
+          The library is divided into two parts. 
+          Investing_Crawler, a library that collects data, Investing_Cleanse, a library that processes data
+          -------------------------------------------------- 
+          The function of Investing_Crawler is shown below. 
+          DriverSettings() is a Selenium Chrome driver settings function. 
+          download_historial() is a function that collects past stock price data. 
+          collect() is a function that collects data from investing.com. 
+          -------------------------------------------------- 
+          Investing_Cleanse will proceed as soon as you run the class. 
+          ------------------------------------------------------------------------------
           """
           </code>
           </pre>
@@ -90,18 +106,19 @@ sqlalchemy==2.0.4
           * Example code
           <pre>
           <code>
-          investing = INVESTING.Investing_Cleanse("/~.xlsx", "/~.xlsx")
-          process = investing.matching_process()
+          country_lst = ["japan", "hong-kong"]
+          for country in country_lst:
+               investing.DriverSettings()
+               investing.collect(country, country, f"{country}.xlsx")
           </code>
           </pre>
 
      * Financial Modeling Prep
           * importing library
-          * ```from DataColletion.Collection.Financial import FMP``` 
+          * ```from dinnovation.collection.financial import fmp``` 
           * you can get library infromation
           <pre>
           <code>
-          fmp = FMP
           information = fmp.information()
           print(information)
           
@@ -124,8 +141,11 @@ sqlalchemy==2.0.4
           * Example code
           <pre>
           <code>
-          fmp = FMP.fmp_extract()
-          get_symbols = fmp.get_symbols("한국")
+          fmp = fmp.fmp_extract()
+          country_lst = ["호주", "스위스"]
+
+          for country in country_lst:
+               fmp.get_symbols(country)
           </code>
           </pre>
           * you can use transform data
@@ -133,17 +153,16 @@ sqlalchemy==2.0.4
           <pre>
           <code>
           fmp = FMP.fmp_extract()
-          clean = fmp.make_clean("/", "/")
+          clean = fmp.cleanse("/", "/")
           </code>
           </pre>
 
      * Dart (Republic of Korea Only)
           * importing library
-          * ```from DataColletion.Collection.Financial import DART``` 
+          * ```from dinnovation.collection.financial import dart``` 
           * you can get library infromation
           <pre>
           <code>
-          dart = DART
           information = dart.information()
           print(information)
           
@@ -160,12 +179,8 @@ sqlalchemy==2.0.4
           * Example code
           <pre>
           <code>
-          dart = DART.dart_extract("/.xlsx")
-          print(dart.api_key())
-          
-          """ print is api_key1 = 'example key code 0000' """
-          
-          extract_finstate = dart.load_finstats('example key code 0000')
+          dart = dart.dart_extract("/.xlsx")         
+          extract_finstate = dart.load_finstats('your api key')
           </code>
           </pre>
           * you can use transform data
@@ -176,30 +191,12 @@ sqlalchemy==2.0.4
           </code>
           </pre>
 
-     * Vietstock (Viet Nam Only)
-          * importing library
-          * ```from DataColletion.Collection.Financial import VIETSTOCK``` 
-          * you can get library infromation
-          <pre>
-          <code>
-          vietstock = VIETSTOCK
-          information = vietstock.information()
-          print(information)
-          """
-          print is 
-          """
-          </code>
-          </pre>
-          * you can use collecting Vietstock financial information data
-          * Example code
-
      * idx (Indonesia Only)
           * importing library
-          * ```from DataColletion.Collection.Financial import IDX``` 
+          * ```from dinnovation.collection.financial import idx``` 
           * you can get library infromation
           <pre>
           <code>
-          idx = IDX
           information = idx.information()
           print(information)
           """
@@ -213,15 +210,57 @@ sqlalchemy==2.0.4
           </pre>
           * you can use collecting idx financial information data
           * Example code
+          <pre>
+          <code>
+          idx_dataframe = pd.read_excel("idx excel path")
+          idx = idx.idx_extract(idx_dataframe)
+
+          idx.MakeAvaible()
+          
+          # add mapping excel file path
+          idx.Add_On("mapping_path")
+          
+          # add idx files path
+          idx.transform("files path")
+
+          </code>
+          </pre>
+
+     * wsj (USA OTC)
+          * importing library
+          * ```from dinnovation.collection.financial import wsj``` 
+          * you can get library infromation
+          <pre>
+          <code>
+          information = wsj.information()
+          print(information)
+          """
+          The function is described below. 
+          The main class in the library is extract().
+          extract() collects data from wsj.
+          collect() imports only OTC companies of the data collected.
+          """
+          </code>
+          </pre>
+          * you can use collecting idx financial information data
+          * Example code
+          <pre>
+          <code>
+          wsj = wsj.wsj()
+
+          # US index data is required unconditionally.
+          wsj.collect()
+          </code>
+          </pre>
+
     
 * Company general information data
      * opencorporates
           * importing library
-          * ```from DataColletion.Collection.General import OPENCORPORATES``` 
+          * ```from dinnovation.collection.general import opencorporates``` 
           * you can get library infromation
           <pre>
           <code>
-          opencorporates = OPENCORPORATES
           information = opencorporates.information()
           print(information)
           """
@@ -240,7 +279,6 @@ sqlalchemy==2.0.4
           * Example code
           <pre>
           <code>
-          opencorporates = OPENCORPORATES
           crawler = opencorporates.opencorporates_extract()
           crawler.Login()
           df = pd.read_excel("finished_url_opencorporates.xlsx")
@@ -251,13 +289,64 @@ sqlalchemy==2.0.4
           </code>
           </pre>
 
-     * datos (Columbia Only)
+     * yellow
           * importing library
-          * ```from DataColletion.Collection.General import DATOS``` 
+          * ```from dinnovation.collection.general import yellow``` 
           * you can get library infromation
           <pre>
           <code>
-          datos = DATOS
+          information = yellow.information()
+          print(information)
+          """
+          The function is described below. \n
+          The main class in the library is opencorporates_extract.
+          DriverSettings() is a function that sets the driver.
+          """
+          </code>
+          </pre>
+          * you can use collecting opencorporates general information data
+          * Example code
+          <pre>
+          <code>
+          yellow = yellow.yellow_extract()
+          yellow.DriverSettings()
+          yellow.extract()
+          </code>
+          </pre>
+
+     * bizin
+          * importing library
+          * ```from dinnovation.collection.general import bizin``` 
+          * you can get library infromation
+          <pre>
+          <code>
+          information = bizin.information()
+          print(information)
+          """
+          A description of the function is given below. 
+          The main class within the library is BIZIN. 
+          In the case of Asian countries, the url is different, so you need to set it. 
+          DriverSettings() is a Selenium Chrome driver settings function. 
+          area() is a function that collects information on companies in the country. 
+          collect() is a function that collects data from the BIZIN site. 
+          """
+          </code>
+          </pre>
+          * you can use collecting opencorporates general information data
+          * Example code
+          <pre>
+          bizin.DriverSettings()
+          bizin.area()
+          bizin.collect()
+          </code>
+          </pre>
+
+     * datos (Columbia Only)
+          * importing library
+          * ```from dinnovation.collection.general import datos``` 
+          * you can get library infromation
+          <pre>
+          <code>
           information = datos.information()
           print(information)
           """
@@ -270,14 +359,20 @@ sqlalchemy==2.0.4
           </pre>
           * you can use collecting opencorporates general information data
           * Example code
+          <pre>
+          <code>
+          # Datos data is required unconditionally.
+          datos.make("datos.csv")
+          datos.load()
+          </code>
+          </pre>
 
      * kemenperin (Italy Only)
           * importing library
-          * ```from DataColletion.Collection.General import KEMENPERIN``` 
+          * ```from dinnovation.collection.general import kemenperin``` 
           * you can get library infromation
           <pre>
           <code>
-          kemenperin = KEMENPERIN
           information = kemenperin.information()
           print(information)
           """
@@ -291,17 +386,174 @@ sqlalchemy==2.0.4
           </pre>
           * you can use collecting opencorporates general information data
           * Example code
+          <pre>
+          <code>
+          kemenperin.DriverSettings()
+          kemenperin.get_data()
+          kemenperin.load()
+          </code>
+          </pre>
+
+     * cybo (Ukraina Only)
+          * importing library
+          * ```from dinnovation.collection.general import cybo``` 
+          * you can get library infromation
+          <pre>
+          <code>
+          information = cybo.information()
+          print(information)
+          """
+          The function is described below. \n
+          The main class in the library is cybo_extract. \n
+          DriverSettings() is a function that sets the driver. \n
+          collect() is collect data.
+          """
+          </code>
+          </pre>
+          * you can use collecting opencorporates general information data
+          * Example code
+          <pre>
+          cybo.DriverSettings()
+          cybo.collect()
+          </code>
+          </pre>
+
+* Company road view picture information data
+     * google
+          * importing library
+          * ```from dinnovation.collection.map import google``` 
+          * you can get library infromation
+          <pre>
+          <code>
+          information = google.information()
+          print(information)
+          """
+          A description of the function is given below.
+          The main class in the library is map.
+          GetStreet() is a function that calls the Google map api.
+          collect() is a function that extracts data.
+          """
+          </code>
+          </pre>
+          * you can use collecting opencorporates general information data
+          * Example code
+          <pre>
+          <code>
+          google = google.map("your api key")
+          google.GetStrret("address", "/")
+          
+          # if you need many address pics
+          address_info_lst = ["1", "2"]
+          google.collect(address_info_lst, "/")
+          </code>
+          </pre>
+
+* Company stock data
+     * marcap
+          * importing library
+          * ```from dinnovation.collection.stock import marcap``` 
+          * you can get library infromation
+          <pre>
+          <code>
+          information = marcap.information()
+          print(information)
+          """
+          A description of the function is given below.
+          The main class within the library is MARCAP.
+          install() is a function that informs the marcap data github address.
+          collect() is a function that extracts data.
+          """
+          </code>
+          </pre>
+          * you can use collecting opencorporates general information data
+          * Example code
+          <pre>
+          <code>
+          ticker_lst = ["1", "2"]
+          marcap = marcap.MARCAP(ticker_lst)
+
+          marcap.install()
+          marcap.collect()
+          </code>
+          </pre>
+
+     * shareoutstanding
+          * importing library
+          * ```from dinnovation.collection.stock import shareoutstanding``` 
+          * you can get library infromation
+          <pre>
+          <code>
+          information = shareoutstanding.information()
+          print(information)
+          """
+          The SHAREOUTSTANDING library collects market cap data. 
+          DriverSettings() is a Selenium Chrome driver settings function. 
+          get_company() is a function that retrieves a ticker from our US company database and stores its value. 
+          collect() is a function that collects data from shareoutstanding sites. 
+          """
+          </code>
+          </pre>
+          * you can use collecting opencorporates general information data
+          * Example code
+          <pre>
+          <code>
+          shareoutstanding.DriverSettings()
+          # to access the database
+          # Please enter host ip, database, id, password.
+          shareoutstanding.get_company(host, database, user, password)
+          shareoutstanding.collect()
+          </code>
+          </pre>
+
+     * yfinance
+          * importing library
+          * ```from dinnovation.collection.stock import yfinance``` 
+          * you can get library infromation
+          <pre>
+          <code>
+          information = yfinance.information()
+          print(information)
+          """
+          The yfinance library collects market cap data. 
+          collect() is a function that collects data from shareoutstanding sites.
+          """
+          </code>
+          </pre>
+          * you can use collecting opencorporates general information data
+          * Example code
+          <pre>
+          <code>
+          # to access the database
+          # Please enter host ip, database, id, password.
+          yfinance.get_company(host, database, user, password)
+          yfinance.collect()
+          </code>
+          </pre>
+
 
 ### Data Processing
 
 * importing library
-     * ```from DataQuality.ETL import EL``` 
-* Data Extract to Database
-
+     * ```from dinnovation.processing import extract``` 
+* you can get library information
 <pre>
 <code>
-extract = EL.DataExtract()
-extract.connect("id", "password", "ip address", "port number", "database name", "table_name")
+information = extract.information()
+print(information)
+"""
+A description of the function is given below. \n
+The main class within the library is DataExtract. \n
+Enter database id, pw, port, database, table_name in order to connect.\n
+The connect() function is a function that tries to connect.\n
+The extract() function extracts the database after connecting.
+"""
+</code>
+</pre>
+* Data Extract to Database
+<pre>
+<code>
+extract = extract.DataExtract("id", "password", "ip address", "port number", "database name", "table_name")
+extract.connect()
 extract.extract()
 </code>
 </pre>
@@ -309,13 +561,38 @@ extract.extract()
 ### Data Transformation
 
 * importing library
-     * ```from DataQuality.ETL import T``` 
-* Data Extract to Database
-
+     * ```from dinnovation.processing import transform``` 
+* you can get library information
 <pre>
 <code>
-import pandas as pd
-
+information = transform.information()
+print(information)
+"""
+A description of the function is given below. 
+The library includes T (Transform) in the ETL process. 
+The class that checks data in the database is Checker. 
+When designating a class, enter the id, pw, ip, db of the database (postgresql), and the table name to be extracted.
+The read_excel() function loads xlsx and saves it as a data frame. 
+The read_csv() function loads a csv and saves it as a data frame. 
+The data_update() function inputs I or U when updating new data. 
+The date_update() function inputs the date when new data is updated. 
+The CheckDate() function is a function that standardizes the general data date of Investing.com 
+The CheckLength() function checks the size of data and cuts it by the size 
+The CheckVarchar() function checks the financial data size and inserts a new one if it is large 
+The CheckNumeric() function checks a number in financial data 
+-------------------------------------------------- ----------------
+The class that checks data from database is Analysis. 
+The read_excel() function loads xlsx and saves it as a data frame. 
+The read_csv() function loads a csv and saves it as a data frame. 
+The Fail() function is a function that dictates erroneous data to put into a data frame 
+The CheckDate_Duplicate() function is a function that checks the date check and duplicate check 
+The CheckNumber() function checks whether a phone number is valid 
+"""
+</code>
+</pre>
+* Data Transform
+<pre>
+<code>
 transform = T.Checker()
 # if you data type is xlsx 
 transform.read_excel("path")
@@ -338,11 +615,27 @@ transform.df.to_excel("~.xlsx")
 ### Data Load
 
 * importing library
-     * ```from DataQuality.ETL import EL``` 
-* Data Extract to Database
+     * ```from dinnovation.processing import load```  
+* you can get library information
 <pre>
 <code>
-load = EL.DataLoad()
+information = load.information()
+print(information)
+"""
+The DataLoad() class is the main one. 
+The class can handle large amounts if many = True is set. 
+DataLoading() is a function that saves data in the form of a data frame within a class. 
+CheckLength() is a function that measures the length of the saved data frame to prevent errors beyond the standard. In addition, the value of keyval is raised above the latest value that currently exists. 
+Load() loads the data using a batch process. 
+Login() is a function that connects to the database. 
+Connect_DB() is a function that connects to the database and creates an environment where data can be loaded.
+"""
+</code>
+</pre>
+* Data load to Database
+<pre>
+<code>
+load = load.DataLoad()
 # if you loading data is many, many argument is True
 load.Login("user", "password", "host", "port", "dbname")
 load.DataLoading("path")
@@ -356,5 +649,3 @@ load.Connect_DB()
 load.Load()
 </code>
 </pre>
-
-### Data Analysis

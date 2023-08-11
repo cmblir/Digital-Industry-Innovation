@@ -1,6 +1,20 @@
 from sqlalchemy import create_engine
 import pandas as pd
 
+class information:
+    def __init__(self):
+        self.print_information()
+
+    def print_information(self):
+        print("""
+        A description of the function is given below. \n
+        The main class within the library is DataExtract. \n
+        Enter database id, pw, port, database, table_name in order to connect.\n
+        The connect() function is a function that tries to connect.\n
+        The extract() function extracts the database after connecting.
+        """)
+
+
 class DataExtract:
     def __init__(self, id, pw, ip, pt, db, table_name):
         """

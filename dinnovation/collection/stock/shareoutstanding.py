@@ -15,13 +15,10 @@ class information:
 
     def print_information(self):
         print("""
-        SHAREOUTSTANDING 라이브러리는 market cap 데이터를 수집합니다. \n
-        ------------------------------------------------------------------------------------------\n
-        DriverSettings()은 셀레니움 크롬 드라이버 세팅 함수입니다. \n
-        get_company()는 자사의 미국 기업 데이터베이스에서 ticker를 검색하여 해당 값을 저장하는 함수입니다. \n
-        collect()은 shareoutstanding 사이트에서 데이터를 수집하는 함수입니다. \n
-        ------------------------------------------------------------------------------------------\n
-        Investing_Cleanse는 클래스를 실행시키면 바로 진행이 됩니다. \n
+        The SHAREOUTSTANDING library collects market cap data. \n
+        DriverSettings() is a Selenium Chrome driver settings function. \n
+        get_company() is a function that retrieves a ticker from our US company database and stores its value. \n
+        collect() is a function that collects data from shareoutstanding sites. \n
         """)
 
 class SHAREOUTSTANDING:
@@ -30,27 +27,26 @@ class SHAREOUTSTANDING:
 
     def DriverSettings(self, Turn_off_warning = False, linux_mode = False) -> None:
         """
-        드라이버 세팅을 하는 함수입니다.
-        linux mode를 True로 지정할 경우 백그라운드에서 수집이 가능합니다.
-        단, 클릭과 같은 액션은 취하지 못합니다.
+        This function sets the driver.
+        If linux mode is set to True, collection is possible in the background.
+        However, actions such as clicks cannot be taken.
         """
         if Turn_off_warning == True: self.TurnOffWarning()
-        chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]  #크롬드라이버 버전 확인
+        chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]  # Check chromedriver version
         chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument("--incognito") # 시크릿 모드
-        if linux_mode == True: chrome_options.add_argument("--headless") # 리눅스 GUI 없는 디스플레이 모드
-        chrome_options.add_argument("--no-sandbox") # 리소스에 대한 엑서스 방지
-        chrome_options.add_argument("--disable-setuid-sandbox") # 크롬 충돌 방지
-        chrome_options.add_argument("--disable-dev-shm-usage") # 메모리 부족 에러 방지
+        chrome_options.add_argument("--incognito") # incognito mode
+        if linux_mode == True: chrome_options.add_argument("--headless") # Display mode without Linux GUI
+        chrome_options.add_argument("--no-sandbox") # Prevent access to resources
+        chrome_options.add_argument("--disable-setuid-sandbox") # Prevent chrome crashes
+        chrome_options.add_argument("--disable-dev-shm-usage") # Prevent out of memory errors
         chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        try: # 크롬 드라이버
+        try: # Chrome Driver
             self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)   
         except:
             chromedriver_autoinstaller.install(True)
             self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-        # WebDruverException Error 방지 기존의 드라이버 버젼으로 지정
-        # driver = webdriver.Chrome(executable_path='/Users/cmblir/Python/Musinsa-Analysis/100/chromedriver')
-
+        # Prevent WebDruverException Error Designate as an existing driver version
+        
     def get_company(self, host, database, user, password):
         conn = psycopg2.connect(
             host = host,

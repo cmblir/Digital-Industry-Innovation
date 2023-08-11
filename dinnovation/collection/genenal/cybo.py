@@ -8,6 +8,15 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 
+class information:
+    def __init__(self):
+        self.print_information = """
+        The function is described below. \n
+        The main class in the library is cybo_extract. \n
+        DriverSettings() is a function that sets the driver. \n
+        collect() is collect data.
+        """
+
 class cybo_extract:
     def __init__(self):
         self.url = lambda x: f"https://www.cybo.com/UA/kiev-kiev/hotels-&-travel/?p={x}"
