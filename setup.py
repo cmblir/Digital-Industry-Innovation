@@ -41,6 +41,8 @@ setup(
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
+    url = "https://github.com/cmblir/dinnovation",
+    keywords=["financial", "data", "investing", "FMP", "idx", "wsj", "dart", "python", "yahoo finance"],
     include_package_data=True,
     packages=find_packages(),
     platforms=['any'],
