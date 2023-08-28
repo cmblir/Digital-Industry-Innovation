@@ -19,7 +19,7 @@ class information:
 class dart_extract:
     def __init__(self, Path):
         """
-        Download all items from data at http://data.krx.co.kr/contents/MDC/MDI/mdiLoader. \n
+        Download all items from data at http://data.krx.co.kr/contents/MDC/MAIN/main/index.cmd. \n
         Enter the downloaded data file path.
         """
         self.Columns = const.korea_financial_column
