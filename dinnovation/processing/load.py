@@ -166,7 +166,7 @@ class DataLoad:
         if self.many == False:
             if first == False:
                 try:
-                    conn = psycopg2.connect(self.url)
+                    conn = psycopg2.connect(**self.url)
                     cur = conn.cursor()
                     cur.execute(f"select keyval from {self.table_name} order by keyval desc limit 1;")
                     rows = cur.fetchall()
