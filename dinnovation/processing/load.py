@@ -116,7 +116,8 @@ class DataLoad:
         This is a process, also known as batch processing, where \n is processed by request in real time.
         It processes large amounts of data in batches rather than in a way.
         """
-        engine = create_engine(self.url)
+        url = f"postgresql://{self.url['user']}:{self.url['password']}@{self.url['host']}:{self.url['port']}/{self.url['dbname']}"
+        engine = create_engine(url)
         if self.many == False:
             if self.table_name.split("_")[-1] == "m":
                 dtypesql = self.dtypesql_info
@@ -184,7 +185,7 @@ class DataLoad:
             for length in tqdm(range(len(self.table_nameList))):
                 if first == False:
                     try:
-                        conn = psycopg2.connect(self.url)
+                        conn = psycopg2.connect(**self.url)
                         cur = conn.cursor()
                         cur.execute(f"select keyval from {self.table_nameList[length]} order by keyval desc limit 1;")
                         rows = cur.fetchall()
