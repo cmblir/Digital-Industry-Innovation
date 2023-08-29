@@ -414,7 +414,7 @@ class Investing_Crawler:
                 company_df_A['webpage_info'] = webpage_info
                 company_df_A['source'] = 'https://au.investing.com'+company+self.IS_suffix
                 company_df_A['PIC'] = 'Nicholas'
-                company_df_A['gathering_time'] = datetime.date.today()
+                company_df_A['gathering_time'] = datetime.today().strftime("%Y-%m-%d")
                 
                 # company_df_Q is the quarterly report obtained by pressing the 'Quarter' button
                 company_df_Q = pd.concat([df_balance_Q, df_income_Q, df_cash_flow_Q],axis=1)# Mark the data frame as a quarterly report
@@ -426,7 +426,7 @@ class Investing_Crawler:
                 company_df_Q['webpage_info'] = webpage_info
                 company_df_Q['source'] = 'https://au.investing.com'+company+self.IS_suffix
                 company_df_Q['PIC'] = 'Nicholas'
-                company_df_Q['gathering_time'] = datetime.date.today()
+                company_df_Q['gathering_time'] = datetime.today().strftime("%Y-%m-%d")
 
                 
                 blank = pd.DataFrame(columns = all_cols)
@@ -500,7 +500,7 @@ class Investing_Crawler:
                 blank['webpage_info'] = webpage_info
                 blank['source'] = 'https://au.investing.com'+company+self.PROFILE_suffix
                 blank['PIC'] = 'Nicholas'
-                blank['gathering_time'] = datetime.date.today()
+                blank['gathering_time'] = datetime.today().strftime("%Y-%m-%d")
 
 
                 for code in blank.columns : 

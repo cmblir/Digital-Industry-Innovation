@@ -145,7 +145,13 @@ class DataLoad:
 
 
     def Login(self, user, password, host, port, dbname):
-        self.url = f"postgresql://{user}:{password}@{host}:{port}/{dbname}"
+        self.url = {
+                    'dbname': dbname,
+                    'user': user,
+                    'password': password,
+                    'host': host,
+                    'port': port
+                }
 
     def Connect_DB(self, replace=False, first=False):
         """
